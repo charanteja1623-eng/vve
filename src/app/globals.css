@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/*
+  Vintage Vibe Events — brand token system (Tailwind v4 @theme).
+  Palette salvaged from the original repo; see docs/essentials.md.
+  Usage: bg-burgundy, text-gold, font-serif, etc.
+*/
+
+@theme {
+  /* Brand colour tokens */
+  --color-burgundy: #3a0507; /* primary field */
+  --color-burgundy-wine: #671217; /* raised surfaces / medallion */
+  --color-burgundy-deep: #210304; /* deepest shadow */
+  --color-plum: #250305; /* dark plum / charcoal accents */
+  --color-gold: #c9a15a; /* antique gold — hairlines, small accents */
+  --color-gold-light: #e3c985; /* light gold — highlights only */
+  --color-ivory: #f7f1e5; /* warm ivory — primary light surface */
+
+  /* Semantic aliases */
+  --color-background: var(--color-ivory);
+  --color-foreground: var(--color-burgundy-deep);
+
+  /* Typography — self-hosted via next/font (see layout.tsx) */
+  --font-serif: var(--font-cormorant); /* display / headings */
+  --font-sans: var(--font-manrope); /* UI / body */
+}
+
+/* Baseline */
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), Arial, sans-serif;
+}
+
+/* Visible gold focus ring, brand-consistent (a11y) */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Respect reduced-motion globally; feature animations opt back in deliberately */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
