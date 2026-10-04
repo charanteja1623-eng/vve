@@ -1,37 +1,36 @@
-import Image from "next/image";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
+import LogoLoader from "@/components/loader/LogoLoader";
+import LogoMark from "@/components/brand/LogoMark";
 import { site } from "@/lib/site";
 
 /**
- * P0 placeholder home — proves the token system, fonts, logo asset and layout
- * shell render. The real homepage (loader → hero → sections) arrives in later phases.
+ * P1 — homepage hero. The §7 shatter-and-reassemble loader (LogoLoader) plays
+ * over the page on first load, converging into the exact LogoMark shown here as
+ * the hero centerpiece. Sections, navigation and CTAs arrive in later phases.
  */
 export default function Home() {
   return (
     <>
+      <LogoLoader />
       <SiteHeader />
-      <main className="flex flex-1 flex-col items-center justify-center gap-8 bg-burgundy px-6 py-24 text-center text-ivory">
-        <Image
-          src="/vintage-vibe-events-logo.png"
-          alt={site.name}
-          width={230}
-          height={192}
-          priority
-          className="h-auto w-40 rounded-full"
-        />
-        <div className="space-y-3">
-          <h1 className="font-serif text-4xl tracking-wide text-gold-light sm:text-5xl">
-            {site.name}
-          </h1>
-          <p className="font-serif text-lg tracking-widest text-gold uppercase">
+      <main className="flex flex-1 flex-col items-center justify-center gap-10 bg-burgundy px-6 py-20 text-center text-ivory">
+        <h1 className="m-0">
+          <LogoMark className="w-[min(86vw,620px)]" priority />
+        </h1>
+        <div className="space-y-4">
+          <p className="font-serif text-xl uppercase tracking-[0.3em] text-gold sm:text-2xl">
             {site.tagline}
           </p>
+          <p className="mx-auto max-w-xl text-sm leading-relaxed text-ivory/70">
+            Premium event design and coordination in {site.serviceArea} —
+            weddings, celebrations and corporate occasions, crafted end to end by
+            one team.
+          </p>
         </div>
-        <p className="max-w-md text-sm text-ivory/60">
-          Foundation scaffold (P0). Brand tokens, self-hosted fonts and the real
-          logo asset are wired. Loader and hero follow in P1.
-        </p>
+        <span className="mt-2 text-xs uppercase tracking-[0.3em] text-gold/60">
+          Scroll to explore
+        </span>
       </main>
       <SiteFooter />
     </>

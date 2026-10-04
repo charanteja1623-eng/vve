@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# reference / local only
+stitch_vintage_vibe_events_website/
+stitch_vintage_vibe_events_website.zip
+.claude/

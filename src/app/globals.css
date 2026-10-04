@@ -23,6 +23,7 @@
   /* Typography — self-hosted via next/font (see layout.tsx) */
   --font-serif: var(--font-cormorant); /* display / headings */
   --font-sans: var(--font-manrope); /* UI / body */
+  --font-logo: var(--font-cinzel-decorative); /* logo wordmark only */
 }
 
 /* Baseline */
@@ -51,5 +52,128 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   §7 Shatter-and-reassemble logo loader
+   Fragments are exact grid slices of the real frame artwork
+   (public/vve-frame.png) that scatter → reassemble pixel-exact.
+   Animates transform + opacity only (GPU-friendly). The reduced-
+   motion path is handled in the component (static logo, no shards).
+   ============================================================ */
+
+.vve-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-burgundy);
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+.vve-loader[data-exiting="true"] {
+  opacity: 0;
+}
+
+/* Stage keeps the exact frame aspect ratio; cqw drives wordmark size */
+.vve-stage {
+  position: relative;
+  width: min(80vw, 560px);
+  aspect-ratio: var(--frame-w) / var(--frame-h);
+  container-type: inline-size;
+}
+
+/* Base frame image — cross-fades in as the shards settle so any
+   sub-threshold filigree tips are present in the final state. */
+.vve-frame-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  animation: vve-frame-settle 0.45s ease-out var(--settle-delay) both;
+}
+
+.vve-shards {
+  position: absolute;
+  inset: 0;
+}
+
+.vve-shard {
+  position: absolute;
+  left: calc(var(--c) * 100% / var(--cols));
+  top: calc(var(--r) * 100% / var(--rows));
+  width: calc(100% / var(--cols));
+  height: calc(100% / var(--rows));
+  background-image: var(--frame-src);
+  background-repeat: no-repeat;
+  background-size: calc(var(--cols) * 100%) calc(var(--rows) * 100%);
+  background-position: calc(var(--c) / (var(--cols) - 1) * 100%)
+    calc(var(--r) / (var(--rows) - 1) * 100%);
+  transform: translate(0, 0) rotate(0deg) scale(1);
+  opacity: 1;
+  will-change: transform, opacity;
+  animation: vve-shard-in 0.72s cubic-bezier(0.22, 0.9, 0.3, 1) var(--delay) both;
+}
+
+@keyframes vve-shard-in {
+  from {
+    opacity: 0;
+    transform: translate(calc(var(--dx) * 1%), calc(var(--dy) * 1%))
+      rotate(calc(var(--rot) * 1deg)) scale(var(--sc));
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes vve-frame-settle {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Wordmark — center-out reveal + gentle rise, in the exact brand gold */
+.vve-wordmark {
+  position: absolute;
+  left: 50%;
+  top: 47.6%;
+  width: 72%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  white-space: nowrap;
+  font-family: var(--font-logo), serif;
+  font-weight: 700;
+  color: #9a6b06;
+  font-size: 7.4cqw;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+.vve-wordmark--animated {
+  opacity: 0;
+  animation: vve-wordmark-in 0.9s ease-out var(--wordmark-delay) both;
+}
+
+@keyframes vve-wordmark-in {
+  from {
+    opacity: 0;
+    clip-path: inset(0 50% 0 50%);
+    transform: translate(-50%, calc(-50% + 7px));
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 -6% 0 -6%);
+    transform: translate(-50%, -50%);
   }
 }
