@@ -20,7 +20,7 @@ export default function AboutPage() {
             <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">Our Story</span>
             <h1 className="font-serif text-4xl md:text-6xl text-ivory mb-6">About the Atelier</h1>
             <p className="font-sans text-lg text-ivory/80 max-w-2xl leading-relaxed">
-              We bring decades of artisanal scenography and production expertise to Hyderabad's most discerning hosts.
+              We bring decades of artisanal scenography and production expertise to Hyderabad&apos;s most discerning hosts.
             </p>
           </div>
         </section>
