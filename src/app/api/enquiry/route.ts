@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { enquirySchema } from "@/lib/validations/enquiry";
 import { createClient } from "@supabase/supabase-js";
 
-// Supabase environment variables
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+// Supabase environment variables (Server-side privileged client)
+const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseSecretKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Rate limiting state (In-memory for now)
 // REQUIREMENT: For serverless deployments (Vercel, etc.), a shared store like Upstash Redis MUST be used.
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
     const data = result.data;
 
     // 4. Check for Supabase credentials (Blocker documentation)
-    if (!supabaseUrl || !supabaseServiceKey) {
+    if (!supabaseUrl || !supabaseSecretKey) {
       // "If external credentials are unavailable... document the exact integration blocker, and do not simulate successful persistence."
       return NextResponse.json(
         { 
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
     // 5. Persistent Storage using Supabase
     // SECURITY NOTE: In production, consider using a Service Role Key kept server-side only (not NEXT_PUBLIC_)
     // to bypass restrictive RLS for inserts, or ensuring RLS strictly allows anonymous inserts but no selects.
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const supabase = createClient(supabaseUrl, supabaseSecretKey);
     
     const { error } = await supabase
       .from('enquiries')
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
       { status: 200 }
     );
 
-  } catch (error) {
+  } catch {
     console.error("Enquiry API error encountered."); // Safe log
     return NextResponse.json(
       { error: "Internal Server Error", message: "An unexpected error occurred." },

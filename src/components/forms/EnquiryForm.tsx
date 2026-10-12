@@ -33,7 +33,7 @@ export default function EnquiryForm() {
       } else {
         setStatus({ type: 'error', message: result.message || result.error || 'Something went wrong.' });
       }
-    } catch (err) {
+    } catch {
       setStatus({ type: 'error', message: 'Network error. Please try again later.' });
     } finally {
       setIsSubmitting(false);
