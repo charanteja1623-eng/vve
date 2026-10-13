@@ -34,8 +34,9 @@ export default function Home() {
               <h1 className="m-0">
                 <LogoMark className="w-[min(84vw,540px)]" priority />
               </h1>
-              <p className="font-serif text-2xl md:text-4xl lg:text-5xl text-ivory tracking-wide max-w-3xl leading-tight">
-                Creating moments. <span className="text-gold italic">Designing memories.</span>
+              <p className="font-serif text-xl md:text-2xl lg:text-3xl text-ivory tracking-wide max-w-2xl leading-snug">
+                <span className="inline-block">Creating moments.</span>{" "}
+                <span className="inline-block text-gold italic">Designing memories.</span>
               </p>
             </div>
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-xl leading-relaxed">

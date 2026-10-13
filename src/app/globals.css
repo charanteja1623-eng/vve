@@ -226,12 +226,14 @@ html[data-loader-done="true"] .hero-brand-lockup {
   }
 }
 
-/* Wordmark — per-letter convergence in Cinzel Decorative Regular (1.3s - 3.2s) */
+/* Wordmark — per-letter convergence in Cinzel Decorative Regular (1.3s - 3.2s)
+   Width is sized relative to the usable inner width of the cartouche frame,
+   with intentional horizontal padding so the text never touches the frame rails. */
 .vve-wordmark {
   position: absolute;
   left: 50%;
   top: 48.0%;
-  width: 68%;
+  width: 62%;
   transform: translate(-50%, -50%);
   text-align: center;
   white-space: nowrap;
@@ -241,14 +243,14 @@ html[data-loader-done="true"] .hero-brand-lockup {
   background: linear-gradient(180deg, #f7ebb8 0%, #d9b15d 45%, #b88a32 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 5.25cqw;
+  font-size: 4.8cqw;
   line-height: 1;
   letter-spacing: 0.04em;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.35em;
-  padding: 0 0.5cqw;
+  padding: 0 2cqw;
   box-sizing: border-box;
 }
 

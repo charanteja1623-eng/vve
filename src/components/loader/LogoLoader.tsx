@@ -202,8 +202,8 @@ export default function LogoLoader({ onDone }: { onDone?: () => void }) {
           <LogoMark className="w-[min(84vw,540px)]" priority />
           <div className="vve-tagline-wrap" aria-hidden>
             <p className="vve-tagline vve-tagline--static">
-              Creating moments.{" "}
-              <span className="vve-tagline-accent">Designing memories.</span>
+              <span className="inline-block">Creating moments.</span>{" "}
+              <span className="inline-block vve-tagline-accent">Designing memories.</span>
             </p>
           </div>
         </div>
@@ -284,8 +284,8 @@ export default function LogoLoader({ onDone }: { onDone?: () => void }) {
           {/* Tagline reveals smoothly between 4.2s and 5.0s */}
           <div className="vve-tagline-wrap" aria-hidden>
             <p className="vve-tagline">
-              Creating moments.{" "}
-              <span className="vve-tagline-accent">Designing memories.</span>
+              <span className="inline-block">Creating moments.</span>{" "}
+              <span className="inline-block vve-tagline-accent">Designing memories.</span>
             </p>
           </div>
         </div>

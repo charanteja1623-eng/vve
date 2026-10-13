@@ -20,7 +20,9 @@ Every feature claimed in this document has been **empirically validated** via au
 ## 1. Summary of Completed Phases & Git History
 
 ```
-* b7019de (HEAD -> master, origin/master) docs: update state and project status following remote sync
+* 84155e3 feat(loader): precision visual correction and cinematic rebuild
+* 97521da docs: add comprehensive completed work summary report
+* b7019de docs: update state and project status following remote sync
 * b4e895f feat(content): integrate authentic event media, copy, whatsapp fab, and cinematic loader
 * bbc689a feat(supabase): verify enquiry persistence and access controls
 * ca7ef12 feat: establish Playwright testing suite, GSD workflows, and project documentation
