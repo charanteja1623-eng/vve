@@ -6,43 +6,84 @@ import { SHARDS, COLS, ROWS, FRAME_W, FRAME_H } from "./logoShards";
 import LogoMark from "@/components/brand/LogoMark";
 
 /**
- * §7 shatter-and-reassemble splash loader.
+ * Vintage Vibe Events — Cinematic 5-Second Logo Loader.
  *
- * The gold ornamental frame breaks into plate/shard fragments — each an exact
- * grid slice of the real frame artwork — that scatter and then reassemble
- * pixel-exact, while the "VINTAGE VIBE EVENTS" wordmark (live Cinzel Decorative
- * Bold) reveals into place. Both converge into the canonical LogoMark. This is a
- * reassembly of the logo's OWN geometry — not ambient particle convergence.
+ * Sequence:
+ *   0.0–0.8s: Deep burgundy canvas fades in with warm ambient radial glow.
+ *   0.8–3.2s: Gold fragments follow controlled trajectories and assemble into
+ *             the official frame artwork (public/vve-frame.png).
+ *   2.25–3.2s: Cinzel Decorative Bold wordmark emerges from center-out.
+ *   2.95–3.4s: Base master frame cross-fades in to seal all fine filigree tips.
+ *   3.25–4.3s: Restrained gold light sweep reveals the completed mark.
+ *   4.2–5.0s:  Tagline ("Creating moments. Designing memories.") fades in.
+ *   5.0s+:     Holds serenely until page is ready, then dissolves gracefully.
  *
- * Animates transform + opacity only. Honors prefers-reduced-motion (static
- * logo, no shatter), supports early-exit (tap / key), and plays once per tab.
+ * Lifecycle:
+ *   - Enforces a MINIMUM of 5,000ms visible duration from first mount.
+ *   - Waits for document.readyState === "complete" and document.fonts.ready.
+ *   - If page is not ready after 5,000ms, holds in calm assembled state.
+ *   - Honors prefers-reduced-motion with an elegant static composition
+ *     while maintaining the full minimum 5,000ms display duration.
  */
 
 const FRAME_SRC = "url(/vve-frame.png)";
-const SETTLE_DELAY = 0.95; // s — base image fades in as the shards land
-const WORDMARK_DELAY = 1.15; // s — wordmark reveal begins
-const FULL_MS = 2450; // hold until fully assembled, then exit
-const REDUCED_MS = 800; // reduced-motion: brief, calm hold
-const EXIT_MS = 520; // overlay fade-out (matches CSS transition)
+const SETTLE_DELAY = 2.95; // s — base image cross-fades in as shards settle
+const WORDMARK_DELAY = 2.25; // s — wordmark reveal starts
+const MIN_DISPLAY_MS = 5000; // ms — strict minimum visible sequence duration
+const EXIT_MS = 650; // ms — smooth overlay dissolve transition
 
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
-/**
- * Subscribe to the OS "reduce motion" setting as an external store — the
- * React-sanctioned way to read a browser API without a setState-in-effect.
- * Server snapshot is `false` (full markup renders), the client re-reads on
- * hydration and switches to the static fallback for users who opted out.
- */
 function usePrefersReducedMotion() {
   return useSyncExternalStore(
     (notify) => {
+      if (typeof window === "undefined" || !window.matchMedia) {
+        return () => {};
+      }
       const mq = window.matchMedia(REDUCED_QUERY);
       mq.addEventListener("change", notify);
       return () => mq.removeEventListener("change", notify);
     },
-    () => window.matchMedia(REDUCED_QUERY).matches,
+    () => {
+      if (typeof window === "undefined" || !window.matchMedia) return false;
+      return window.matchMedia(REDUCED_QUERY).matches;
+    },
     () => false,
   );
+}
+
+/**
+ * Resolves when both document lifecycle and web fonts are fully ready.
+ */
+function waitForPageReady(): Promise<void> {
+  return new Promise((resolve) => {
+    if (typeof document === "undefined") {
+      resolve();
+      return;
+    }
+
+    const checkReady = () => {
+      const isComplete = document.readyState === "complete";
+      const fontsPromise =
+        typeof document.fonts !== "undefined" && document.fonts.ready
+          ? document.fonts.ready
+          : Promise.resolve();
+
+      if (isComplete) {
+        fontsPromise.then(() => resolve()).catch(() => resolve());
+      } else {
+        window.addEventListener(
+          "load",
+          () => {
+            fontsPromise.then(() => resolve()).catch(() => resolve());
+          },
+          { once: true },
+        );
+      }
+    };
+
+    checkReady();
+  });
 }
 
 export default function LogoLoader({ onDone }: { onDone?: () => void }) {
@@ -54,56 +95,63 @@ export default function LogoLoader({ onDone }: { onDone?: () => void }) {
   useEffect(() => {
     let seen = false;
     try {
-      seen = sessionStorage.getItem("vve_loader_seen") === "1";
+      const params = new URLSearchParams(window.location.search);
+      const isForced = params.get("loader") === "always";
+      seen = !isForced && sessionStorage.getItem("vve_loader_seen") === "1";
     } catch {}
 
-    const prefersReduced = window.matchMedia?.(REDUCED_QUERY).matches ?? false;
-
     if (seen) {
-      // Returning-visitor fast path. sessionStorage can't be read during SSR,
-      // so this skip is necessarily a post-mount state sync, not derivable at
-      // render time without a hydration mismatch.
+      // Returning-visitor fast path: sessionStorage can only be read post-hydration
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setHidden(true);
       onDone?.();
       return;
     }
-    try {
-      sessionStorage.setItem("vve_loader_seen", "1");
-    } catch {}
 
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
+    let isMounted = true;
+    let minTimeElapsed = false;
+    let pageReady = false;
     let exitTimer = 0;
-    const finish = () => {
-      setHidden(true);
-      document.body.style.overflow = prevOverflow;
-      onDone?.();
-    };
-    const beginExit = () => {
-      if (doneRef.current) return;
-      doneRef.current = true;
-      setExiting(true);
-      exitTimer = window.setTimeout(finish, EXIT_MS);
+
+    const tryDismiss = () => {
+      if (!isMounted || doneRef.current) return;
+      if (minTimeElapsed && pageReady) {
+        doneRef.current = true;
+        setExiting(true);
+        try {
+          sessionStorage.setItem("vve_loader_seen", "1");
+        } catch {}
+        exitTimer = window.setTimeout(() => {
+          if (!isMounted) return;
+          setHidden(true);
+          document.body.style.overflow = prevOverflow;
+          onDone?.();
+        }, EXIT_MS);
+      }
     };
 
-    const holdTimer = window.setTimeout(
-      beginExit,
-      prefersReduced ? REDUCED_MS : FULL_MS,
-    );
-    window.addEventListener("pointerdown", beginExit, { once: true });
-    window.addEventListener("keydown", beginExit, { once: true });
+    // 1. Strict minimum 5,000ms timer from visible mount
+    const durationTimer = window.setTimeout(() => {
+      minTimeElapsed = true;
+      tryDismiss();
+    }, MIN_DISPLAY_MS);
+
+    // 2. Wait for full page readiness (DOM + images/subresources + fonts)
+    waitForPageReady().then(() => {
+      pageReady = true;
+      tryDismiss();
+    });
 
     return () => {
-      window.clearTimeout(holdTimer);
+      isMounted = false;
+      window.clearTimeout(durationTimer);
       window.clearTimeout(exitTimer);
-      window.removeEventListener("pointerdown", beginExit);
-      window.removeEventListener("keydown", beginExit);
       document.body.style.overflow = prevOverflow;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onDone]);
 
   if (hidden) return null;
 
@@ -125,34 +173,62 @@ export default function LogoLoader({ onDone }: { onDone?: () => void }) {
       aria-label="Vintage Vibe Events — loading"
       aria-live="polite"
     >
+      {/* Ambient warm atmospheric background glow */}
+      <div className="vve-loader-ambient" aria-hidden />
+
       {reduced ? (
-        <LogoMark className="w-[min(80vw,560px)]" priority />
-      ) : (
-        <div className="vve-stage" style={stageStyle}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="vve-frame-base" src="/vve-frame.png" alt="" aria-hidden />
-          <div className="vve-shards" aria-hidden>
-            {SHARDS.map((s, i) => (
-              <span
-                key={i}
-                className="vve-shard"
-                style={
-                  {
-                    "--c": String(s.c),
-                    "--r": String(s.r),
-                    "--dx": String(s.dx),
-                    "--dy": String(s.dy),
-                    "--rot": String(s.rot),
-                    "--sc": String(s.sc),
-                    "--delay": `${s.delay}s`,
-                  } as CSSProperties
-                }
-              />
-            ))}
+        <div className="flex flex-col items-center justify-center gap-6 text-center px-4">
+          <LogoMark className="w-[min(82vw,560px)]" priority />
+          <div className="vve-tagline-wrap" aria-hidden>
+            <p className="vve-tagline vve-tagline--static">
+              Creating moments.{" "}
+              <span className="vve-tagline-accent">Designing memories.</span>
+            </p>
           </div>
-          <span className="vve-wordmark vve-wordmark--animated" aria-hidden>
-            VINTAGE VIBE EVENTS
-          </span>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center text-center px-4 w-full">
+          <div className="vve-stage" style={stageStyle}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="vve-frame-base"
+              src="/vve-frame.png"
+              alt=""
+              aria-hidden
+            />
+            <div className="vve-shards" aria-hidden>
+              {SHARDS.map((s, i) => (
+                <span
+                  key={i}
+                  className="vve-shard"
+                  style={
+                    {
+                      "--c": String(s.c),
+                      "--r": String(s.r),
+                      "--dx": String(s.dx),
+                      "--dy": String(s.dy),
+                      "--rot": String(s.rot),
+                      "--sc": String(s.sc),
+                      "--delay": `${(0.8 + s.delay * 1.35).toFixed(3)}s`,
+                    } as CSSProperties
+                  }
+                />
+              ))}
+            </div>
+            <span className="vve-wordmark vve-wordmark--animated" aria-hidden>
+              VINTAGE VIBE EVENTS
+            </span>
+            {/* Restrained gold light sweep */}
+            <div className="vve-shimmer" aria-hidden />
+          </div>
+
+          {/* Tagline reveals smoothly between 4.2s and 5.0s */}
+          <div className="vve-tagline-wrap" aria-hidden>
+            <p className="vve-tagline">
+              Creating moments.{" "}
+              <span className="vve-tagline-accent">Designing memories.</span>
+            </p>
+          </div>
         </div>
       )}
     </div>

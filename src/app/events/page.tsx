@@ -1,70 +1,141 @@
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
-import { site } from "@/lib/site";
+import { site, eventDisciplines } from "@/lib/site";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = {
-  title: `Our Events — ${site.name}`,
-  description: "Detailed breakdown of the event types organized by Vintage Vibe Events.",
+  title: `Curated Event Disciplines — ${site.name}`,
+  description: "Bespoke royal weddings, thematic milestone birthdays, corporate summits, and open lawn productions in Hyderabad.",
 };
 
 export default function EventsPage() {
-  const events = [
-    { title: "Weddings", desc: "Bespoke mandaps, grand entry arches, and lavish production tailored to your vision." },
-    { title: "Birthday Parties", desc: "Immersive thematic settings and personalized installations crafted for all ages." },
-    { title: "Surprise Parties", desc: "Romantic setups, secret proposal installations, and anniversary celebrations." },
-    { title: "Corporate Events", desc: "Executive unveilings, leadership summits, and awards galas engineered with precision." },
-    { title: "School & College Events", desc: "Concert-grade outdoor stages, alumni galas, and safety-compliant setups." },
-    { title: "Indoor & Outdoor Events", desc: "Adaptable scenography tailored for grand banquets, lush lawns, or intimate courtyards." }
-  ];
-
   return (
     <>
       <SiteHeader />
       <main className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory pt-24">
+        
         {/* Hero */}
-        <section className="py-20 px-6 text-center border-b border-gold/20 relative">
-          <div className="absolute inset-0 bg-plum opacity-50 z-0"></div>
+        <section className="relative py-24 px-6 text-center border-b border-gold/20 overflow-hidden">
+          <div className="absolute inset-0 z-0 opacity-20">
+            <Image
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuASjUPo6L5BBZUhIfrLNQhKDY22yivrPXGJP00nb6maefMTosPa5cvCPW11LrvwkbpYaTQwlkrAJpBx7GmyVt9Hrbhc0BM_81R5fSLnstB2JgGCBh45v4qVC2PcZFkuuUN9kqNyqBpoDmdgbdfqH_FyVVYTQsm6ukFT6SuKh0eX5gq5PlRs9qXRtLKGhVg8-5W80nHC4gu6gCSSPeSs-uLTNOAUPMoIyvzdRfv7k79tcQrJwAyWwwgF"
+              alt="Luxury event backdrop"
+              fill
+              priority
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep via-burgundy-deep/90 to-burgundy-deep" />
+          </div>
+
           <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-            <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">Our Disciplines</span>
-            <h1 className="font-serif text-4xl md:text-6xl text-ivory mb-6">Event Categories</h1>
-            <p className="font-sans text-lg text-ivory/80 max-w-2xl leading-relaxed">
-              We specialize in creating magnificent, bespoke environments for a wide range of celebrations.
+            <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">
+              Curated Event Architecture
+            </span>
+            <h1 className="font-serif text-4xl md:text-6xl text-ivory mb-6 leading-tight">
+              Event Disciplines
+            </h1>
+            <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
+            <p className="font-sans text-base md:text-lg text-ivory/80 max-w-2xl leading-relaxed">
+              Every celebration is treated as an architectural commission. From sacred Vedic mandaps to high-octane corporate galas across Hyderabad.
             </p>
           </div>
         </section>
 
-        {/* Event List */}
+        {/* Disciplines Detailed Showcase */}
         <section className="py-24 px-6 lg:px-12 bg-burgundy">
-          <div className="max-w-5xl mx-auto space-y-16">
-            {events.map((event, idx) => (
-              <div key={idx} className="flex flex-col md:flex-row gap-12 items-center group">
-                <div className={`w-full md:w-1/2 h-80 bg-plum border border-gold/20 relative overflow-hidden rounded-xl ${idx % 2 !== 0 ? 'md:order-last' : ''}`}>
-                  <div className="absolute inset-0 flex items-center justify-center z-0">
-                    <span className="text-gold/30 font-sans text-xs uppercase tracking-widest z-10 px-4 text-center">Photography Placeholder</span>
+          <div className="max-w-6xl mx-auto space-y-24">
+            {eventDisciplines.map((event, idx) => (
+              <article
+                key={event.id}
+                id={event.id}
+                className="scroll-mt-32 flex flex-col lg:flex-row gap-12 lg:gap-16 items-center p-8 md:p-12 rounded-2xl bg-burgundy-deep/80 border border-gold/25 shadow-2xl backdrop-blur-sm"
+              >
+                {/* Visual */}
+                <div className={`w-full lg:w-1/2 relative h-80 sm:h-96 rounded-xl overflow-hidden shadow-lg border border-gold/20 ${idx % 2 !== 0 ? 'lg:order-last' : ''}`}>
+                  <Image
+                    src={event.image}
+                    alt={event.imageAlt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 via-transparent to-transparent" />
+                  <span className="absolute bottom-4 left-4 font-sans text-xs font-semibold px-3 py-1.5 bg-burgundy-deep/90 text-gold border border-gold/30 rounded backdrop-blur-md">
+                    Capacity: {event.capacity}
+                  </span>
+                </div>
+
+                {/* Details */}
+                <div className="w-full lg:w-1/2 flex flex-col gap-6">
+                  <div>
+                    <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-2">
+                      {event.tag}
+                    </span>
+                    <h2 className="font-serif text-3xl md:text-4xl text-ivory mb-2">{event.title}</h2>
+                    <p className="font-sans text-sm text-gold-light/90 italic">{event.subtitle}</p>
+                  </div>
+
+                  <p className="font-sans text-base text-ivory/80 leading-relaxed">
+                    {event.description}
+                  </p>
+
+                  {/* Feature Pills */}
+                  <div className="space-y-3 pt-2">
+                    <span className="font-sans text-xs font-bold uppercase tracking-wider text-ivory/60 block">
+                      Signature Inclusions:
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {event.features.map((feat, fIdx) => (
+                        <div key={fIdx} className="flex items-center gap-2 text-xs font-sans text-ivory/90 bg-burgundy/60 px-3 py-2 rounded border border-gold/15">
+                          <span className="text-gold">✦</span>
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="pt-4 flex items-center gap-4">
+                    <Link
+                      href={`/contact?eventType=${event.id}`}
+                      className="px-8 py-3.5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-xs hover:bg-gold-light transition-all rounded shadow-md text-center"
+                    >
+                      Enquire for this Event
+                    </Link>
+                    <a
+                      href={`https://wa.me/${site.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(`Hello Vintage Vibe Events, I would like to enquire about ${event.title}.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3.5 border border-gold/40 text-ivory font-sans font-semibold text-xs hover:bg-gold/10 transition-colors rounded text-center"
+                    >
+                      WhatsApp Atelier
+                    </a>
                   </div>
                 </div>
-                <div className="w-full md:w-1/2 flex flex-col gap-4">
-                  <h2 className="font-serif text-3xl text-gold">{event.title}</h2>
-                  <p className="font-sans text-lg text-ivory/80 leading-relaxed">{event.desc}</p>
-                  <p className="font-sans text-sm text-ivory/60 italic mt-4">
-                    [Detailed service description placeholder for {event.title.toLowerCase()}.]
-                  </p>
-                </div>
-              </div>
+              </article>
             ))}
           </div>
         </section>
 
-        {/* CTA */}
+        {/* Global Consultation CTA */}
         <section className="py-24 px-6 bg-burgundy-deep text-center border-t border-gold/20">
           <div className="max-w-3xl mx-auto flex flex-col items-center gap-8">
-            <h2 className="font-serif text-4xl text-ivory">Plan Your Event</h2>
-            <Link href="/contact" className="px-10 py-4 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold-light transition-all rounded shadow-lg">
+            <h2 className="font-serif text-4xl md:text-5xl text-ivory leading-tight">
+              Begin Architectural Scenography
+            </h2>
+            <p className="font-sans text-base md:text-lg text-ivory/80 max-w-xl leading-relaxed">
+              Connect with our master production team to schedule an in-person design consultation.
+            </p>
+            <Link
+              href="/contact"
+              className="px-12 py-5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold-light transition-all rounded shadow-xl"
+            >
               Book a Consultation
             </Link>
           </div>
         </section>
+
       </main>
       <SiteFooter />
     </>

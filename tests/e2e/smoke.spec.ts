@@ -46,6 +46,12 @@ test.describe('VVE Browser Smoke Tests', () => {
   test('Header navigation and mobile menu behavior', async ({ page }) => {
     await page.goto('/');
 
+    // Wait for splash loader to finish if present
+    const loader = page.locator('.vve-loader');
+    if (await loader.count() > 0) {
+      await loader.waitFor({ state: 'detached', timeout: 15000 });
+    }
+
     const viewport = page.viewportSize();
     const isSmallScreen = (viewport?.width ?? 1440) < 768;
 
@@ -156,6 +162,32 @@ test.describe('VVE Browser Smoke Tests', () => {
 
     // Form submit button returns to active state
     await expect(page.locator('button[type="submit"]')).toBeEnabled();
+  });
+
+  test('WhatsApp floating action button is rendered globally', async ({ page }) => {
+    await page.goto('/');
+    const waLink = page.locator('a[aria-label="Chat with Vintage Vibe Events on WhatsApp"]');
+    await expect(waLink).toBeVisible();
+    await expect(waLink).toHaveAttribute('href', /wa\.me/);
+    await expect(waLink).toHaveAttribute('target', '_blank');
+  });
+
+  test('Portfolio filtering operates cleanly on /work', async ({ page }) => {
+    await page.goto('/work');
+    // Verify project cards render
+    const initialCards = page.locator('main h2');
+    const initialCount = await initialCards.count();
+    expect(initialCount).toBeGreaterThan(0);
+
+    // Filter by Royal Weddings
+    const weddingsBtn = page.locator('button', { hasText: 'Royal Weddings' });
+    await weddingsBtn.click();
+    await expect(weddingsBtn).toHaveClass(/bg-gold/);
+
+    // Filter by Corporate Summits
+    const corporateBtn = page.locator('button', { hasText: 'Corporate Summits' });
+    await corporateBtn.click();
+    await expect(corporateBtn).toHaveClass(/bg-gold/);
   });
 
 });
