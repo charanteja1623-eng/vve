@@ -5,13 +5,11 @@ import { site } from "@/lib/site";
 /**
  * Canonical Vintage Vibe Events logo mark — the single source of truth for the
  * assembled brand lockup. The ornamental frame is the master-quality raster
- * extracted from the client's Canva PDF (public/vve-frame.png); the wordmark is
- * live text in Cinzel Decorative Bold (the exact face used in the source),
- * locked to the frame's proportions. The §7 loader's final state is built to
- * match this exactly, and this component is the reduced-motion fallback.
+ * extracted from the client's Canva master (public/vve-frame.png); the wordmark is
+ * Cinzel Decorative Regular 400 locked to the frame's proportions.
  */
 export default function LogoMark({
-  className = "",
+  className = "w-[min(84vw,540px)]",
   priority = false,
 }: {
   className?: string;
@@ -32,13 +30,15 @@ export default function LogoMark({
         alt=""
         fill
         priority={priority}
-        sizes="(max-width: 640px) 80vw, 560px"
+        sizes="(max-width: 640px) 84vw, 540px"
         className="object-contain"
         aria-hidden
       />
-      <span className="vve-wordmark" aria-hidden>
-        VINTAGE VIBE EVENTS
-      </span>
+      <div className="vve-wordmark" aria-hidden>
+        <span className="vve-word">VINTAGE</span>
+        <span className="vve-word">VIBE</span>
+        <span className="vve-word">EVENTS</span>
+      </div>
     </div>
   );
 }

@@ -18,13 +18,12 @@ const manrope = Manrope({
   display: "swap",
 });
 
-// The logo wordmark's exact typeface (verified from the Canva PDF master:
-// BaseFont CinzelDecorative-Bold). Used only by the logo mark — preloaded so the
-// loader's text-assembly renders in the correct face immediately.
+// The logo wordmark's exact typeface (Cinzel Decorative Regular 400).
+// Configured in regular weight to eliminate excessive bold thickness and match the canonical reference wordmark.
 const cinzelDecorative = Cinzel_Decorative({
   variable: "--font-cinzel-decorative",
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["400"],
   display: "swap",
 });
 

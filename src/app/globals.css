@@ -68,6 +68,51 @@ body {
      5.0s+:    Smooth exit dissolve once page is ready
    ============================================================ */
 
+/* ============================================================
+   Vintage Vibe Events — Precision Cinematic 5-Second Logo Loader
+   Palette: deep burgundy (#210304 / #320406), antique gold (#c9a15a / #e5c483), ivory (#f7f1e5)
+   Sequence:
+     0.0–0.8s: Deep burgundy canvas & warm radial gold ambience
+     0.8–3.2s: Coordinated anatomical fragment assembly & per-letter wordmark formation
+     2.8–3.3s: Base frame cross-fades in to seal fine filigree tips
+     3.2–4.2s: Restrained gold luster bloom washes softly across the mark and settles
+     4.2–5.0s: Tagline fades in and composition holds calmly
+     5.0s+:    Smooth exit dissolve once page is ready
+   ============================================================ */
+
+/* Document Scroll Locking & Duplicate Transition Guards */
+html[data-loader-active="true"],
+html[data-loader-active="true"] body {
+  overflow: hidden !important;
+  height: 100% !important;
+  overscroll-behavior: none;
+}
+html[data-loader-active="true"]::-webkit-scrollbar,
+html[data-loader-active="true"] body::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+html[data-loader-active="true"] .hero-brand-lockup {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+html[data-loader-done="true"] .hero-brand-lockup {
+  animation: vve-hero-reveal 0.8s ease-out forwards;
+}
+
+@keyframes vve-hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .vve-loader {
   position: fixed;
   inset: 0;
@@ -116,13 +161,13 @@ body {
 /* Stage keeps the exact frame aspect ratio; cqw drives wordmark size */
 .vve-stage {
   position: relative;
-  width: min(82vw, 560px);
-  aspect-ratio: var(--frame-w) / var(--frame-h);
+  width: min(84vw, 540px);
+  aspect-ratio: 720 / 436;
   container-type: inline-size;
   will-change: transform;
 }
 
-/* Base frame image — cross-fades in as shards settle (2.95s - 3.4s) */
+/* Base frame image — cross-fades in as shards settle (2.85s - 3.35s) */
 .vve-frame-base {
   position: absolute;
   inset: 0;
@@ -130,7 +175,7 @@ body {
   height: 100%;
   object-fit: contain;
   opacity: 0;
-  animation: vve-frame-settle 0.45s ease-out var(--settle-delay, 2.95s) both;
+  animation: vve-frame-settle 0.5s ease-out 2.85s both;
 }
 
 @keyframes vve-frame-settle {
@@ -149,34 +194,30 @@ body {
 
 .vve-shard {
   position: absolute;
-  left: calc(var(--c) * 100% / var(--cols));
-  top: calc(var(--r) * 100% / var(--rows));
-  width: calc(100% / var(--cols));
-  height: calc(100% / var(--rows));
-  background-image: var(--frame-src);
+  inset: 0;
+  background-image: url(/vve-frame.png);
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-size: calc(var(--cols) * 100%) calc(var(--rows) * 100%);
-  background-position: calc(var(--c) / (var(--cols) - 1) * 100%)
-    calc(var(--r) / (var(--rows) - 1) * 100%);
-  transform: translate(0, 0) rotate(0deg) scale(1);
-  opacity: 1;
+  clip-path: inset(var(--clip-top) var(--clip-right) var(--clip-bottom) var(--clip-left));
+  transform-origin: var(--ox) var(--oy);
+  transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(var(--sc));
+  opacity: 0;
+  animation: vve-shard-in 1.45s cubic-bezier(0.16, 1, 0.3, 1) var(--delay) forwards;
   will-change: transform, opacity;
-  animation: vve-shard-in 2.1s cubic-bezier(0.16, 1, 0.3, 1) var(--delay) both;
 }
 
 @keyframes vve-shard-in {
   0% {
     opacity: 0;
-    transform: translate(calc(var(--dx) * 1%), calc(var(--dy) * 1%))
-      rotate(calc(var(--rot) * 1deg)) scale(var(--sc));
-    filter: brightness(1.2) drop-shadow(0 0 6px rgba(201, 161, 90, 0.35));
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(var(--sc));
+    filter: brightness(1.2) drop-shadow(0 0 6px rgba(212, 175, 55, 0.35));
   }
-  35% {
+  40% {
     opacity: 0.95;
   }
   85% {
     opacity: 1;
-    filter: brightness(1.05) drop-shadow(0 0 2px rgba(201, 161, 90, 0.15));
+    filter: brightness(1.04) drop-shadow(0 0 2px rgba(212, 175, 55, 0.15));
   }
   100% {
     opacity: 1;
@@ -185,77 +226,94 @@ body {
   }
 }
 
-/* Wordmark — center-out reveal in Cinzel Decorative Bold (2.25s - 3.2s) */
+/* Wordmark — per-letter convergence in Cinzel Decorative Regular (1.3s - 3.2s) */
 .vve-wordmark {
   position: absolute;
   left: 50%;
-  top: 47.6%;
-  width: 72%;
+  top: 48.0%;
+  width: 68%;
   transform: translate(-50%, -50%);
   text-align: center;
   white-space: nowrap;
   font-family: var(--font-logo), serif;
-  font-weight: 700;
-  color: #9a6b06;
-  font-size: 7.4cqw;
+  font-weight: 400;
+  color: #d4a853;
+  background: linear-gradient(180deg, #f7ebb8 0%, #d9b15d 45%, #b88a32 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 5.25cqw;
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  padding: 0 0.5cqw;
+  box-sizing: border-box;
 }
-.vve-wordmark--animated {
+
+.vve-word {
+  display: inline-flex;
+  align-items: center;
+}
+
+.vve-letter {
+  display: inline-block;
+}
+
+.vve-wordmark--animated .vve-letter {
   opacity: 0;
-  animation: vve-wordmark-in 0.95s cubic-bezier(0.16, 1, 0.3, 1) var(--wordmark-delay, 2.25s) both;
+  transform: translate(var(--char-dx), var(--char-dy)) rotate(var(--char-rot)) scale(0.9);
+  animation: vve-letter-in 1.25s cubic-bezier(0.16, 1, 0.3, 1) var(--char-delay) forwards;
+  will-change: transform, opacity;
 }
 
-@keyframes vve-wordmark-in {
-  from {
-    opacity: 0;
-    clip-path: inset(0 50% 0 50%);
-    transform: translate(-50%, calc(-50% + 7px));
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 -6% 0 -6%);
-    transform: translate(-50%, -50%);
-  }
-}
-
-/* Restrained Gold Light Sweep (3.25s - 4.3s) */
-.vve-shimmer {
-  position: absolute;
-  inset: -12%;
-  pointer-events: none;
-  background: linear-gradient(
-    115deg,
-    transparent 20%,
-    rgba(201, 161, 90, 0) 38%,
-    rgba(229, 196, 131, 0.45) 48%,
-    rgba(255, 255, 255, 0.65) 50%,
-    rgba(229, 196, 131, 0.45) 52%,
-    rgba(201, 161, 90, 0) 62%,
-    transparent 80%
-  );
-  opacity: 0;
-  transform: translateX(-130%);
-  animation: vve-shimmer-sweep 1.05s cubic-bezier(0.4, 0, 0.2, 1) 3.25s both;
-  mix-blend-mode: color-dodge;
-  mask-image: radial-gradient(ellipse at center, black 65%, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 65%, transparent 85%);
-}
-
-@keyframes vve-shimmer-sweep {
+@keyframes vve-letter-in {
   0% {
     opacity: 0;
-    transform: translateX(-130%);
+    transform: translate(var(--char-dx), var(--char-dy)) rotate(var(--char-rot)) scale(0.9);
+    filter: blur(1.5px) brightness(1.2);
   }
-  25% {
-    opacity: 0.9;
+  45% {
+    opacity: 0.95;
+    filter: blur(0px) brightness(1.1);
   }
-  75% {
-    opacity: 0.9;
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    filter: none;
+  }
+}
+
+/* Restrained Gold Luster Bloom (3.2s - 4.2s settling phase) */
+.vve-gold-luster {
+  position: absolute;
+  inset: 20% 12%;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.05) 50%, transparent 75%);
+  opacity: 0;
+  transform: scale(0.95);
+  animation: vve-luster-bloom 1.1s cubic-bezier(0.4, 0, 0.2, 1) 3.25s both;
+  mix-blend-mode: screen;
+}
+
+@keyframes vve-luster-bloom {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  40% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+  80% {
+    opacity: 0.4;
+    transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateX(130%);
+    transform: scale(1);
   }
 }
 
@@ -265,12 +323,12 @@ body {
   text-align: center;
   position: relative;
   z-index: 10;
-  max-width: min(90vw, 600px);
+  max-width: min(90vw, 560px);
 }
 
 .vve-tagline {
   font-family: var(--font-serif), Cormorant Garamond, Georgia, serif;
-  font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+  font-size: clamp(0.9rem, 2.2vw, 1.15rem);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(247, 241, 229, 0.85); /* ivory/85 */
@@ -325,13 +383,12 @@ body {
     animation: none !important;
     opacity: 1 !important;
   }
-  .vve-wordmark--animated {
+  .vve-wordmark--animated .vve-letter {
     animation: none !important;
-    clip-path: none !important;
-    transform: translate(-50%, -50%) !important;
+    transform: none !important;
     opacity: 1 !important;
   }
-  .vve-shimmer {
+  .vve-gold-luster {
     display: none !important;
   }
   .vve-tagline {

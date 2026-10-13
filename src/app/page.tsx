@@ -30,12 +30,14 @@ export default function Home() {
           </div>
           
           <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto gap-8 mt-12">
-            <h1 className="m-0">
-              <LogoMark className="w-[min(86vw,520px)]" priority />
-            </h1>
-            <p className="font-serif text-2xl md:text-4xl lg:text-5xl text-ivory tracking-wide max-w-3xl leading-tight">
-              Creating moments. <span className="text-gold italic">Designing memories.</span>
-            </p>
+            <div className="hero-brand-lockup flex flex-col items-center text-center gap-8 w-full">
+              <h1 className="m-0">
+                <LogoMark className="w-[min(84vw,540px)]" priority />
+              </h1>
+              <p className="font-serif text-2xl md:text-4xl lg:text-5xl text-ivory tracking-wide max-w-3xl leading-tight">
+                Creating moments. <span className="text-gold italic">Designing memories.</span>
+              </p>
+            </div>
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-xl leading-relaxed">
               Palatial event scenography, royal catering, and turnkey productions in Hyderabad.
             </p>
