@@ -41,7 +41,7 @@ export default function EnquiryForm() {
   }
 
   return (
-    <form className="md:col-span-7 flex flex-col gap-8 pt-4" onSubmit={handleSubmit}>
+    <form id="enquiry-form" className="md:col-span-7 flex flex-col gap-8 pt-4" onSubmit={handleSubmit}>
       
       {status.type !== 'idle' && (
         <div className={`p-4 rounded border text-sm font-sans ${status.type === 'success' ? 'bg-gold/10 border-gold/30 text-gold-light' : 'bg-red-900/30 border-red-500/30 text-red-200'}`}>

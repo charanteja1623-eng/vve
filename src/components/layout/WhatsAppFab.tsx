@@ -5,6 +5,12 @@ import { useState } from "react";
 
 export default function WhatsAppFab() {
   const [isHovered, setIsHovered] = useState(false);
+
+  // Single source of truth switch: do not render anything if WhatsApp is unconfirmed
+  if (!site.whatsappNumber) {
+    return null;
+  }
+
   const cleanPhone = site.whatsappNumber.replace(/\D/g, "");
   const defaultMessage = encodeURIComponent(
     `Hello ${site.name}, I would like to enquire about your luxury event planning services in Hyderabad.`

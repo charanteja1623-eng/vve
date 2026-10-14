@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope, Cinzel_Decorative } from "next/font/google";
 import "./globals.css";
+import "@/styles/scroll-experience.css";
 import WhatsAppFab from "@/components/layout/WhatsAppFab";
+import MobileActionBar from "@/components/layout/MobileActionBar";
 
 // next/font self-hosts these at build time — no runtime Google Fonts request.
 const cormorant = Cormorant_Garamond({
@@ -42,6 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-ivory text-burgundy-deep">
         {children}
         <WhatsAppFab />
+        <MobileActionBar />
       </body>
     </html>
   );

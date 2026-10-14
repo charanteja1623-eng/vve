@@ -41,6 +41,15 @@ export default defineConfig({
         hasTouch: true,
       },
     },
+    {
+      name: 'mobile-webkit-390x844',
+      use: {
+        browserName: 'webkit',
+        viewport: { width: 390, height: 844 },
+        isMobile: true,
+        hasTouch: true,
+      },
+    },
   ],
   webServer: {
     command: 'npm run dev',

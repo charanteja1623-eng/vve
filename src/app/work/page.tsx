@@ -3,8 +3,8 @@
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { site, portfolioProjects, type PortfolioProject } from "@/lib/site";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 
 type FilterCategory = "all" | "weddings" | "birthdays" | "corporate" | "surprises";
@@ -24,14 +24,9 @@ export default function WorkPage() {
         
         {/* Hero */}
         <section className="relative py-24 px-6 text-center border-b border-gold/20 overflow-hidden">
-          <div className="absolute inset-0 z-0 opacity-20">
-            <Image
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXkFVb3CdXgTAahe_LMDwsjdToFAWYuEYENkqJ79YZKhEUzBZhN5rY_cEYPCkFetz-ndVMXiPJ9LkrIE8R49ulzHwo2nkzHUGYSFUV04h8_UCFAQTXFP23JiHHPg_n79u8auF0L0bQj1Kd9jxqmbNqB3cCMhbm6DzFxNtGCZn11jwEHnx-jpLtLSYYWaSLxSrcx0tJkpDUUHhS2sIEir1yQzCbik9bVbvIf_V7l7RMRSyW4KdRoGVn"
-              alt="Luxury wedding portfolio archive backdrop"
-              fill
-              priority
-              className="object-cover"
-            />
+          <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#3a0507_0%,_#210304_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(#c9a15a_1px,transparent_1px)] [background-size:24px_24px]" />
             <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep via-burgundy-deep/90 to-burgundy-deep" />
           </div>
 
@@ -84,12 +79,12 @@ export default function WorkPage() {
                   onClick={() => setSelectedProject(project)}
                   className="group relative h-[440px] rounded-2xl overflow-hidden border border-gold/25 bg-plum flex flex-col justify-end p-8 shadow-xl cursor-pointer hover:border-gold/60 transition-all duration-500"
                 >
-                  <Image
-                    src={project.image}
-                    alt={project.imageAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  <ImagePlaceholder
+                    title={project.title}
+                    category={project.categoryLabel}
+                    aspectRatio="16/10"
+                    className="absolute inset-0 w-full h-full"
+                    alt={`Neutral placeholder block for ${project.title}`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep via-burgundy-deep/50 to-transparent z-10" />
                   
@@ -146,13 +141,14 @@ export default function WorkPage() {
               </button>
 
               <div className="relative h-72 sm:h-96 w-full flex-shrink-0">
-                <Image
-                  src={selectedProject.image}
-                  alt={selectedProject.imageAlt}
-                  fill
-                  className="object-cover"
+                <ImagePlaceholder
+                  title={selectedProject.title}
+                  category={selectedProject.categoryLabel}
+                  aspectRatio="16/9"
+                  className="w-full h-full"
+                  alt={`Neutral placeholder block for ${selectedProject.title}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-burgundy via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-burgundy via-transparent to-transparent pointer-events-none" />
               </div>
 
               <div className="p-8 sm:p-10 overflow-y-auto space-y-6">

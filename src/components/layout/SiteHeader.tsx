@@ -31,9 +31,9 @@ export default function SiteHeader() {
   }, [isOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-gold/20 bg-burgundy-deep/90 backdrop-blur-md text-ivory">
+    <header className={`fixed top-0 left-0 right-0 ${isOpen ? "z-[60]" : "z-50"} w-full border-b border-gold/20 bg-burgundy-deep/90 backdrop-blur-md text-ivory`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-serif text-xl tracking-wide text-gold-light hover:text-gold transition-colors z-50" onClick={() => setIsOpen(false)}>
+        <Link href="/" className="font-serif text-xl tracking-wide text-gold-light hover:text-gold transition-colors z-[70]" onClick={() => setIsOpen(false)}>
           {site.name}
         </Link>
         <nav aria-label="Primary" className="hidden md:flex items-center gap-8 text-sm font-semibold tracking-widest uppercase font-sans">
@@ -45,7 +45,7 @@ export default function SiteHeader() {
         </nav>
         
         {/* Mobile menu button */}
-        <div className="md:hidden z-50">
+        <div className="md:hidden z-[70]">
           <button 
             ref={buttonRef}
             className="text-gold p-2 -mr-2 focus:outline-none focus:ring-2 focus:ring-gold rounded" 
@@ -63,9 +63,9 @@ export default function SiteHeader() {
         </div>
       </div>
 
-      {/* Mobile menu overlay */}
+      {/* Mobile menu overlay — overlays entire screen including MobileActionBar */}
       {isOpen && (
-        <div id="mobile-menu" ref={menuRef} className="fixed inset-0 z-40 bg-burgundy-deep pt-24 px-6 md:hidden overflow-y-auto" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <div id="mobile-menu" ref={menuRef} className="fixed inset-0 z-[60] bg-burgundy-deep pt-24 px-6 md:hidden overflow-y-auto" role="dialog" aria-modal="true" aria-label="Mobile navigation">
           <nav className="flex flex-col gap-8 text-center text-lg font-semibold tracking-widest uppercase font-sans">
             <Link href="/" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Home</Link>
             <Link href="/events" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Events</Link>

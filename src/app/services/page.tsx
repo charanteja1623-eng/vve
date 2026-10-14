@@ -1,8 +1,8 @@
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { site, artisanalServices } from "@/lib/site";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import Link from "next/link";
-import Image from "next/image";
 
 export const metadata = {
   title: `Artisanal Services & Production — ${site.name}`,
@@ -17,14 +17,9 @@ export default function ServicesPage() {
         
         {/* Hero */}
         <section className="relative py-24 px-6 text-center border-b border-gold/20 overflow-hidden">
-          <div className="absolute inset-0 z-0 opacity-20">
-            <Image
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6uhY-rtg83mvB4Yzwug2grTV9aPhxeXw16A2vXARh4nk4NZapZNlcpxq7sqGwwZDghqhWHujVSpJs9dNRAYzhcjbz66Keay2Ae0-VfpBRMP2pD-rIEo1xmWNbs4N-5OgeFgUQfR0ncpgsPhmpVLy-nASrsjc-gbPUjQA6qG-Zi5IpmHou4UlWn-fJZmh5R5WyNjKMOJmaZcyGI3_D313pmpMKsbCZTkfkquDyqWVLGrN06KNe48vM"
-              alt="Artisanal catering and decor backdrop"
-              fill
-              priority
-              className="object-cover"
-            />
+          <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#3a0507_0%,_#210304_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(#c9a15a_1px,transparent_1px)] [background-size:24px_24px]" />
             <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep via-burgundy-deep/90 to-burgundy-deep" />
           </div>
 
@@ -53,12 +48,12 @@ export default function ServicesPage() {
               >
                 {/* Visual Header */}
                 <div className="relative h-72 sm:h-80 overflow-hidden bg-plum border-b border-gold/20">
-                  <Image
-                    src={service.image}
-                    alt={service.imageAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover group-hover:scale-108 transition-transform duration-700"
+                  <ImagePlaceholder
+                    title={service.title}
+                    category={service.number}
+                    aspectRatio="16/10"
+                    className="w-full h-full"
+                    alt={`Neutral placeholder block for ${service.title}`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep via-burgundy-deep/30 to-transparent" />
                   

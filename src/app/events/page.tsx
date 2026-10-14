@@ -1,8 +1,8 @@
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { site, eventDisciplines } from "@/lib/site";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import Link from "next/link";
-import Image from "next/image";
 
 export const metadata = {
   title: `Curated Event Disciplines — ${site.name}`,
@@ -17,14 +17,9 @@ export default function EventsPage() {
         
         {/* Hero */}
         <section className="relative py-24 px-6 text-center border-b border-gold/20 overflow-hidden">
-          <div className="absolute inset-0 z-0 opacity-20">
-            <Image
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuASjUPo6L5BBZUhIfrLNQhKDY22yivrPXGJP00nb6maefMTosPa5cvCPW11LrvwkbpYaTQwlkrAJpBx7GmyVt9Hrbhc0BM_81R5fSLnstB2JgGCBh45v4qVC2PcZFkuuUN9kqNyqBpoDmdgbdfqH_FyVVYTQsm6ukFT6SuKh0eX5gq5PlRs9qXRtLKGhVg8-5W80nHC4gu6gCSSPeSs-uLTNOAUPMoIyvzdRfv7k79tcQrJwAyWwwgF"
-              alt="Luxury event backdrop"
-              fill
-              priority
-              className="object-cover"
-            />
+          <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#3a0507_0%,_#210304_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(#c9a15a_1px,transparent_1px)] [background-size:24px_24px]" />
             <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep via-burgundy-deep/90 to-burgundy-deep" />
           </div>
 
@@ -53,12 +48,12 @@ export default function EventsPage() {
               >
                 {/* Visual */}
                 <div className={`w-full lg:w-1/2 relative h-80 sm:h-96 rounded-xl overflow-hidden shadow-lg border border-gold/20 ${idx % 2 !== 0 ? 'lg:order-last' : ''}`}>
-                  <Image
-                    src={event.image}
-                    alt={event.imageAlt}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover hover:scale-105 transition-transform duration-700"
+                  <ImagePlaceholder
+                    title={event.title}
+                    category={event.tag}
+                    aspectRatio="16/10"
+                    className="w-full h-full"
+                    alt={`Neutral placeholder block for ${event.title}`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 via-transparent to-transparent" />
                   <span className="absolute bottom-4 left-4 font-sans text-xs font-semibold px-3 py-1.5 bg-burgundy-deep/90 text-gold border border-gold/30 rounded backdrop-blur-md">

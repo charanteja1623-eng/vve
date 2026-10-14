@@ -2,34 +2,41 @@ import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import LogoLoader from "@/components/loader/LogoLoader";
 import LogoMark from "@/components/brand/LogoMark";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
+import ScrollExperienceController from "@/components/scroll/ScrollExperienceController";
 import Link from "next/link";
-import Image from "next/image";
 import { eventDisciplines, artisanalServices, portfolioProjects, site } from "@/lib/site";
 
 export default function Home() {
   return (
     <>
       <LogoLoader />
+      <ScrollExperienceController />
       <SiteHeader />
       <main className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory">
         
-        {/* 1. Hero */}
-        <section className="relative min-h-[95vh] flex flex-col items-center justify-center pt-20 px-6 overflow-hidden">
-          {/* Background Image with Cinematic Luxury Gradient */}
-          <div className="absolute inset-0 w-full h-full z-0">
-            <Image
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuASjUPo6L5BBZUhIfrLNQhKDY22yivrPXGJP00nb6maefMTosPa5cvCPW11LrvwkbpYaTQwlkrAJpBx7GmyVt9Hrbhc0BM_81R5fSLnstB2JgGCBh45v4qVC2PcZFkuuUN9kqNyqBpoDmdgbdfqH_FyVVYTQsm6ukFT6SuKh0eX5gq5PlRs9qXRtLKGhVg8-5W80nHC4gu6gCSSPeSs-uLTNOAUPMoIyvzdRfv7k79tcQrJwAyWwwgF"
-              alt="Palatial Indian wedding floral stage and royal mandap celebration in Hyderabad"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center opacity-40 mix-blend-luminosity scale-105 animate-fade-in"
-            />
+        {/* 1. Hero with Restrained Background Scaling */}
+        <section className="hero-viewport pt-20 px-6">
+          {/* Background Layer — ONLY this layer scales (1.0 -> 1.25) */}
+          <div className="hero-bg-layer" aria-hidden="true">
+            {/* Neutral burgundy/ivory patterned backdrop */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#3a0507_0%,_#210304_100%)]" />
+            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#c9a15a_1px,transparent_1px)] [background-size:24px_24px]" />
+            <div className="absolute inset-0 flex items-center justify-center opacity-10">
+              <svg width="400" height="400" viewBox="0 0 100 100" fill="none" stroke="#c9a15a" strokeWidth="0.75">
+                <circle cx="50" cy="50" r="45" strokeDasharray="2 2" />
+                <circle cx="50" cy="50" r="35" />
+                <circle cx="50" cy="50" r="22" strokeDasharray="4 2" />
+                <circle cx="50" cy="50" r="10" />
+                <path d="M50 5 L50 95 M5 50 L95 50 M18 18 L82 82 M18 82 L82 18" />
+              </svg>
+            </div>
             <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep/90 via-burgundy-deep/65 to-burgundy-deep" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-burgundy-deep/40 to-burgundy-deep" />
           </div>
           
-          <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto gap-8 mt-12">
+          {/* Foreground Content Layer — Stays sharp, readable and never scales */}
+          <div className="hero-content-layer max-w-4xl mx-auto gap-8 mt-12">
             <div className="hero-brand-lockup flex flex-col items-center text-center gap-8 w-full">
               <h1 className="m-0">
                 <LogoMark className="w-[min(84vw,540px)]" priority />
@@ -50,10 +57,10 @@ export default function Home() {
                 Book a Consultation
               </Link>
               <Link
-                href="#work"
+                href="#events"
                 className="px-10 py-4 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:border-gold hover:bg-burgundy/60 transition-all bg-burgundy-deep/60 backdrop-blur-md w-full sm:w-auto rounded"
               >
-                Explore The Archive
+                Explore Disciplines
               </Link>
             </div>
           </div>
@@ -86,7 +93,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. Approved Event Disciplines */}
+        {/* 3. Approved Event Disciplines (Mobile Swipe Rail & Desktop Grid) */}
         <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy-deep" id="events">
           <div className="max-w-7xl mx-auto flex flex-col items-center">
             <div className="text-center mb-16 lg:mb-20">
@@ -95,22 +102,22 @@ export default function Home() {
               <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-6" />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+            {/* Mobile Swipeable Rail (< 768px) and Responsive Grid (>= 768px) */}
+            <div className="mobile-swipe-rail md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 w-full">
               {eventDisciplines.map((event) => (
                 <div
                   key={event.id}
-                  className="group border border-gold/20 bg-burgundy/60 hover:border-gold/60 transition-all duration-500 flex flex-col h-full rounded-xl overflow-hidden shadow-lg hover:shadow-[0_10px_30px_rgba(201,161,90,0.15)]"
+                  className="mobile-swipe-item group border border-gold/20 bg-burgundy/60 hover:border-gold/60 transition-all duration-500 flex flex-col h-full rounded-xl overflow-hidden shadow-lg hover:shadow-[0_10px_30px_rgba(201,161,90,0.15)]"
                 >
                   <div className="h-64 relative overflow-hidden bg-plum border-b border-gold/20">
-                    <Image
-                      src={event.image}
-                      alt={event.imageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-108 transition-transform duration-700"
+                    <ImagePlaceholder
+                      title={event.title}
+                      category={event.tag}
+                      aspectRatio="16/10"
+                      className="w-full h-full"
+                      alt={`Neutral placeholder block for ${event.title}`}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/90 via-burgundy-deep/20 to-transparent" />
-                    <span className="absolute top-4 left-4 font-sans text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-burgundy-deep/90 text-gold border border-gold/30 rounded backdrop-blur-md">
+                    <span className="absolute top-4 left-4 font-sans text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-burgundy-deep/90 text-gold border border-gold/30 rounded backdrop-blur-md z-10">
                       {event.tag}
                     </span>
                   </div>
@@ -173,7 +180,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. Portfolio Preview Bento Grid */}
+        {/* 5. Portfolio Preview (Neutral Placeholders & Responsive Flow) */}
         <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy-deep" id="work">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
@@ -189,22 +196,22 @@ export default function Home() {
               </Link>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
+            <div className="mobile-swipe-rail md:grid md:grid-cols-12 md:gap-6 w-full">
               {portfolioProjects.slice(0, 4).map((project, idx) => {
                 const spanClass = idx === 0 ? "md:col-span-8 min-h-[420px]" : idx === 1 ? "md:col-span-4 min-h-[420px]" : idx === 2 ? "md:col-span-5 min-h-[360px]" : "md:col-span-7 min-h-[360px]";
                 return (
                   <div
                     key={project.id}
-                    className={`${spanClass} relative border border-gold/25 bg-plum flex flex-col justify-end p-8 group overflow-hidden rounded-xl shadow-xl`}
+                    className={`mobile-swipe-item ${spanClass} relative border border-gold/25 bg-plum flex flex-col justify-end p-8 group overflow-hidden rounded-xl shadow-xl`}
                   >
-                    <Image
-                      src={project.image}
-                      alt={project.imageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 60vw"
-                      className="object-cover group-hover:scale-108 transition-transform duration-700"
+                    <ImagePlaceholder
+                      title={project.title}
+                      category={project.categoryLabel}
+                      aspectRatio="16/9"
+                      className="absolute inset-0 w-full h-full"
+                      alt={`Neutral placeholder block for ${project.title}`}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/95 via-burgundy-deep/40 to-transparent z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/95 via-burgundy-deep/60 to-transparent z-10" />
                     <div className="relative z-20 text-left transition-transform duration-500 group-hover:-translate-y-1">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold">{project.categoryLabel}</span>
@@ -221,7 +228,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6. Royal Consultation CTA */}
+        {/* 6. Consultation CTA */}
         <section className="py-32 lg:py-40 px-6 bg-burgundy text-center relative overflow-hidden border-t border-gold/20">
           <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 to-transparent pointer-events-none" />
           <div className="absolute -top-40 left-1/4 w-96 h-96 rounded-full bg-gold/5 blur-3xl pointer-events-none" />
@@ -241,14 +248,17 @@ export default function Home() {
               >
                 Schedule Consultation
               </Link>
-              <a
-                href={`https://wa.me/${site.whatsappNumber.replace(/\D/g, "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-10 py-5 border border-gold/50 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold/15 transition-all rounded w-full sm:w-auto text-center"
-              >
-                WhatsApp Direct →
-              </a>
+              {/* WhatsApp direct link: strictly conditional upon confirmed business number */}
+              {Boolean(site.whatsappNumber) && (
+                <a
+                  href={`https://wa.me/${site.whatsappNumber.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-10 py-5 border border-gold/50 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold/15 transition-all rounded w-full sm:w-auto text-center"
+                >
+                  WhatsApp Direct →
+                </a>
+              )}
             </div>
           </div>
         </section>
