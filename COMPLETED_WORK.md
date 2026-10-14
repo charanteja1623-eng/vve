@@ -3,9 +3,9 @@
 **Project Name:** Vintage Vibe Events (VVE)  
 **Repository:** `F:\projects or code\VVE`  
 **Remote Git:** `https://github.com/charanteja1623-eng/vve.git` (`master` branch)  
-**Latest Remote Commit:** `b7019de`  
-**Report Date:** 2026-10-13  
-**Status:** All Core Phases (Foundation, Loader, Database, Content & Media, WhatsApp) Fully Implemented, Empirically Tested, and Pushed to GitHub.
+**Latest Remote Commit:** `1cfc4e5`  
+**Report Date:** 2026-10-14  
+**Status:** All Core Phases (Foundation, Gold Dust Loader, Database, Content & Media, WhatsApp) Fully Implemented, Empirically Tested, and Pushed to GitHub.
 
 ---
 
@@ -61,19 +61,23 @@ Every feature claimed in this document has been **empirically validated** via au
 
 ---
 
-### 2.2. Canonical LogoMark & Cinematic 5-Second Loader
+### 2.2. Canonical LogoMark & Cinematic Gold Dust Loader
 - **Canonical LogoMark (`src/components/brand/LogoMark.tsx`):**
-  - Extracts and displays the official Canva master gold frame (`public/vve-frame.png`).
-  - Seamlessly combines the frame with live `Cinzel Decorative Bold` wordmark typography.
-- **Cinematic Shard Loader (`src/components/loader/LogoLoader.tsx`):**
-  - **33 Deterministic Shards (`src/components/loader/logoShards.ts`):** 9x5 mathematical grid dividing the royal gold frame into individual polygon pieces.
-  - **Shatter-and-Reassemble Choreography:** Shards drift inward along custom cubic-bezier trajectory curves and lock into place with sub-pixel precision.
-  - **Cross-Fade & Shimmer:** Base master frame fades in to seal filigree tips followed by a gold specular highlight sweep.
-  - **Tagline Reveal:** Displays *"Creating moments. Designing memories."* in gold typography.
-  - **Session Memory:** Stores `vve_loader_seen = "1"` in `sessionStorage` so returning visitors skip the intro on subsequent page loads within the same session.
-  - **Bypass Parameter:** Allows forced preview anytime using `?loader=always`.
-  - **Early Exit:** Users can tap/click or press any key to immediately bypass the intro.
-  - **Reduced Motion Fallback:** Displays a static, tranquil LogoMark if the user's operating system requests reduced motion.
+  - Displays the official Canva master gold frame (`public/vve-frame.png`).
+  - Seamlessly combines the frame with live `Cinzel Decorative Bold` wordmark typography and responsive cartouche padding.
+- **Cinematic Gold Dust Particle Formation (`src/components/loader/LogoLoader.tsx`):**
+  - **1,182 Coordinate Point Cloud (`src/components/loader/logoDustPoints.ts`):** 720 exact spatial coordinates tracing the scrolls and cartouche rails of `vve-frame.png`, plus 462 stroke coordinates outlining "VINTAGE", "VIBE", "EVENTS".
+  - **Hardware-Accelerated Canvas 2D Simulation:** Renders ~1,340 particles in HiDPI (`devicePixelRatio`) with 3D depth layers and twinkling luminance.
+  - **5-Phase Cinematic Timeline (5,000ms minimum display duration):**
+    - *Phase A (0.0–0.8s):* Deep burgundy canvas fades in with warm ambient radial glow and drifting gold dust.
+    - *Phase B (0.8–2.0s):* Particles swirl inward along non-linear arced trajectories with angular decay (`easeOutQuart`).
+    - *Phase C (2.0–3.3s):* Dust sculpts master frame contours, cross-fading into high-res frame artwork.
+    - *Phase D (3.0–4.2s):* Staggered wordmark materialization inside the cartouche, cross-fading into crisp serif typography.
+    - *Phase E (4.2–5.0s):* Settling particles dissolve into solid gold with a gentle luster bloom; tagline reveals smoothly below (*"Creating moments. Designing memories."*).
+  - **Empirical Page Readiness Gating:** Waits for both 5,000ms duration AND `document.readyState === "complete"` + `document.fonts.ready`. If page is not ready after 5s, holds in a calm, steady state.
+  - **Scroll Lock & Restoration:** `document.documentElement` sets `data-loader-active="true"` and `document.body.style.overflow = "hidden"` during playback; restores cleanly on exit.
+  - **Reduced Motion Fallback:** Displays a static LogoMark and tagline, preserving the 5,000ms minimum duration without particle motion.
+  - **Reload Replay:** Replays reliably on full page reload; forceable anytime with `?loader=always`.
 
 ---
 

@@ -20,7 +20,7 @@ test.describe('VVE Cinematic Logo Loader (Precision Rebuild Audit)', () => {
     });
 
     const startTime = Date.now();
-    await page.goto('/?loader=always');
+    await page.goto('/?loader=always', { waitUntil: 'domcontentloaded' });
 
     const loader = page.locator('.vve-loader');
     await expect(loader).toBeVisible({ timeout: 20000 });
@@ -29,12 +29,22 @@ test.describe('VVE Cinematic Logo Loader (Precision Rebuild Audit)', () => {
     expect(await loader.getAttribute('role')).toBe('status');
     expect(await loader.getAttribute('aria-live')).toBe('polite');
 
-    // 2. Defect 10 Check: Scroll locking while loader is active
+    // 2. Structural presence (checked immediately while loader is active)
+    const goldLuster = loader.locator('.vve-gold-luster');
+    await expect(goldLuster).toBeAttached();
+    const canvas = loader.locator('.vve-dust-canvas');
+    await expect(canvas).toBeVisible();
+    const badShimmer = loader.locator('.vve-shimmer');
+    expect(await badShimmer.count(), 'Hard-edged rectangular .vve-shimmer streak must not exist').toBe(0);
+    const shards = loader.locator('.vve-shard');
+    expect(await shards.count(), 'Rigid tile shards must be completely replaced by the gold dust particle canvas').toBe(0);
+
+    // 3. Defect 10 Check: Scroll locking while loader is active
     await expect(page.locator('html')).toHaveAttribute('data-loader-active', 'true');
     const bodyOverflow = await page.evaluate(() => window.getComputedStyle(document.body).overflow);
     expect(bodyOverflow, 'Body computed overflow must be hidden while loader is active').toBe('hidden');
 
-    // 3. Defect 6 & 9 Check: Single Intentional Transition (Hero branding hidden while loader active)
+    // 4. Defect 6 & 9 Check: Single Intentional Transition (Hero branding hidden while loader active)
     const heroBrand = page.locator('.hero-brand-lockup');
     if (await heroBrand.count() > 0) {
       const heroOpacity = await heroBrand.evaluate((el) => {
@@ -46,19 +56,7 @@ test.describe('VVE Cinematic Logo Loader (Precision Rebuild Audit)', () => {
       ).toBe('0');
     }
 
-    // 4. Defect 3 Check: Defective rectangular light streak (.vve-shimmer) is completely removed
-    const badShimmer = loader.locator('.vve-shimmer');
-    expect(await badShimmer.count(), 'Hard-edged rectangular .vve-shimmer streak must not exist').toBe(0);
-
-    // 5. Restrained gold luster exists within composition
-    const goldLuster = loader.locator('.vve-gold-luster');
-    await expect(goldLuster).toBeAttached();
-
-    // 6. Defect 4 & 5 Check: Exactly 14 Anatomical Ornamental Shards exist
-    const shards = loader.locator('.vve-shard');
-    expect(await shards.count(), 'Frame must use 14 anatomical ornamental pieces, not 33 rectangular bricks').toBe(14);
-
-    // 7. Defect 1 & 8 Check: Wordmark is fully legible and complete throughout animation
+    // 7. Phase A & B Verification: Wordmark is hidden during initial atmospheric drift and materializes cleanly
     const wordmark = loader.locator('.vve-wordmark');
     await expect(wordmark).toBeAttached();
     expect(await wordmark.textContent()).toContain('VINTAGE');
@@ -165,20 +163,20 @@ test.describe('VVE Cinematic Logo Loader (Precision Rebuild Audit)', () => {
 
   test('Visual frame capture at 1920x1080 across cinematic timeline', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
-    await page.goto('/?loader=always');
+    await page.goto('/?loader=always', { waitUntil: 'domcontentloaded' });
     const loader = page.locator('.vve-loader');
     await expect(loader).toBeVisible({ timeout: 20000 });
 
-    // Frame 1: ~1.2s - Anatomical shards drifting inward & letters converging
-    await page.waitForTimeout(1200);
+    // Frame 1: ~0.7s - Atmospheric gold dust drifting & swirling inward (no letters)
+    await page.waitForTimeout(700);
     await page.screenshot({ path: `${ARTIFACT_DIR}/1920x1080-frame-1-assembly.png` });
 
-    // Frame 2: ~3.5s - Assembled frame, wordmark lockup & restrained gold luster
-    await page.waitForTimeout(2300);
+    // Frame 2: ~2.8s - Master frame contours sculpted by gold dust, letters materializing
+    await page.waitForTimeout(1100);
     await page.screenshot({ path: `${ARTIFACT_DIR}/1920x1080-frame-2-assembled-luster.png` });
 
-    // Frame 3: ~4.6s - Tagline reveal in holding state
-    await page.waitForTimeout(1100);
+    // Frame 3: ~4.4s - Wordmark fully settled, tagline revealed in holding state
+    await page.waitForTimeout(500);
     await page.screenshot({ path: `${ARTIFACT_DIR}/1920x1080-frame-3-tagline-hold.png` });
 
     // Frame 4: Post-exit homepage reveal with single intentional hero entrance
@@ -189,7 +187,7 @@ test.describe('VVE Cinematic Logo Loader (Precision Rebuild Audit)', () => {
 
   test('Mobile visual frame capture at 390x844', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/?loader=always');
+    await page.goto('/?loader=always', { waitUntil: 'domcontentloaded' });
     const loader = page.locator('.vve-loader');
     await expect(loader).toBeVisible({ timeout: 20000 });
 
