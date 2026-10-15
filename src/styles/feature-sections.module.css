@@ -1,0 +1,123 @@
+/**
+ * Vintage Vibe Events — Parallax Feature Sections (Prompt 3)
+ *
+ * File Boundary: Isolated in this CSS Module per user approval to preserve
+ * src/styles/scroll-experience.css and src/components/scroll/ScrollExperienceController.tsx.
+ *
+ * Implements:
+ * 1. Safe bleed geometry for parallax backplates (no exposed edges, no overflow).
+ * 2. Three entry-reveal variations:
+ *    - Section 1: Subtle horizontal entrance (translateX + opacity)
+ *    - Section 2: Vertical fade-up (translateY + opacity)
+ *    - Section 3: Gentle scale-and-opacity entrance (scale + opacity)
+ * 3. Restrained compositor parallax via CSS view() timeline.
+ * 4. Full reduced-motion and fallback compliance.
+ */
+
+/* Parallax Section Container */
+.parallaxSection {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-burgundy-deep, #150102);
+}
+
+/* Background Parallax Layer with Safe Bleed */
+.parallaxBackplate {
+  position: absolute;
+  top: -15%;
+  bottom: -15%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 130%;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Native Compositor Parallax via CSS Scroll-Driven View Timeline */
+@supports (animation-timeline: view()) {
+  :global(html:not([data-scroll-fallback="true"])) .parallaxBackplate {
+    animation: vveFeatureParallaxShift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+@keyframes vveFeatureParallaxShift {
+  from {
+    transform: translate3d(0, -6%, 0);
+  }
+  to {
+    transform: translate3d(0, 6%, 0);
+  }
+}
+
+/* Section 1: Subtle horizontal entrance */
+.revealHorizontal {
+  opacity: 0;
+  transform: translate3d(-24px, 0, 0);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Section 2: Vertical fade-up */
+.revealVertical {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Section 3: Gentle scale-and-opacity entrance */
+.revealScale {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Active / Revealed State triggered by Intersection Observer */
+.isRevealed {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
+}
+
+/* Media Card Parallax Sub-Layer */
+.imageCardWrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(201, 161, 90, 0.25);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.imageCardWrapper:hover {
+  border-color: rgba(201, 161, 90, 0.55);
+  box-shadow: 0 25px 50px -12px rgba(201, 161, 90, 0.15);
+}
+
+/* Prefers Reduced Motion: Disable all animations, transitions, and transforms */
+@media (prefers-reduced-motion: reduce) {
+  .parallaxBackplate {
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .revealHorizontal,
+  .revealVertical,
+  .revealScale {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .imageCardWrapper {
+    transition: none !important;
+  }
+}

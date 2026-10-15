@@ -31,7 +31,7 @@ export default function SiteHeader() {
   }, [isOpen]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 ${isOpen ? "z-[60]" : "z-50"} w-full border-b border-gold/20 bg-burgundy-deep/90 backdrop-blur-md text-ivory`}>
+    <header className={`fixed top-0 left-0 right-0 ${isOpen ? "z-[60] h-screen bg-burgundy-deep" : "z-50 bg-burgundy-deep/90 backdrop-blur-md"} w-full border-b border-gold/20 text-ivory`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="font-serif text-xl tracking-wide text-gold-light hover:text-gold transition-colors z-[70]" onClick={() => setIsOpen(false)}>
           {site.name}

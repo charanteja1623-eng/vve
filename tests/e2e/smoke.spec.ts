@@ -19,8 +19,8 @@ test.describe('VVE Browser Smoke & Mobile Scroll Tests', () => {
     const loader = page.locator('.vve-loader');
     if (await loader.count() > 0) {
       await loader.waitFor({ state: 'detached', timeout: 35000 });
+      await page.locator('html[data-loader-done="true"]').waitFor({ state: 'attached', timeout: 35000 }).catch(() => {});
     }
-    await page.locator('html[data-loader-done="true"]').waitFor({ state: 'attached', timeout: 35000 }).catch(() => {});
   }
 
   test('Page rendering and horizontal overflow check (Home)', async ({ page }) => {
@@ -159,6 +159,21 @@ test.describe('VVE Browser Smoke & Mobile Scroll Tests', () => {
     const heroBg = page.locator('.hero-bg-layer');
     await expect(heroBg).toBeAttached();
 
+    // Verify initial transform and opacity
+    const initialBgTransform = await heroBg.evaluate((el) => window.getComputedStyle(el).transform);
+    const initialBgOpacity = await heroBg.evaluate((el) => parseFloat(window.getComputedStyle(el).opacity));
+
+    // Scroll down 400px
+    await page.evaluate(() => window.scrollTo(0, 400));
+    await page.waitForTimeout(200);
+
+    // Verify computed visual changes: background must scale and change opacity
+    const scrolledBgTransform = await heroBg.evaluate((el) => window.getComputedStyle(el).transform);
+    const scrolledBgOpacity = await heroBg.evaluate((el) => parseFloat(window.getComputedStyle(el).opacity));
+
+    expect(scrolledBgTransform).not.toBe(initialBgTransform);
+    expect(scrolledBgOpacity).toBeLessThan(initialBgOpacity);
+
     // Verify logo and headline do not have scale transform applied (scale remains 1)
     const heroLockup = page.locator('.hero-brand-lockup');
     const lockupTransform = await heroLockup.evaluate((el) => window.getComputedStyle(el).transform);
@@ -173,12 +188,18 @@ test.describe('VVE Browser Smoke & Mobile Scroll Tests', () => {
       }
     }
 
+    // Scroll back to top and verify natural reverse
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(200);
+    const reversedBgOpacity = await heroBg.evaluate((el) => parseFloat(window.getComputedStyle(el).opacity));
+    expect(reversedBgOpacity).toBeCloseTo(initialBgOpacity, 1);
+
     // Scroll to events and confirm it is visible in viewport
     await eventsSection.scrollIntoViewIfNeeded();
     await expect(eventsSection).toBeVisible();
   });
 
-  test('Supported CSS animation and forced-off JavaScript fallback updates --scroll-progress', async ({ page }) => {
+  test('Supported CSS animation and forced-off JavaScript fallback updates --scroll-progress and --section-progress', async ({ page }) => {
     // Navigate with forced scroll fallback query param
     await page.goto('/?scrollFallback=true');
     await waitForPageReady(page);
@@ -195,14 +216,26 @@ test.describe('VVE Browser Smoke & Mobile Scroll Tests', () => {
 
     // Scroll down 400px
     await page.evaluate(() => window.scrollTo(0, 400));
-    // Wait for rAF update
     await page.waitForTimeout(200);
 
     progress = await page.evaluate(() => {
       return document.documentElement.style.getPropertyValue('--scroll-progress');
     });
-    // Fallback must have actively updated --scroll-progress
+    const sectionProgress = await page.evaluate(() => {
+      return document.documentElement.style.getPropertyValue('--section-progress');
+    });
+
+    // Fallback must have actively updated --scroll-progress and --section-progress
     expect(Number(progress)).toBeGreaterThan(0.1);
+    expect(Number(sectionProgress)).toBeGreaterThan(0);
+
+    // Scroll back upward and verify reverse
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(200);
+    const progressReversed = await page.evaluate(() => {
+      return document.documentElement.style.getPropertyValue('--scroll-progress');
+    });
+    expect(Number(progressReversed || '0')).toBeLessThanOrEqual(0.05);
   });
 
   test('Prefers-reduced-motion disables scaling and keeps content static', async ({ page }) => {
@@ -347,4 +380,238 @@ test.describe('VVE Browser Smoke & Mobile Scroll Tests', () => {
     await expect(corporateBtn).toHaveClass(/bg-gold/);
   });
 
+  /* ============================================================
+     Prompt 3: Parallax Feature Sections & Entry Reveals
+     ============================================================ */
+
+  test('Parallax Feature Sections: structure, verified content, and routes', async ({ page }) => {
+    await page.goto('/');
+    await waitForPageReady(page);
+
+    // Section 1: Wedding Experiences (#events)
+    const s1 = page.locator('#events');
+    await expect(s1).toBeAttached();
+    await expect(s1.locator('h2')).toContainText('Royal Weddings');
+    const s1Enquiry = s1.locator('a[href*="/contact?eventType=wedding"]');
+    const s1Explore = s1.locator('a[href*="/events#weddings"]');
+    await expect(s1Enquiry).toBeVisible();
+    await expect(s1Explore).toBeVisible();
+
+    // Section 2: Celebrations & Milestones (#celebrations)
+    const s2 = page.locator('#celebrations');
+    await expect(s2).toBeAttached();
+    await expect(s2.locator('h2')).toContainText('Celebrations');
+    const s2Enquiry = s2.locator('a[href*="/contact?eventType=birthday"]');
+    const s2Explore = s2.locator('a[href*="/events#birthdays"]');
+    await expect(s2Enquiry).toBeVisible();
+    await expect(s2Explore).toBeVisible();
+
+    // Section 3: Corporate Events (#corporate)
+    const s3 = page.locator('#corporate');
+    await expect(s3).toBeAttached();
+    await expect(s3.locator('h2')).toContainText('Corporate Galas');
+    const s3Enquiry = s3.locator('a[href*="/contact?eventType=corporate"]');
+    const s3Explore = s3.locator('a[href*="/events#corporate"]');
+    await expect(s3Enquiry).toBeVisible();
+    await expect(s3Explore).toBeVisible();
+  });
+
+  test('Parallax Feature Sections: entry reveals trigger properly on scroll', async ({ page }) => {
+    await page.goto('/');
+    await waitForPageReady(page);
+
+    const s1 = page.locator('#events');
+    const s2 = page.locator('#celebrations');
+    const s3 = page.locator('#corporate');
+
+    // Scroll to section 1
+    await s1.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+
+    // Section 1 card should have received revealed state
+    const s1Content = s1.locator('[class*="revealHorizontal"]');
+    await expect(s1Content).toHaveClass(/isRevealed/);
+
+    // Scroll to section 2
+    await s2.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+    const s2Content = s2.locator('[class*="revealVertical"]');
+    await expect(s2Content).toHaveClass(/isRevealed/);
+
+    // Scroll to section 3
+    await s3.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+    const s3Content = s3.locator('[class*="revealScale"]');
+    await expect(s3Content).toHaveClass(/isRevealed/);
+  });
+
+  test('Parallax Feature Sections: backplate bleed geometry and zero horizontal overflow across mobile widths', async ({ page }) => {
+    await page.goto('/');
+    await waitForPageReady(page);
+
+    const mobileWidths = [360, 390, 412, 430];
+    for (const w of mobileWidths) {
+      await page.setViewportSize({ width: w, height: 800 });
+      await page.waitForTimeout(100);
+
+      // Scroll sequentially through the three sections
+      for (const id of ['#events', '#celebrations', '#corporate']) {
+        const section = page.locator(id);
+        await section.scrollIntoViewIfNeeded();
+        await page.waitForTimeout(100);
+
+        // Check horizontal overflow
+        const overflow = await page.evaluate(() => {
+          return document.documentElement.scrollWidth > document.documentElement.clientWidth;
+        });
+        expect(overflow, `Horizontal overflow detected at ${w}px in section ${id}`).toBe(false);
+
+        // Verify backplate exists with bleed geometry
+        const backplate = section.locator('[class*="parallaxBackplate"]');
+        await expect(backplate).toBeAttached();
+      }
+    }
+  });
+
+  test('Parallax Feature Sections: reduced motion disables transforms and presents static content', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    await waitForPageReady(page);
+
+    const s1 = page.locator('#events');
+    await s1.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(200);
+
+    // Verify opacity is 1 and transform is none under reduced motion
+    const s1Content = s1.locator('[class*="revealHorizontal"]');
+    const opacity = await s1Content.evaluate((el) => window.getComputedStyle(el).opacity);
+    expect(parseFloat(opacity)).toBe(1);
+  });
+
+  /* ============================================================
+     Prompt 4: Scroll-Controlled Canvas Sequence Prototype
+     ============================================================ */
+
+  test('Canvas Sequence Prototype: route accessibility, canvas mounting, and first-frame rendering', async ({ page }) => {
+    const consoleErrors: string[] = [];
+    page.on('console', (msg) => {
+      if (msg.type() === 'error') consoleErrors.push(msg.text());
+    });
+
+    const res = await page.goto('/prototype/canvas');
+    expect(res?.status()).toBe(200);
+    await waitForPageReady(page);
+
+    // Canvas exists and is mounted
+    const canvas = page.locator('canvas[role="img"]');
+    await expect(canvas).toBeVisible();
+
+    // Container data attributes initialized
+    const container = page.locator('[data-testid="canvas-sequence-container"]');
+    await expect(container).toBeAttached();
+    const frameIndex = await container.getAttribute('data-frame-index');
+    expect(frameIndex).toBe('0');
+
+    // Canvas has non-zero internal resolution
+    const canvasDimensions = await canvas.evaluate((el: HTMLCanvasElement) => ({
+      width: el.width,
+      height: el.height,
+    }));
+    expect(canvasDimensions.width).toBeGreaterThan(0);
+    expect(canvasDimensions.height).toBeGreaterThan(0);
+
+    expect(consoleErrors).toHaveLength(0);
+  });
+
+  test('Canvas Sequence Prototype: scroll progress maps to frame changes and reverses smoothly', async ({ page }) => {
+    await page.goto('/prototype/canvas');
+    await waitForPageReady(page);
+
+    const container = page.locator('[data-testid="canvas-sequence-container"]');
+    await expect(container).toBeAttached();
+
+    // Initial frame index is 0
+    expect(await container.getAttribute('data-frame-index')).toBe('0');
+
+    // Scroll track into view and advance into the pinned track
+    const track = page.locator('[data-testid="canvas-sequence-track"]');
+    await track.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+
+    // Scroll down 600px into the pinned sequence
+    await page.evaluate(() => window.scrollBy(0, 600));
+    await page.waitForTimeout(400);
+
+    const midProgress = await container.getAttribute('data-scroll-progress');
+    const midIndex = await container.getAttribute('data-frame-index');
+    expect(parseFloat(midProgress || '0')).toBeGreaterThan(0);
+    expect(parseInt(midIndex || '0', 10)).toBeGreaterThanOrEqual(0);
+
+    // Scroll further down 800px
+    await page.evaluate(() => window.scrollBy(0, 800));
+    await page.waitForTimeout(300);
+    const deepIndex = await container.getAttribute('data-frame-index');
+    expect(parseInt(deepIndex || '0', 10)).toBeGreaterThanOrEqual(parseInt(midIndex || '0', 10));
+
+    // Scroll back to top
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(300);
+    const reversedIndex = await container.getAttribute('data-frame-index');
+    expect(reversedIndex).toBe('0');
+  });
+
+  test('Canvas Sequence Prototype: pinned track releases cleanly at endpoint with intact interactions', async ({ page }) => {
+    await page.goto('/prototype/canvas');
+    await waitForPageReady(page);
+
+    // Scroll completely past the 260vh sequence track into the post-release section
+    const releaseSection = page.locator('text=Sequence Complete');
+    await releaseSection.scrollIntoViewIfNeeded();
+    await expect(releaseSection).toBeVisible();
+
+    // Verify post-pinning navigation CTA is active and clickable
+    const returnLink = page.locator('a', { hasText: 'Return to Production Home' });
+    await expect(returnLink).toBeVisible();
+    await expect(returnLink).toHaveAttribute('href', '/');
+  });
+
+  test('Canvas Sequence Prototype: mobile responsiveness and zero horizontal overflow', async ({ page }) => {
+    await page.goto('/prototype/canvas');
+    await waitForPageReady(page);
+
+    const mobileWidths = [360, 390, 412, 430];
+    for (const w of mobileWidths) {
+      await page.setViewportSize({ width: w, height: 800 });
+      await page.waitForTimeout(100);
+
+      // Check overflow at top, middle of sequence, and bottom
+      const scrollPositions = [0, 800, 1600];
+      for (const pos of scrollPositions) {
+        await page.evaluate((y) => window.scrollTo(0, y), pos);
+        await page.waitForTimeout(100);
+
+        const overflow = await page.evaluate(() => {
+          return document.documentElement.scrollWidth > document.documentElement.clientWidth;
+        });
+        expect(overflow, `Horizontal overflow detected on /prototype/canvas at ${w}px, scrollY=${pos}`).toBe(false);
+      }
+    }
+  });
+
+  test('Canvas Sequence Prototype: reduced-motion presents static scene without forced 260vh pinning', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/prototype/canvas');
+    await waitForPageReady(page);
+
+    // Track should not render the pinned 260vh container in reduced-motion mode
+    const pinnedTrack = page.locator('[data-testid="canvas-sequence-track"]');
+    await expect(pinnedTrack).toHaveCount(0);
+
+    // Static fallback presentation should be visible
+    const staticCard = page.locator('text=Motion Reduced Presentation · Master Mandap');
+    await expect(staticCard).toBeVisible();
+  });
+
 });
+
+

@@ -32,22 +32,24 @@
   overflow: hidden;
 }
 
-/* Background image layer — solely responsible for scale */
+/* Background image layer — solely responsible for scale & subtle parallax retention */
 .hero-bg-layer {
   position: absolute;
-  inset: 0;
+  top: -12%;
+  bottom: -12%;
+  left: 0;
+  right: 0;
   width: 100%;
-  height: 100%;
+  height: 124%;
   z-index: 0;
   will-change: transform, opacity;
   transform-origin: center center;
   /* Baseline & JavaScript fallback driven by CSS custom property */
-  transform: scale(calc(1 + (var(--scroll-progress, 0) * 0.25)));
-  opacity: calc(0.85 - (var(--scroll-progress, 0) * 0.35));
-  transition: opacity 0.1s linear;
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * 10%), 0) scale(calc(1 + (var(--scroll-progress, 0) * 0.20)));
+  opacity: calc(0.85 - (var(--scroll-progress, 0) * 0.40));
 }
 
-/* Hero foreground layer — stays sharp and never scales */
+/* Hero foreground layer — stays sharp, readable and never scales */
 .hero-content-layer {
   position: relative;
   z-index: 10;
@@ -58,15 +60,15 @@
   text-align: center;
   will-change: transform, opacity;
   /* Baseline & JavaScript fallback */
-  transform: translateY(calc(var(--scroll-progress, 0) * -16px));
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -20px), 0);
   opacity: calc(1 - (var(--scroll-progress, 0) * 0.45));
 }
 
 /* Restrained cross-fade and translation into the next section */
 .section-entry-reveal {
   will-change: transform, opacity;
-  opacity: calc(0.7 + (var(--scroll-progress, 0) * 0.3));
-  transform: translateY(calc(20px - (var(--scroll-progress, 0) * 20px)));
+  opacity: calc(0.4 + (var(--section-progress, 1) * 0.6));
+  transform: translate3d(0, calc(28px - (var(--section-progress, 1) * 28px)), 0);
 }
 
 /* CSS Scroll-Driven Animations (Native Compositor Timeline) */
@@ -82,44 +84,47 @@
     animation-timeline: scroll(root block);
     animation-range: 0px 80vh;
   }
+}
 
+/* Element-linked viewport entry for sections */
+@supports (animation-timeline: view()) {
   html:not([data-scroll-fallback="true"]) .section-entry-reveal {
     animation: vve-section-crossfade linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 15vh 75vh;
+    animation-timeline: view();
+    animation-range: entry 0% entry 75%;
   }
 }
 
 @keyframes vve-hero-bg-zoom {
   from {
-    transform: scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
     opacity: 0.85;
   }
   to {
-    transform: scale(1.25);
-    opacity: 0.50;
+    transform: translate3d(0, 10%, 0) scale(1.20);
+    opacity: 0.45;
   }
 }
 
 @keyframes vve-hero-content-fade {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
     opacity: 0.55;
-    transform: translateY(-16px);
+    transform: translate3d(0, -20px, 0);
   }
 }
 
 @keyframes vve-section-crossfade {
   from {
-    opacity: 0.65;
-    transform: translateY(20px);
+    opacity: 0.4;
+    transform: translate3d(0, 28px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 

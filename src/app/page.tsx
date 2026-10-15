@@ -4,8 +4,9 @@ import LogoLoader from "@/components/loader/LogoLoader";
 import LogoMark from "@/components/brand/LogoMark";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import ScrollExperienceController from "@/components/scroll/ScrollExperienceController";
+import ParallaxFeatureSections from "@/components/sections/ParallaxFeatureSections";
 import Link from "next/link";
-import { eventDisciplines, artisanalServices, portfolioProjects, site } from "@/lib/site";
+import { artisanalServices, portfolioProjects, site } from "@/lib/site";
 
 export default function Home() {
   return (
@@ -15,14 +16,19 @@ export default function Home() {
       <SiteHeader />
       <main className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory">
         
-        {/* 1. Hero with Restrained Background Scaling */}
-        <section className="hero-viewport pt-20 px-6">
-          {/* Background Layer — ONLY this layer scales (1.0 -> 1.25) */}
+        {/* 1. Hero Section with Refined Editorial Composition */}
+        <section className="hero-viewport pt-20 pb-12 px-5 sm:px-6">
+          {/* Background Layer — ONLY this layer scales (1.0 -> 1.20) with parallax retention */}
           <div className="hero-bg-layer" aria-hidden="true">
             {/* Deep imperial burgundy base with luminous center */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#4a070a_0%,_#210304_75%,_#150102_100%)]" />
+            
+            {/* Soft antique gold ember ambient luster behind cartouche */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_45%_at_50%_40%,_rgba(201,161,90,0.18)_0%,_transparent_75%)]" />
+
             {/* Textured stipple grid that provides continuous motion perception */}
-            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#c9a15a_1.5px,transparent_1.5px)] [background-size:28px_28px]" />
+            <div className="absolute inset-0 opacity-25 bg-[radial-gradient(#c9a15a_1.5px,transparent_1.5px)] [background-size:28px_28px]" />
+            
             {/* Architectural mandala & filigree pattern spanning the viewport */}
             <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
               <svg width="100%" height="100%" viewBox="0 0 800 800" fill="none" stroke="#c9a15a" strokeWidth="1" className="max-w-[850px] max-h-[850px] w-full h-full">
@@ -44,35 +50,59 @@ export default function Home() {
                 <path d="M720 720 Q660 720 660 660 M720 720 Q720 660 660 660" strokeWidth="1.5" />
               </svg>
             </div>
+            
             {/* Elegant vignette preserving edge focus and smooth fade to next section */}
             <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep/70 via-transparent to-burgundy-deep" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-burgundy-deep/30 to-burgundy-deep" />
           </div>
           
           {/* Foreground Content Layer — Stays sharp, readable and never scales */}
-          <div className="hero-content-layer max-w-4xl mx-auto gap-8 mt-12">
-            <div className="hero-brand-lockup flex flex-col items-center text-center gap-8 w-full">
-              <h1 className="m-0">
-                <LogoMark className="w-[min(84vw,540px)]" priority />
-              </h1>
-              <p className="font-serif text-xl md:text-2xl lg:text-3xl text-ivory tracking-wide max-w-2xl leading-snug">
-                <span className="inline-block">Creating moments.</span>{" "}
-                <span className="inline-block text-gold italic">Designing memories.</span>
+          <div className="hero-content-layer max-w-4xl mx-auto flex flex-col items-center text-center gap-5 sm:gap-6 mt-4 sm:mt-8">
+            {/* Editorial Eyebrow */}
+            <div className="flex items-center justify-center gap-3 opacity-90">
+              <span className="w-6 sm:w-8 h-px bg-gradient-to-r from-transparent to-gold/60" />
+              <p className="font-sans text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-gold-light">
+                Bespoke Event Management · Hyderabad
               </p>
+              <span className="w-6 sm:w-8 h-px bg-gradient-to-l from-transparent to-gold/60" />
             </div>
-            <p className="font-sans text-base md:text-lg text-ivory/80 max-w-xl leading-relaxed">
-              Palatial event scenography, royal catering, and turnkey productions in Hyderabad.
+
+            {/* Canonical LogoMark */}
+            <div className="hero-brand-lockup flex flex-col items-center text-center w-full">
+              <h1 className="m-0">
+                <LogoMark className="w-[min(80vw,460px)]" priority />
+              </h1>
+            </div>
+
+            {/* Tagline */}
+            <p className="font-serif text-2xl sm:text-3xl md:text-4xl text-ivory tracking-wide max-w-2xl leading-tight font-normal">
+              <span className="inline-block">Creating moments.</span>{" "}
+              <span className="inline-block text-gold italic font-serif">Designing memories.</span>
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-8 w-full">
+
+            {/* Subtle Royal Divider Pip */}
+            <div className="flex items-center justify-center gap-2 my-0.5 opacity-80">
+              <span className="w-5 h-px bg-gold/40" />
+              <span className="text-gold text-[9px]">♦</span>
+              <span className="w-5 h-px bg-gold/40" />
+            </div>
+
+            {/* Value Proposition */}
+            <p className="font-serif text-sm sm:text-base md:text-lg text-ivory/90 italic max-w-lg leading-relaxed px-2">
+              Palatial event scenography, royal culinary spreads, and turnkey celebration productions.
+            </p>
+
+            {/* Call to Actions with Safe Mobile Clearance */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 mt-4 sm:mt-6 w-full max-w-md px-4 sm:px-0">
               <Link
                 href="/contact"
-                className="px-10 py-4 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold-light transition-all shadow-[0_4px_25px_rgba(201,161,90,0.35)] hover:shadow-[0_4px_35px_rgba(201,161,90,0.6)] hover:-translate-y-0.5 transform w-full sm:w-auto rounded"
+                className="w-full sm:w-auto px-8 py-3.5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-[0.18em] text-xs hover:bg-gold-light transition-all shadow-[0_4px_25px_rgba(201,161,90,0.35)] hover:shadow-[0_4px_35px_rgba(201,161,90,0.6)] hover:-translate-y-0.5 transform rounded text-center"
               >
                 Book a Consultation
               </Link>
               <Link
                 href="#events"
-                className="px-10 py-4 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:border-gold hover:bg-burgundy/60 transition-all bg-burgundy-deep/60 backdrop-blur-md w-full sm:w-auto rounded"
+                className="w-full sm:w-auto px-8 py-3.5 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-[0.18em] text-xs hover:border-gold hover:bg-burgundy/60 transition-all bg-burgundy-deep/60 backdrop-blur-md rounded text-center"
               >
                 Explore Disciplines
               </Link>
@@ -107,51 +137,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. Approved Event Disciplines (Mobile Swipe Rail & Desktop Grid) */}
-        <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy-deep" id="events">
-          <div className="max-w-7xl mx-auto flex flex-col items-center">
-            <div className="text-center mb-16 lg:mb-20">
-              <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">Signature Offerings</span>
-              <h2 className="font-serif text-4xl md:text-5xl text-ivory">Curated Event Disciplines</h2>
-              <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-6" />
-            </div>
-            
-            {/* Mobile Swipeable Rail (< 768px) and Responsive Grid (>= 768px) */}
-            <div className="mobile-swipe-rail md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 w-full">
-              {eventDisciplines.map((event) => (
-                <div
-                  key={event.id}
-                  className="mobile-swipe-item group border border-gold/20 bg-burgundy/60 hover:border-gold/60 transition-all duration-500 flex flex-col h-full rounded-xl overflow-hidden shadow-lg hover:shadow-[0_10px_30px_rgba(201,161,90,0.15)]"
-                >
-                  <div className="h-64 relative overflow-hidden bg-plum border-b border-gold/20">
-                    <ImagePlaceholder
-                      title={event.title}
-                      category={event.tag}
-                      aspectRatio="16/10"
-                      className="w-full h-full"
-                      alt={`Neutral placeholder block for ${event.title}`}
-                    />
-                    <span className="absolute top-4 left-4 font-sans text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-burgundy-deep/90 text-gold border border-gold/30 rounded backdrop-blur-md z-10">
-                      {event.tag}
-                    </span>
-                  </div>
-                  <div className="p-8 flex flex-col flex-1">
-                    <h3 className="font-serif text-2xl text-ivory mb-2 group-hover:text-gold transition-colors">{event.title}</h3>
-                    <p className="font-sans text-xs text-gold/80 mb-4">{event.subtitle}</p>
-                    <p className="font-sans text-sm text-ivory/70 leading-relaxed mb-6 flex-1">{event.description}</p>
-                    <Link
-                      href={`/events#${event.id}`}
-                      className="flex items-center justify-between text-gold font-sans text-xs font-bold uppercase tracking-widest pt-4 border-t border-gold/15 group-hover:text-gold-light transition-colors"
-                    >
-                      <span>Explore Discipline</span>
-                      <span className="transition-transform group-hover:translate-x-1">→</span>
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* 3. Parallax Feature Sections (Prompt 3: Weddings, Celebrations & Corporate) */}
+        <ParallaxFeatureSections />
+
+        {/* Curated Disciplines Exploration Bridge */}
+        <div className="py-10 px-6 bg-burgundy-deep/90 border-t border-b border-gold/15 text-center">
+          <p className="font-serif text-base sm:text-lg text-ivory/85 mb-3">
+            Seeking intimate proposals, campus concerts, or palatial lawn banquets?
+          </p>
+          <Link
+            href="/events"
+            className="inline-flex items-center gap-2 text-gold font-sans text-xs font-bold uppercase tracking-widest hover:text-gold-light transition-colors border-b border-gold/30 hover:border-gold pb-1"
+          >
+            <span>Explore All 6 Curated Disciplines</span>
+            <span>→</span>
+          </Link>
+        </div>
 
         {/* 4. Artisanal Services Showcase */}
         <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy border-y border-gold/20" id="services">
