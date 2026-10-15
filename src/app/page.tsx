@@ -19,20 +19,34 @@ export default function Home() {
         <section className="hero-viewport pt-20 px-6">
           {/* Background Layer — ONLY this layer scales (1.0 -> 1.25) */}
           <div className="hero-bg-layer" aria-hidden="true">
-            {/* Neutral burgundy/ivory patterned backdrop */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#3a0507_0%,_#210304_100%)]" />
-            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#c9a15a_1px,transparent_1px)] [background-size:24px_24px]" />
-            <div className="absolute inset-0 flex items-center justify-center opacity-10">
-              <svg width="400" height="400" viewBox="0 0 100 100" fill="none" stroke="#c9a15a" strokeWidth="0.75">
-                <circle cx="50" cy="50" r="45" strokeDasharray="2 2" />
-                <circle cx="50" cy="50" r="35" />
-                <circle cx="50" cy="50" r="22" strokeDasharray="4 2" />
-                <circle cx="50" cy="50" r="10" />
-                <path d="M50 5 L50 95 M5 50 L95 50 M18 18 L82 82 M18 82 L82 18" />
+            {/* Deep imperial burgundy base with luminous center */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#4a070a_0%,_#210304_75%,_#150102_100%)]" />
+            {/* Textured stipple grid that provides continuous motion perception */}
+            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#c9a15a_1.5px,transparent_1.5px)] [background-size:28px_28px]" />
+            {/* Architectural mandala & filigree pattern spanning the viewport */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
+              <svg width="100%" height="100%" viewBox="0 0 800 800" fill="none" stroke="#c9a15a" strokeWidth="1" className="max-w-[850px] max-h-[850px] w-full h-full">
+                {/* Concentric Vedic arches & rings */}
+                <circle cx="400" cy="400" r="380" strokeDasharray="4 6" strokeWidth="1" />
+                <circle cx="400" cy="400" r="340" strokeWidth="0.75" />
+                <circle cx="400" cy="400" r="290" strokeDasharray="8 4" strokeWidth="1.2" />
+                <circle cx="400" cy="400" r="230" strokeWidth="0.75" />
+                <circle cx="400" cy="400" r="160" strokeDasharray="3 3" />
+                {/* Geometric radial axis & diamond facets */}
+                <path d="M400 20 L400 780 M20 400 L780 400" strokeDasharray="6 6" strokeWidth="0.75" />
+                <path d="M131 131 L669 669 M131 669 L669 131" strokeDasharray="4 8" strokeWidth="0.75" />
+                <polygon points="400,60 740,400 400,740 60,400" strokeWidth="0.8" />
+                <polygon points="400,110 690,400 400,690 110,400" strokeDasharray="4 4" strokeWidth="0.6" />
+                {/* Corner ornamental cartouche accents */}
+                <path d="M80 80 Q140 80 140 140 M80 80 Q80 140 140 140" strokeWidth="1.5" />
+                <path d="M720 80 Q660 80 660 140 M720 80 Q720 140 660 140" strokeWidth="1.5" />
+                <path d="M80 720 Q140 720 140 660 M80 720 Q80 660 140 660" strokeWidth="1.5" />
+                <path d="M720 720 Q660 720 660 660 M720 720 Q720 660 660 660" strokeWidth="1.5" />
               </svg>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep/90 via-burgundy-deep/65 to-burgundy-deep" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-burgundy-deep/40 to-burgundy-deep" />
+            {/* Elegant vignette preserving edge focus and smooth fade to next section */}
+            <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep/70 via-transparent to-burgundy-deep" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-burgundy-deep/30 to-burgundy-deep" />
           </div>
           
           {/* Foreground Content Layer — Stays sharp, readable and never scales */}
@@ -67,7 +81,7 @@ export default function Home() {
         </section>
 
         {/* 2. Brand Story / The Atelier Creed */}
-        <section className="py-24 px-6 lg:px-12 bg-burgundy border-t border-gold/15">
+        <section className="section-entry-reveal py-24 px-6 lg:px-12 bg-burgundy border-t border-gold/15">
           <div className="max-w-6xl mx-auto border border-gold/25 bg-burgundy-deep/85 p-8 md:p-16 lg:p-24 relative rounded-xl shadow-2xl backdrop-blur-sm">
             <div className="flex justify-center mb-12">
                <div className="h-px w-20 bg-gradient-to-r from-transparent to-gold/50" />

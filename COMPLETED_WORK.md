@@ -190,6 +190,23 @@ Zero placeholder wireframes remain in the application. All pages are populated w
 
 ---
 
+### 2.7. Mobile-First Cinematic Scroll Experience & Visual Depth
+- **Restrained Hero Transition (`src/styles/scroll-experience.css`, `src/app/page.tsx`):**
+  - Isolates scale animation to the background layer only (`1.0` to `1.25` with opacity fading from `0.85` down to `0.50`).
+  - Hero logo mark, typography, and primary call-to-actions remain locked at `1.0` scale without distortion.
+  - Multi-tier architectural mandala background with concentric Vedic arches, radial diamond facets, and corner cartouche accents.
+  - Section entry cross-fade (`.section-entry-reveal`) transitioning the Brand Story section smoothly into view.
+  - Native CSS scroll-driven animations (`@supports (animation-timeline: scroll())`) paired with a high-performance passive rAF scroll listener fallback (`src/components/scroll/ScrollExperienceController.tsx`).
+- **Persistent Mobile Action Bar (`src/components/layout/MobileActionBar.tsx`):**
+  - Sticky bottom action bar on mobile viewports featuring direct Call (`tel:+918886882608`) and context-aware Enquire actions.
+  - Z-index stacking guarantees mobile navigation drawer overlays cleanly (`z-[60]` over `z-40`).
+- **Mobile Touch-Swipe Rails:**
+  - Horizontal swipe containers with momentum scrolling for event disciplines and portfolio commissioning cards.
+- **Accessible Neutral Image Placeholders (`src/components/ui/ImagePlaceholder.tsx`):**
+  - Self-contained SVG pattern placeholders replacing external prototype assets.
+
+---
+
 ## 3. Technology Stack & Key Dependencies
 
 | Layer | Technology | Version / Details |
