@@ -18,6 +18,8 @@ export interface ScrollCanvasSequenceProps {
   subtitle?: string;
   /** Category tag */
   tag?: string;
+  /** Responsive mobile frame URL builder for viewports <= 768px */
+  mobileFramePattern?: (index: number) => string;
   /** Flag indicating whether the sequence frame files exist on disk */
   isSequenceReady?: boolean;
 }
@@ -53,6 +55,7 @@ function getReducedMotionServerSnapshot() {
 export default function ScrollCanvasSequence({
   frameCount = 24,
   framePattern = (idx) => `/sequences/mandap-assembly/frame_${String(idx + 1).padStart(2, "0")}.webp`,
+  mobileFramePattern = (idx) => `/sequences/mandap-assembly/mobile/frame_${String(idx + 1).padStart(2, "0")}.webp`,
   fallbackSrc = "/sequences/mandap-assembly/fallback.jpg",
   className = "",
   title = "Sacred Mandap Architecture",
@@ -142,7 +145,7 @@ export default function ScrollCanvasSequence({
       return false;
     };
 
-    // Helper: Load a single frame
+    // Helper: Load a single frame with responsive mobile tier support
     const loadFrame = (index: number): Promise<HTMLImageElement> => {
       if (imageCache.has(index)) {
         return Promise.resolve(imageCache.get(index)!);
@@ -151,7 +154,10 @@ export default function ScrollCanvasSequence({
       return new Promise((resolve, reject) => {
         const img = document.createElement("img");
         img.decoding = "async";
-        img.src = framePattern(index);
+        
+        const useMobile = typeof window !== "undefined" && window.innerWidth <= 768 && Boolean(mobileFramePattern);
+        const targetUrl = useMobile && mobileFramePattern ? mobileFramePattern(index) : framePattern(index);
+        img.src = targetUrl;
 
         img.onload = () => {
           if (isDisposed) return;
@@ -165,6 +171,11 @@ export default function ScrollCanvasSequence({
         };
 
         img.onerror = () => {
+          // If mobile tier fails, attempt desktop frame fallback before rejecting
+          if (useMobile && targetUrl !== framePattern(index)) {
+            img.src = framePattern(index);
+            return;
+          }
           reject(new Error(`Failed to load frame ${index}`));
         };
       });
@@ -300,7 +311,7 @@ export default function ScrollCanvasSequence({
         window.cancelAnimationFrame(rafId);
       }
     };
-  }, [frameCount, framePattern, fallbackSrc, isReducedMotion, isSequenceReady]);
+  }, [frameCount, framePattern, mobileFramePattern, fallbackSrc, isReducedMotion, isSequenceReady]);
 
   // Reduced motion presentation: static high-resolution frame with no forced pinning
   if (isReducedMotion) {
