@@ -4,6 +4,7 @@ import LogoLoader from "@/components/loader/LogoLoader";
 import LogoMark from "@/components/brand/LogoMark";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import ScrollExperienceController from "@/components/scroll/ScrollExperienceController";
+import ScrollCanvasSequence from "@/components/canvas/ScrollCanvasSequence";
 import ParallaxFeatureSections from "@/components/sections/ParallaxFeatureSections";
 import Link from "next/link";
 import { artisanalServices, portfolioProjects, site } from "@/lib/site";
@@ -137,7 +138,15 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. Parallax Feature Sections (Prompt 3: Weddings, Celebrations & Corporate) */}
+        {/* 3. Atelier Scenography / Mandap Assembly Sequence */}
+        <ScrollCanvasSequence
+          frameCount={24}
+          title="Sacred Mandap Architecture"
+          subtitle="Interactive 3D scroll assembly of royal Vedic floral dome and carved antique-gold pillars"
+          tag="Atelier Scenography · Mandap Assembly"
+        />
+
+        {/* 4. Parallax Feature Sections (Prompt 3: Weddings, Celebrations & Corporate) */}
         <ParallaxFeatureSections />
 
         {/* Curated Disciplines Exploration Bridge */}
@@ -154,7 +163,7 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* 4. Artisanal Services Showcase */}
+        {/* 5. Artisanal Services Showcase */}
         <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy border-y border-gold/20" id="services">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
@@ -195,7 +204,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. Portfolio Preview (Neutral Placeholders & Responsive Flow) */}
+        {/* 6. Portfolio Preview (Neutral Placeholders & Responsive Flow) */}
         <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy-deep" id="work">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
@@ -243,7 +252,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6. Consultation CTA */}
+        {/* 7. Consultation CTA */}
         <section className="py-32 lg:py-40 px-6 bg-burgundy text-center relative overflow-hidden border-t border-gold/20">
           <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 to-transparent pointer-events-none" />
           <div className="absolute -top-40 left-1/4 w-96 h-96 rounded-full bg-gold/5 blur-3xl pointer-events-none" />

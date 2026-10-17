@@ -612,6 +612,220 @@ test.describe('VVE Browser Smoke & Mobile Scroll Tests', () => {
     await expect(staticCard).toBeVisible();
   });
 
+  /* ============================================================
+     Prompt 5: Production Homepage Canvas Sequence Integration
+     ============================================================ */
+
+  test('Homepage Canvas Sequence: mounts with 3D spatial mandap sequence and title', async ({ page }) => {
+    const consoleErrors: string[] = [];
+    page.on('console', (msg) => {
+      if (msg.type() === 'error') consoleErrors.push(msg.text());
+    });
+
+    await page.goto('/');
+    await waitForPageReady(page);
+
+    // Canvas exists and is mounted on the production homepage
+    const canvas = page.locator('canvas[role="img"]');
+    await expect(canvas).toBeVisible();
+
+    // Verify atelier titling and tag
+    const title = page.locator('h2', { hasText: 'Sacred Mandap Architecture' });
+    await expect(title).toBeAttached();
+    const tag = page.locator('text=Atelier Scenography · Mandap Assembly');
+    await expect(tag).toBeAttached();
+
+    // Container data attributes initialized
+    const container = page.locator('[data-testid="canvas-sequence-container"]');
+    await expect(container).toBeAttached();
+    expect(await container.getAttribute('data-frame-index')).toBe('0');
+
+    // Canvas internal buffer has non-zero dimensions
+    const dimensions = await canvas.evaluate((el: HTMLCanvasElement) => ({
+      width: el.width,
+      height: el.height,
+    }));
+    expect(dimensions.width).toBeGreaterThan(0);
+    expect(dimensions.height).toBeGreaterThan(0);
+
+    expect(consoleErrors).toHaveLength(0);
+  });
+
+  test('Homepage Canvas Sequence: scroll progression advances frame index and transitions into feature sections', async ({ page }) => {
+    await page.goto('/');
+    await waitForPageReady(page);
+
+    const track = page.locator('[data-testid="canvas-sequence-track"]');
+    await expect(track).toBeAttached();
+
+    const container = page.locator('[data-testid="canvas-sequence-container"]');
+    await expect(container).toBeAttached();
+
+    // Scroll track into view
+    await track.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+
+    // Scroll down 600px into the sequence
+    await page.evaluate(() => window.scrollBy(0, 600));
+    await page.waitForTimeout(400);
+
+    const midProgress = await container.getAttribute('data-scroll-progress');
+    const midIndex = await container.getAttribute('data-frame-index');
+    expect(parseFloat(midProgress || '0')).toBeGreaterThan(0);
+    expect(parseInt(midIndex || '0', 10)).toBeGreaterThanOrEqual(0);
+
+    // Scroll past the sequence directly to #events (ParallaxFeatureSections)
+    const eventsSection = page.locator('#events');
+    await eventsSection.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+    await expect(eventsSection).toBeVisible();
+
+    // Verify enquiry CTA in section 1 remains interactive
+    const s1Enquiry = eventsSection.locator('a[href*="/contact?eventType=wedding"]');
+    await expect(s1Enquiry).toBeVisible();
+  });
+
+  test('Homepage Canvas Sequence: mobile responsiveness and zero horizontal overflow across viewports', async ({ page }) => {
+    await page.goto('/');
+    await waitForPageReady(page);
+
+    const mobileWidths = [360, 390, 412, 430];
+    for (const w of mobileWidths) {
+      await page.setViewportSize({ width: w, height: 800 });
+      await page.waitForTimeout(100);
+
+      // Verify at track start, inside track, and post-track
+      const track = page.locator('[data-testid="canvas-sequence-track"]');
+      await track.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(100);
+
+      let overflow = await page.evaluate(() => {
+        return document.documentElement.scrollWidth > document.documentElement.clientWidth;
+      });
+      expect(overflow, `Horizontal overflow at sequence entry at ${w}px`).toBe(false);
+
+      await page.evaluate(() => window.scrollBy(0, 800));
+      await page.waitForTimeout(100);
+
+      overflow = await page.evaluate(() => {
+        return document.documentElement.scrollWidth > document.documentElement.clientWidth;
+      });
+      expect(overflow, `Horizontal overflow at sequence mid-scroll at ${w}px`).toBe(false);
+    }
+  });
+
+  test('Homepage Canvas Sequence: reduced-motion presents static scene without forced 260vh pinning', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    await waitForPageReady(page);
+
+    // Track should not render the pinned 260vh container in reduced-motion mode
+    const pinnedTrack = page.locator('[data-testid="canvas-sequence-track"]');
+    await expect(pinnedTrack).toHaveCount(0);
+
+    // Static fallback presentation should be visible on homepage
+    const staticCard = page.locator('text=Motion Reduced Presentation · Master Mandap');
+    await expect(staticCard).toBeVisible();
+
+    // Verify feature section #events is immediately below and fully reachable
+    const eventsSection = page.locator('#events');
+    await eventsSection.scrollIntoViewIfNeeded();
+    await expect(eventsSection).toBeVisible();
+  });
+
+  /* ============================================================
+     Option B: Real-Time 3D Perspective Palatial Corridor (/prototype/3d)
+     ============================================================ */
+
+  test('Option B 3D Corridor: route accessibility, 3D world mounting, and HUD controls', async ({ page }) => {
+    const consoleErrors: string[] = [];
+    page.on('console', (msg) => {
+      if (msg.type() === 'error') consoleErrors.push(msg.text());
+    });
+
+    const res = await page.goto('/prototype/3d');
+    expect(res?.status()).toBe(200);
+    await waitForPageReady(page);
+
+    // Verify 3D Corridor Container and Track
+    const container = page.locator('[data-testid="3d-corridor-container"]');
+    await expect(container).toBeAttached();
+    expect(await container.getAttribute('data-camera-z')).toBe('0');
+
+    const track = page.locator('[data-testid="3d-corridor-track"]');
+    await expect(track).toBeAttached();
+
+    // Verify HUD & Scrubber dock
+    const hud = page.locator('[data-testid="3d-corridor-hud"]');
+    await expect(hud).toBeVisible();
+
+    expect(consoleErrors).toHaveLength(0);
+  });
+
+  test('Option B 3D Corridor: camera advances along Z-axis on scroll and releases cleanly', async ({ page }) => {
+    await page.goto('/prototype/3d');
+    await waitForPageReady(page);
+
+    const container = page.locator('[data-testid="3d-corridor-container"]');
+    await expect(container).toBeAttached();
+
+    // Initial camera depth
+    expect(await container.getAttribute('data-camera-z')).toBe('0');
+
+    // Scroll down into the corridor
+    await page.evaluate(() => window.scrollBy(0, 800));
+    await page.waitForTimeout(400);
+
+    const midDepth = await container.getAttribute('data-camera-z');
+    expect(parseFloat(midDepth || '0')).toBeGreaterThan(0);
+
+    // Scroll completely past the 3D corridor to release section
+    const releaseSection = page.locator('text=Corridor Traversal Complete');
+    await releaseSection.scrollIntoViewIfNeeded();
+    await expect(releaseSection).toBeVisible();
+
+    // Verify comparative navigation links
+    const canvasLink = page.locator('a', { hasText: 'Inspect Option A (Canvas Scrubber)' });
+    await expect(canvasLink).toBeVisible();
+    await expect(canvasLink).toHaveAttribute('href', '/prototype/canvas');
+  });
+
+  test('Option B 3D Corridor: mobile responsiveness and zero horizontal overflow across viewports', async ({ page }) => {
+    await page.goto('/prototype/3d');
+    await waitForPageReady(page);
+
+    const mobileWidths = [360, 390, 412, 430];
+    for (const w of mobileWidths) {
+      await page.setViewportSize({ width: w, height: 800 });
+      await page.waitForTimeout(100);
+
+      // Verify overflow at start, middle, and end
+      for (const pos of [0, 900, 1800]) {
+        await page.evaluate((y) => window.scrollTo(0, y), pos);
+        await page.waitForTimeout(100);
+
+        const overflow = await page.evaluate(() => {
+          return document.documentElement.scrollWidth > document.documentElement.clientWidth;
+        });
+        expect(overflow, `Horizontal overflow on /prototype/3d at ${w}px, scrollY=${pos}`).toBe(false);
+      }
+    }
+  });
+
+  test('Option B 3D Corridor: reduced-motion presents static scene without forced 280vh pinning', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/prototype/3d');
+    await waitForPageReady(page);
+
+    // Pinned track should not be rendered under reduced motion
+    const pinnedTrack = page.locator('[data-testid="3d-corridor-track"]');
+    await expect(pinnedTrack).toHaveCount(0);
+
+    // Static palatial card should be visible
+    const staticCard = page.locator('text=Motion Reduced Presentation · Palatial Perspective Sanctuary');
+    await expect(staticCard).toBeVisible();
+  });
+
 });
 
 
