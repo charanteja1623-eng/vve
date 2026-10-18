@@ -179,32 +179,25 @@ The project has advanced through structured, test-verified stages:
 ```text
 VVE/
 ├── public/
-│   ├── sequences/
-│   │   └── mandap-assembly/           # 24-Frame Mandap Assembly Assets
-│   │       ├── frame_01.webp - frame_24.webp  # Desktop tier (1376x768, ~160 KB/frame)
-│   │       ├── mobile/                        # Mobile tier (960x540, ~72 KB/frame, -54.7% size)
-│   │       │   └── frame_01.webp - frame_24.webp
-│   │       ├── fallback.jpg                   # High-res priority fallback
-│   │       └── mandap-master.jpg              # Master reference photograph
 │   ├── vve-frame.png                  # Master Canva gold cartouche frame
-│   └── images/                        # Authentic Hyderabad event & culinary media
+│   └── vintage-vibe-events-logo.png   # Brand logo
 ├── src/
 │   ├── app/
-│   │   ├── page.tsx                   # Production Homepage (Hero, Parallax Features, Services)
+│   │   ├── page.tsx                   # Production Homepage (Hero, Feature Sections, Services)
 │   │   ├── prototype/
-│   │   │   └── canvas/page.tsx        # Isolated Prompt 4 Prototype Route
-│   │   ├── events/page.tsx            # 6 Event Disciplines Showcase
-│   │   ├── services/page.tsx          # Artisanal Services Guild
-│   │   ├── work/page.tsx              # Portfolio Commissions Gallery
+│   │   │   └── 3d/page.tsx            # Option B 3D Corridor Prototype Route
+│   │   ├── events/page.tsx            # Event Categories Showcase
+│   │   ├── services/page.tsx          # Add-On Services
+│   │   ├── work/page.tsx              # Portfolio Gallery
 │   │   ├── contact/page.tsx           # Consultation & Enquiry Form
-│   │   └── api/enquiry/route.ts       # Supabase enquiry endpoint
+│   │   └── api/enquiry/route.ts       # Enquiry endpoint
 │   ├── components/
 │   │   ├── brand/LogoMark.tsx         # Canonical gold frame + typography lockup
-│   │   ├── loader/LogoLoader.tsx      # Gold dust canvas particle formation reveal
+│   │   ├── loader/LogoLoader.tsx      # Brand loader
 │   │   ├── canvas/
-│   │   │   └── ScrollCanvasSequence.tsx # Reusable hardware-accelerated scroll sequence renderer
+│   │   │   └── PalatialCorridor3D.tsx # Option B 3D corridor renderer
 │   │   ├── sections/
-│   │   │   └── ParallaxFeatureSections.tsx # 3 Parallax Service Feature Sections
+│   │   │   └── ParallaxFeatureSections.tsx # Service Feature Sections
 │   │   └── scroll/
 │   │       └── ScrollExperienceController.tsx # Non-destructive scroll engine
 │   └── styles/

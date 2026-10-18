@@ -9,22 +9,54 @@ export default function SiteHeader() {
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Handle Escape key to close menu
+  // Handle Escape key and focus trapping for mobile menu
   useEffect(() => {
+    if (!isOpen) {
+      document.body.style.overflow = "";
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+
+    // Set initial focus to first link in menu
+    const timer = setTimeout(() => {
+      const firstLink = menuRef.current?.querySelector<HTMLElement>("a, button");
+      firstLink?.focus();
+    }, 50);
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
+      if (e.key === "Escape") {
         setIsOpen(false);
         buttonRef.current?.focus();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        const focusable = menuRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusable || focusable.length === 0) return;
+
+        const firstElement = focusable[0];
+        const lastElement = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
       }
     };
-    if (isOpen) {
-      document.addEventListener("keydown", handleKeyDown);
-      // Optional: Prevent scrolling on body when menu is open
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
+      clearTimeout(timer);
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
@@ -39,8 +71,7 @@ export default function SiteHeader() {
         <nav aria-label="Primary" className="hidden md:flex items-center gap-8 text-sm font-semibold tracking-widest uppercase font-sans">
           <Link href="/" className="hover:text-gold transition-colors">Home</Link>
           <Link href="/events" className="hover:text-gold transition-colors">Events</Link>
-          <Link href="/services" className="hover:text-gold transition-colors">Services</Link>
-          <Link href="/work" className="hover:text-gold transition-colors">Work</Link>
+          <Link href="/work" className="hover:text-gold transition-colors">Portfolio</Link>
           <Link href="/contact" className="hover:text-gold transition-colors text-gold">Contact</Link>
         </nav>
         
@@ -69,8 +100,7 @@ export default function SiteHeader() {
           <nav className="flex flex-col gap-8 text-center text-lg font-semibold tracking-widest uppercase font-sans">
             <Link href="/" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Home</Link>
             <Link href="/events" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Events</Link>
-            <Link href="/services" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Services</Link>
-            <Link href="/work" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Work</Link>
+            <Link href="/work" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Portfolio</Link>
             <Link href="/contact" className="text-gold hover:text-gold-light transition-colors" onClick={() => setIsOpen(false)}>Contact</Link>
           </nav>
           

@@ -1,6 +1,8 @@
 import Image from "next/image";
-import { FRAME_W, FRAME_H } from "@/components/loader/logoShards";
 import { site } from "@/lib/site";
+
+export const FRAME_W = 720;
+export const FRAME_H = 436;
 
 /**
  * Canonical Vintage Vibe Events logo mark — the single source of truth for the

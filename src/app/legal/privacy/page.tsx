@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <SiteHeader />
-      <main className="flex flex-1 flex-col items-center py-32 px-6 lg:px-12 bg-ivory text-burgundy-deep">
+      <main id="main-content" className="flex flex-1 flex-col items-center py-32 px-6 lg:px-12 bg-ivory text-burgundy-deep">
         <div className="w-full max-w-3xl flex flex-col gap-8 mt-8">
           <h1 className="font-serif text-4xl md:text-5xl text-burgundy-deep">Privacy Policy</h1>
           <p className="font-sans text-sm text-burgundy/60 uppercase tracking-widest font-bold">Pending Legal Review</p>
@@ -29,7 +29,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <h2 className="font-serif text-2xl text-burgundy-deep mt-8">Contact Us</h2>
             <p>
-              For any privacy-related inquiries, please contact us at <a href={`mailto:${site.email}`} className="text-gold hover:text-gold-light transition-colors">{site.email}</a>.
+              For any privacy-related inquiries, please contact us at <a href={`mailto:${site.email}`} className="text-burgundy-wine font-semibold underline hover:text-burgundy transition-colors">{site.email}</a>.
             </p>
           </div>
         </div>

@@ -5,14 +5,14 @@ import Link from "next/link";
 
 export const metadata = {
   title: `About Us — ${site.name}`,
-  description: "Learn about the heritage and artistry behind Vintage Vibe Events.",
+  description: "Learn about the planning, coordination, and services behind Vintage Vibe Events in Hyderabad.",
 };
 
 export default function AboutPage() {
   return (
     <>
       <SiteHeader />
-      <main className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory pt-24">
+      <main id="main-content" className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory pt-24">
         {/* Hero */}
         <section className="py-20 px-6 text-center border-b border-gold/20 relative">
           <div className="absolute inset-0 bg-plum opacity-50 z-0"></div>
@@ -20,7 +20,7 @@ export default function AboutPage() {
             <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">Our Story</span>
             <h1 className="font-serif text-4xl md:text-6xl text-ivory mb-6">About the Atelier</h1>
             <p className="font-sans text-lg text-ivory/80 max-w-2xl leading-relaxed">
-              We bring decades of artisanal scenography and production expertise to Hyderabad&apos;s most discerning hosts.
+              Dedicated event planning, decor design, and production coordination for celebrations across Hyderabad & Secunderabad.
             </p>
           </div>
         </section>
@@ -29,13 +29,13 @@ export default function AboutPage() {
         <section className="py-24 px-6 lg:px-12 bg-burgundy">
           <div className="max-w-4xl mx-auto space-y-8 font-sans text-lg text-ivory/80 leading-relaxed">
             <p>
-              Born in Hyderabad, the city of Nizami splendor and timeless architectural majesty, <strong className="text-ivory font-semibold">Vintage Vibe Events</strong> was founded with a singular conviction: luxury is not simply excess—it is the harmony of heritage proportions, evocative floral choreography, and unblemished execution.
+              Based in Hyderabad, <strong className="text-ivory font-semibold">{site.name}</strong> was founded with a singular conviction: thoughtful events arise from the harmony of balanced design, attentive coordination, and dependable execution.
             </p>
             <p>
-              From royal palace weddings to high-concept contemporary celebrations, our artisanal scenographers and production maestros sculpt environments where each moment unfolds naturally into an heirloom memory.
+              From traditional ceremonies to contemporary social gatherings, our event planning team coordinates environments where each moment unfolds naturally into an heirloom memory.
             </p>
             <p>
-              Our team works closely with each client to understand their unique vision, translating it into a fully immersive environment. Whether designing an intimate gathering or a grand corporate gala, we apply the same rigorous standards of excellence and meticulous attention to detail.
+              Our team works closely with each client to understand their unique requirements, coordinating decoration, catering, sound, lighting, and vendor logistics under a single unified point of contact.
             </p>
           </div>
         </section>

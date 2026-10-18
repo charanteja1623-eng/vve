@@ -10,6 +10,7 @@ export default function SiteFooter() {
             {site.name}
           </Link>
           <p className="text-sm leading-relaxed max-w-xs">{site.tagline}</p>
+          <span className="text-xs text-ivory/60">Based in {site.serviceArea}</span>
         </div>
         
         <div className="md:col-span-3 flex flex-col gap-4">
@@ -17,18 +18,39 @@ export default function SiteFooter() {
           <nav className="flex flex-col gap-3 text-sm">
             <Link href="/" className="hover:text-gold transition-colors w-fit">Home</Link>
             <Link href="/events" className="hover:text-gold transition-colors w-fit">Events</Link>
-            <Link href="/services" className="hover:text-gold transition-colors w-fit">Services</Link>
-            <Link href="/work" className="hover:text-gold transition-colors w-fit">Work</Link>
+            <Link href="/events#addons" className="hover:text-gold transition-colors w-fit">Add-On Services</Link>
+            <Link href="/work" className="hover:text-gold transition-colors w-fit">Portfolio</Link>
           </nav>
         </div>
 
         <div className="md:col-span-5 flex flex-col gap-4">
-          <span className="text-xs font-bold uppercase tracking-widest text-gold">Contact Atelier</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-gold">Contact</span>
           <div className="flex flex-col gap-3 text-sm">
-            <a href={`tel:${site.phones[0].replace(/\s+/g, '')}`} className="hover:text-gold transition-colors w-fit">{site.phones[0]}</a>
-            <a href={`mailto:${site.email}`} className="hover:text-gold transition-colors w-fit">{site.email}</a>
-            <span>Based in {site.serviceArea}</span>
-            <Link href="/contact" className="mt-4 inline-block font-sans text-xs font-bold uppercase tracking-widest text-gold hover:text-gold-light transition-colors border-b border-gold/30 hover:border-gold pb-1 w-fit">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+              <a href={`tel:${site.phones[0]}`} className="hover:text-gold transition-colors w-fit">
+                {site.phones[0]}
+              </a>
+              <span className="hidden sm:inline text-gold/40">•</span>
+              <a href={`tel:${site.phones[1]}`} className="hover:text-gold transition-colors w-fit">
+                {site.phones[1]}
+              </a>
+            </div>
+            <a href={`mailto:${site.email}`} className="hover:text-gold transition-colors w-fit">
+              {site.email}
+            </a>
+            <a
+              href={site.instagram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gold transition-colors w-fit flex items-center gap-1.5"
+            >
+              <span>Instagram:</span>
+              <span className="text-gold">{site.instagram.handle}</span>
+            </a>
+            <Link
+              href="/contact"
+              className="mt-4 inline-block font-sans text-xs font-bold uppercase tracking-widest text-gold hover:text-gold-light transition-colors border-b border-gold/30 hover:border-gold pb-1 w-fit"
+            >
               Plan Your Event →
             </Link>
           </div>

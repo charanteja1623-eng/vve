@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { site } from "@/lib/site";
@@ -12,10 +13,10 @@ export default function ContactPage() {
   return (
     <>
       <SiteHeader />
-      <main className="flex flex-1 flex-col items-center py-32 px-6 lg:px-12 bg-ivory text-burgundy-deep">
+      <main id="main-content" className="flex flex-1 flex-col items-center py-32 px-6 lg:px-12 bg-ivory text-burgundy-deep">
         <div className="w-full max-w-5xl flex flex-col gap-16 mt-8">
           <div className="text-center space-y-6">
-            <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block">Begin The Journey</span>
+            <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold-ink block">Begin The Journey</span>
             <h1 className="font-serif text-4xl md:text-6xl text-burgundy-deep leading-tight">
               Plan Your Event
             </h1>
@@ -49,7 +50,9 @@ export default function ContactPage() {
             </div>
 
             {/* Form */}
-            <EnquiryForm />
+            <Suspense fallback={<div className="md:col-span-7 p-8 text-burgundy-deep font-sans">Loading enquiry form...</div>}>
+              <EnquiryForm />
+            </Suspense>
           </div>
         </div>
       </main>

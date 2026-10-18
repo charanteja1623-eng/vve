@@ -94,7 +94,7 @@ export default function PalatialCorridor3D({
   subtitle = "Interactive perspective camera gliding through authentic Nizami colonnades to the sacred mandap",
   tag = "Option B · Real-Time 3D Perspective Engine",
   className = "",
-  fallbackSrc = "/sequences/mandap-assembly/fallback.jpg",
+  fallbackSrc = "/vve-frame.png",
 }: PalatialCorridor3DProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);

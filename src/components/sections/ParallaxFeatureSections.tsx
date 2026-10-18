@@ -53,9 +53,9 @@ export default function ParallaxFeatureSections() {
     };
   }, []);
 
-  const weddings = eventDisciplines.find((d) => d.id === "weddings") || eventDisciplines[0];
-  const celebrations = eventDisciplines.find((d) => d.id === "birthdays") || eventDisciplines[1];
-  const corporate = eventDisciplines.find((d) => d.id === "corporate") || eventDisciplines[3];
+  const weddings = eventDisciplines.find((d) => d.id === "wedding-packages") || eventDisciplines[0];
+  const celebrations = eventDisciplines.find((d) => d.id === "birthday-parties") || eventDisciplines[1];
+  const corporate = eventDisciplines.find((d) => d.id === "indoor-outdoor-events") || eventDisciplines[3];
 
   return (
     <div className="w-full flex flex-col">

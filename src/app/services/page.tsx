@@ -2,18 +2,19 @@ import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { site, artisanalServices } from "@/lib/site";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
+import WhatsAppLink from "@/components/ui/WhatsAppLink";
 import Link from "next/link";
 
 export const metadata = {
-  title: `Artisanal Services & Production — ${site.name}`,
-  description: "Royal live catering, couture floral decoration, German tent hangars, concert sound, and heirloom bridal keepsakes in Hyderabad.",
+  title: `Add-On Services & Production — ${site.name}`,
+  description: "Coordinated catering, decoration, tent house, DJ, screens, and event gifting in Hyderabad.",
 };
 
 export default function ServicesPage() {
   return (
     <>
       <SiteHeader />
-      <main className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory pt-24">
+      <main id="main-content" className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory pt-24">
         
         {/* Hero */}
         <section className="relative py-24 px-6 text-center border-b border-gold/20 overflow-hidden">
@@ -25,15 +26,21 @@ export default function ServicesPage() {
 
           <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
             <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">
-              Integrated Artisanal Guild
+              Event Add-On Services
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-ivory mb-6 leading-tight">
-              Production Services
+              Production & Add-On Services
             </h1>
             <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
-            <p className="font-sans text-base md:text-lg text-ivory/80 max-w-2xl leading-relaxed">
-              Every discipline is executed in-house or with certified luxury partners to ensure flawless aesthetic cohesion and hospitality standards.
+            <p className="font-sans text-base md:text-lg text-ivory/80 max-w-2xl leading-relaxed mb-6">
+              Our eight confirmed add-on services provide seamless logistical and design support for weddings, birthdays, and public events across Hyderabad.
             </p>
+            <Link
+              href="/events#addons"
+              className="text-gold font-sans text-xs font-bold uppercase tracking-widest hover:text-gold-light border-b border-gold/30 hover:border-gold pb-1"
+            >
+              View in Unified Events Catalogue →
+            </Link>
           </div>
         </section>
 
@@ -53,7 +60,7 @@ export default function ServicesPage() {
                     category={service.number}
                     aspectRatio="16/10"
                     className="w-full h-full"
-                    alt={`Neutral placeholder block for ${service.title}`}
+                    alt={`Placeholder block for ${service.title} — authentic event photography pending`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep via-burgundy-deep/30 to-transparent" />
                   
@@ -61,9 +68,6 @@ export default function ServicesPage() {
                   <div className="absolute top-4 left-4 flex items-center gap-2">
                     <span className="font-serif text-xl font-bold px-3 py-1 bg-burgundy-deep/90 text-gold border border-gold/30 rounded backdrop-blur-md">
                       {service.number}
-                    </span>
-                    <span className="font-sans text-xs uppercase tracking-widest px-3 py-1.5 bg-burgundy-deep/80 text-ivory/90 border border-gold/20 rounded backdrop-blur-md">
-                      {service.tagline}
                     </span>
                   </div>
                 </div>
@@ -74,7 +78,6 @@ export default function ServicesPage() {
                     <h2 className="font-serif text-2xl md:text-3xl text-ivory mb-2 group-hover:text-gold transition-colors">
                       {service.title}
                     </h2>
-                    <p className="font-sans text-xs font-semibold text-gold-light/90 mb-4">{service.subtitle}</p>
                     <p className="font-sans text-sm text-ivory/80 leading-relaxed mb-6">
                       {service.description}
                     </p>
@@ -98,20 +101,18 @@ export default function ServicesPage() {
                   {/* Actions */}
                   <div className="pt-6 border-t border-gold/15 flex items-center justify-between">
                     <Link
-                      href="/contact"
+                      href={`/contact?addon=${service.id}`}
                       className="text-gold font-sans text-xs font-bold uppercase tracking-widest hover:text-gold-light transition-colors flex items-center gap-1.5"
                     >
                       <span>Incorporate in Package</span>
                       <span>→</span>
                     </Link>
-                    <a
-                      href={`https://wa.me/${site.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(`Hello Vintage Vibe Events, I would like to enquire about ${service.title}.`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <WhatsAppLink
+                      message={`Hello Vintage Vibe Events, I would like to enquire about ${service.title} add-on service.`}
                       className="text-xs font-sans text-ivory/70 hover:text-gold transition-colors"
                     >
-                      Ask on WhatsApp
-                    </a>
+                      Ask on WhatsApp →
+                    </WhatsAppLink>
                   </div>
                 </div>
               </article>
@@ -123,10 +124,10 @@ export default function ServicesPage() {
         <section className="py-24 px-6 bg-burgundy-deep text-center border-t border-gold/20">
           <div className="max-w-3xl mx-auto flex flex-col items-center gap-8">
             <h2 className="font-serif text-4xl md:text-5xl text-ivory">
-              Commission Your Custom Production
+              Commission Your Event Coordination
             </h2>
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-xl leading-relaxed">
-              Combine catering, decor, and technical production into one seamless turnkey agreement.
+              Combine catering, decor, and technical production into one seamless agreement.
             </p>
             <Link
               href="/contact"

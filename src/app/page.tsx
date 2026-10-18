@@ -1,11 +1,12 @@
+import Image from "next/image";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import LogoLoader from "@/components/loader/LogoLoader";
 import LogoMark from "@/components/brand/LogoMark";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import ScrollExperienceController from "@/components/scroll/ScrollExperienceController";
-import ScrollCanvasSequence from "@/components/canvas/ScrollCanvasSequence";
-import ParallaxFeatureSections from "@/components/sections/ParallaxFeatureSections";
+import EditorialSplitStage from "@/components/sections/EditorialSplitStage";
+import WhatsAppLink from "@/components/ui/WhatsAppLink";
 import Link from "next/link";
 import { artisanalServices, portfolioProjects, site } from "@/lib/site";
 
@@ -15,17 +16,27 @@ export default function Home() {
       <LogoLoader />
       <ScrollExperienceController />
       <SiteHeader />
-      <main className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory">
+      <main id="main-content" className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory">
         
-        {/* 1. Hero Section with Refined Editorial Composition */}
+        {/* 1. Hero Section with Scroll-Driven Dolly Zoom */}
         <section className="hero-viewport pt-20 pb-12 px-5 sm:px-6">
-          {/* Background Layer — ONLY this layer scales (1.0 -> 1.20) with parallax retention */}
+          {/* Background Layer — scales and moves with scroll progress */}
           <div className="hero-bg-layer" aria-hidden="true">
-            {/* Deep imperial burgundy base with luminous center */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#4a070a_0%,_#210304_75%,_#150102_100%)]" />
+            {/* Architectural Palace Courtyard Background Image */}
+            <Image
+              src="/images/hero/palace-courtyard.jpg"
+              alt="Palatial architectural courtyard with warm celebratory illumination"
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+
+            {/* Deep imperial burgundy tinted overlay for contrast & brand continuity */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(55,6,9,0.72)_0%,_rgba(33,3,4,0.88)_75%,_#150102_100%)]" />
             
             {/* Soft antique gold ember ambient luster behind cartouche */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_45%_at_50%_40%,_rgba(201,161,90,0.18)_0%,_transparent_75%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_45%_at_50%_40%,_rgba(201,161,90,0.22)_0%,_transparent_75%)]" />
 
             {/* Textured stipple grid that provides continuous motion perception */}
             <div className="absolute inset-0 opacity-25 bg-[radial-gradient(#c9a15a_1.5px,transparent_1.5px)] [background-size:28px_28px]" />
@@ -112,7 +123,7 @@ export default function Home() {
         </section>
 
         {/* 2. Brand Story / The Atelier Creed */}
-        <section className="section-entry-reveal py-24 px-6 lg:px-12 bg-burgundy border-t border-gold/15">
+        <section id="about" className="section-entry-reveal scroll-mt-24 py-24 px-6 lg:px-12 bg-burgundy border-t border-gold/15">
           <div className="max-w-6xl mx-auto border border-gold/25 bg-burgundy-deep/85 p-8 md:p-16 lg:p-24 relative rounded-xl shadow-2xl backdrop-blur-sm">
             <div className="flex justify-center mb-12">
                <div className="h-px w-20 bg-gradient-to-r from-transparent to-gold/50" />
@@ -138,16 +149,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. Atelier Scenography / Mandap Assembly Sequence */}
-        <ScrollCanvasSequence
-          frameCount={24}
-          title="Sacred Mandap Architecture"
-          subtitle="Interactive 3D scroll assembly of royal Vedic floral dome and carved antique-gold pillars"
-          tag="Atelier Scenography · Mandap Assembly"
-        />
-
-        {/* 4. Parallax Feature Sections (Prompt 3: Weddings, Celebrations & Corporate) */}
-        <ParallaxFeatureSections />
+        {/* 3. Editorial Split-Stage: 6 Curated Disciplines */}
+        <EditorialSplitStage />
 
         {/* Curated Disciplines Exploration Bridge */}
         <div className="py-10 px-6 bg-burgundy-deep/90 border-t border-b border-gold/15 text-center">
@@ -188,14 +191,13 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="font-serif text-xl text-ivory group-hover:text-gold transition-colors mb-2">{service.title}</h3>
-                    <p className="font-sans text-xs text-gold/75 mb-3">{service.tagline}</p>
                     <p className="font-sans text-xs text-ivory/70 line-clamp-3 leading-relaxed mb-6">{service.description}</p>
                   </div>
                   <Link
-                    href={`/services#${service.id}`}
+                    href="/events#addons"
                     className="font-sans text-[11px] font-bold uppercase tracking-wider text-gold/80 group-hover:text-gold-light flex items-center gap-1.5 pt-4 border-t border-gold/15"
                   >
-                    <span>View Specifications</span>
+                    <span>View Add-On Details</span>
                     <span>→</span>
                   </Link>
                 </div>
@@ -240,7 +242,7 @@ export default function Home() {
                       <div className="flex items-center gap-3 mb-2">
                         <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold">{project.categoryLabel}</span>
                         <span className="text-gold/40 text-xs">•</span>
-                        <span className="font-sans text-xs text-ivory/70">{project.venue}, {project.location}</span>
+                        <span className="font-sans text-xs text-gold/80">{project.statusLabel}</span>
                       </div>
                       <h3 className="font-serif text-2xl md:text-3xl text-ivory mb-2">{project.title}</h3>
                       <p className="font-sans text-xs text-ivory/75 max-w-lg line-clamp-2">{project.description}</p>
@@ -272,17 +274,12 @@ export default function Home() {
               >
                 Schedule Consultation
               </Link>
-              {/* WhatsApp direct link: strictly conditional upon confirmed business number */}
-              {Boolean(site.whatsappNumber) && (
-                <a
-                  href={`https://wa.me/${site.whatsappNumber.replace(/\D/g, "")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-10 py-5 border border-gold/50 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold/15 transition-all rounded w-full sm:w-auto text-center"
-                >
-                  WhatsApp Direct →
-                </a>
-              )}
+              <WhatsAppLink
+                message="Hello Vintage Vibe Events, I would like to schedule an event consultation."
+                className="px-10 py-5 border border-gold/50 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold/15 transition-all rounded w-full sm:w-auto text-center"
+              >
+                WhatsApp Direct →
+              </WhatsAppLink>
             </div>
           </div>
         </section>

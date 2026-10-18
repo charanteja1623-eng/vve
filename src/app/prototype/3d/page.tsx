@@ -12,7 +12,7 @@ export default function PalatialCorridorPage() {
   return (
     <>
       <SiteHeader />
-      <main className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory pt-20">
+      <main id="main-content" className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory pt-20">
         
         {/* Prototype Header Banner */}
         <section className="py-16 px-6 text-center border-b border-gold/20 bg-burgundy">

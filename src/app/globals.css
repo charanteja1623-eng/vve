@@ -14,6 +14,7 @@
   --color-plum: #250305; /* dark plum / charcoal accents */
   --color-gold: #c9a15a; /* antique gold — hairlines, small accents */
   --color-gold-light: #e3c985; /* light gold — highlights only */
+  --color-gold-ink: #7a5210; /* high-contrast gold ink for light/ivory backgrounds (WCAG 2.2 AA) */
   --color-ivory: #f7f1e5; /* warm ivory — primary light surface */
 
   /* Semantic aliases */
@@ -29,6 +30,8 @@
 /* Baseline */
 html {
   color-scheme: light;
+  scroll-padding-top: 5.5rem;
+  scroll-padding-bottom: 5.5rem;
 }
 
 body {
@@ -97,8 +100,9 @@ html[data-loader-active="true"] body::-webkit-scrollbar {
 html[data-loader-active="true"] .hero-brand-lockup {
   opacity: 0 !important;
   visibility: hidden !important;
+  animation: none !important;
 }
-html[data-loader-done="true"] .hero-brand-lockup {
+html[data-loader-done="true"]:not([data-loader-active="true"]) .hero-brand-lockup {
   animation: vve-hero-reveal 0.8s ease-out forwards;
 }
 
@@ -123,7 +127,7 @@ html[data-loader-done="true"] .hero-brand-lockup {
   justify-content: center;
   background: radial-gradient(ellipse at 50% 48%, #320406 0%, #210304 65%, #140203 100%);
   opacity: 1;
-  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   user-select: none;
   cursor: default;
@@ -141,16 +145,16 @@ html[data-loader-done="true"] .hero-brand-lockup {
   transform: translate(-50%, -50%);
   width: min(92vw, 680px);
   height: min(72vw, 460px);
-  background: radial-gradient(circle, rgba(201, 161, 90, 0.08) 0%, rgba(201, 161, 90, 0.02) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(201, 161, 90, 0.12) 0%, rgba(201, 161, 90, 0.03) 50%, transparent 75%);
   pointer-events: none;
   opacity: 0;
-  animation: vve-ambient-in 1.2s ease-out 0.2s both;
+  animation: vve-ambient-in 1.4s ease-out 0.2s both;
 }
 
 @keyframes vve-ambient-in {
   from {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.92);
+    transform: translate(-50%, -50%) scale(0.90);
   }
   to {
     opacity: 1;
@@ -167,39 +171,114 @@ html[data-loader-done="true"] .hero-brand-lockup {
   will-change: transform;
 }
 
-/* Base frame image — cross-fades in as shards settle (2.85s - 3.35s) */
+/* Golden Stipple & Particle Constellation Assembly (0.0s – 1.8s) */
+.vve-particle-constellation {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.vve-particle {
+  position: absolute;
+  width: var(--psize, 3.5px);
+  height: var(--psize, 3.5px);
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, #f7ebb8 40%, #c9a15a 100%);
+  box-shadow: 0 0 8px rgba(201, 161, 90, 0.8), 0 0 16px rgba(247, 235, 184, 0.5);
+  animation: vve-particle-converge 1.6s cubic-bezier(0.16, 1, 0.3, 1) var(--pdelay, 0s) both;
+}
+
+@keyframes vve-particle-converge {
+  0% {
+    opacity: 0;
+    transform: translate(calc(var(--px) * 2.2), calc(var(--py) * 2.2)) scale(0.3);
+  }
+  30% {
+    opacity: 0.95;
+    transform: translate(calc(var(--px) * 1.3), calc(var(--py) * 1.3)) scale(1.1);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.8);
+  }
+}
+
+/* Bilateral Feathered Reveal of Cartouche Frame (1.0s – 2.6s) */
+.vve-seal-reveal-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: vve-seal-reveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) 1.0s both;
+}
+
+@keyframes vve-seal-reveal {
+  0% {
+    clip-path: inset(0 50% 0 50%);
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0% 0 0%);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .vve-frame-base {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  opacity: 0;
-  animation: vve-frame-settle 0.5s ease-out 2.85s both;
 }
 
-@keyframes vve-frame-settle {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Full-viewport Canvas for cinematic gold dust particle simulation */
-.vve-dust-canvas {
+/* Soft Curved Specular Shimmer Sweep (2.6s – 3.8s) — No harsh rectangular streak */
+.vve-shimmer-sweep {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  background: radial-gradient(
+    ellipse 50% 120% at 50% 50%,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(247, 235, 184, 0.35) 35%,
+    rgba(201, 161, 90, 0.20) 55%,
+    transparent 75%
+  );
+  opacity: 0;
+  transform: translateX(-120%);
+  animation: vve-shimmer-sweep 1.2s cubic-bezier(0.4, 0, 0.2, 1) 2.6s both;
+  mix-blend-mode: screen;
   pointer-events: none;
-  z-index: 4;
 }
 
-/* Wordmark — canonical typography locked to frame geometry.
-   Width is sized relative to the usable inner width of the cartouche frame,
-   with intentional horizontal padding so the text never touches the frame rails. */
+@keyframes vve-shimmer-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+  30% {
+    opacity: 0.95;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+}
+
+/* Wordmark — canonical typography locked to frame geometry (2.2s – 3.4s reveal) */
 .vve-wordmark {
   position: absolute;
   left: 50%;
@@ -230,59 +309,25 @@ html[data-loader-done="true"] .hero-brand-lockup {
   align-items: center;
 }
 
-/* In the loader, wordmark starts completely hidden (0.0s - 3.75s) and cross-fades
-   in smoothly directly under the converging gold dust particles (3.8s - 4.2s). */
 .vve-wordmark--loader {
   opacity: 0;
-  animation: vve-wordmark-dust-settle 0.55s ease-out 3.8s both;
+  animation: vve-wordmark-reveal 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.2s both;
 }
 
-@keyframes vve-wordmark-dust-settle {
+@keyframes vve-wordmark-reveal {
   from {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.98);
-    filter: blur(1.5px) brightness(1.2);
+    transform: translate(-50%, -50%) scale(0.97);
+    filter: blur(2px);
   }
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
-    filter: none;
+    filter: blur(0);
   }
 }
 
-/* Restrained Gold Luster Bloom (3.2s - 4.2s settling phase) */
-.vve-gold-luster {
-  position: absolute;
-  inset: 20% 12%;
-  border-radius: 9999px;
-  pointer-events: none;
-  background: radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.05) 50%, transparent 75%);
-  opacity: 0;
-  transform: scale(0.95);
-  animation: vve-luster-bloom 1.1s cubic-bezier(0.4, 0, 0.2, 1) 3.25s both;
-  mix-blend-mode: screen;
-}
-
-@keyframes vve-luster-bloom {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  40% {
-    opacity: 0.85;
-    transform: scale(1.02);
-  }
-  80% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1);
-  }
-}
-
-/* Tagline Container & Typography (4.2s - 5.0s hold) */
+/* Tagline Container & Typography (3.4s – 4.4s reveal) */
 .vve-tagline-wrap {
   margin-top: 1.75rem;
   text-align: center;
@@ -299,14 +344,14 @@ html[data-loader-done="true"] .hero-brand-lockup {
   color: rgba(247, 241, 229, 0.85); /* ivory/85 */
   opacity: 0;
   transform: translateY(6px);
-  animation: vve-tagline-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 4.2s both;
+  animation: vve-tagline-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 3.4s both;
   line-height: 1.4;
 }
 
 .vve-tagline--static {
-  opacity: 1;
-  transform: none;
-  animation: none;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
 }
 
 .vve-tagline-accent {
@@ -331,19 +376,24 @@ html[data-loader-done="true"] .hero-brand-lockup {
 /* Prefers-reduced-motion overrides */
 @media (prefers-reduced-motion: reduce) {
   .vve-loader {
-    transition: opacity 0.4s ease;
+    transition: opacity 0.1s ease !important;
   }
   .vve-loader-ambient {
     animation: none !important;
     opacity: 1 !important;
     transform: translate(-50%, -50%) !important;
   }
-  .vve-dust-canvas {
+  .vve-particle-constellation {
     display: none !important;
   }
-  .vve-frame-base {
+  .vve-seal-reveal-wrap {
     animation: none !important;
+    clip-path: none !important;
     opacity: 1 !important;
+    transform: none !important;
+  }
+  .vve-shimmer-sweep {
+    display: none !important;
   }
   .vve-wordmark--loader {
     animation: none !important;
@@ -351,13 +401,9 @@ html[data-loader-done="true"] .hero-brand-lockup {
     transform: translate(-50%, -50%) !important;
     filter: none !important;
   }
-  .vve-gold-luster {
-    display: none !important;
-  }
   .vve-tagline {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;
   }
 }
-
