@@ -87,7 +87,6 @@ approval.
 -   Photography & Videography
 -   Customized Gifts
 -   Resin & 3D Moulds
--   Corporate Gifting
 
 These are candidate content items from prior discussions. Verify which
 are currently offered before publishing them.

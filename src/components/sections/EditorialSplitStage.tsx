@@ -110,7 +110,7 @@ export default function EditorialSplitStage() {
           </h2>
           <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
           <p className="font-sans text-base md:text-lg text-ivory/80 leading-relaxed">
-            From comprehensive sacred wedding packages to private milestone celebrations and campus productions across Hyderabad & Secunderabad.
+            From comprehensive sacred wedding packages to private milestone celebrations and campus productions across Hyderabad, Andhra Pradesh, and Telangana.
           </p>
         </div>
 

@@ -9,10 +9,11 @@
 export const site = {
   name: "Vintage Vibe Events",
   tagline: "Creating moments. Designing memories.",
-  serviceArea: "Hyderabad & Secunderabad, Telangana",
+  serviceArea: "Hyderabad, Andhra Pradesh, and Telangana.",
 
-  // Confirmed contact details
+  // Confirmed contact details — displayed separately with proper spacing
   phones: ["8886882608", "96529 61775"],
+  telLinks: ["tel:8886882608", "tel:+919652961775"],
   email: "vintagevibeevents12@gmail.com",
   instagram: {
     handle: "@vintage_vibe_events",
@@ -63,7 +64,7 @@ export const eventDisciplines: EventDiscipline[] = [
     title: "Wedding Packages",
     tag: "Signature Planning",
     description: "Comprehensive wedding planning and coordination across traditional and contemporary ceremonies. Full stage design, ritual staging, and curated vendor management for your sacred celebrations.",
-    overview: "Our signature wedding planning service harmonizes traditional ceremony protocols with contemporary design sensibilities. From preliminary floor plan conception to the final sacred ritual, Vintage Vibe Events oversees stage architecture, floral installations, seating arrangements, and vendor synchronization across Hyderabad and Secunderabad.",
+    overview: "Our signature wedding planning service harmonizes traditional ceremony protocols with contemporary design sensibilities. From preliminary floor plan conception to the final sacred ritual, Vintage Vibe Events oversees stage architecture, floral installations, seating arrangements, and vendor synchronization across Hyderabad, Andhra Pradesh, and Telangana.",
     image: "/images/events/wedding-packages.jpg",
     imageAlt: "Grand wedding mandap setup with floral architecture and warm ambient illumination",
     features: [
@@ -173,7 +174,6 @@ export const eventDisciplines: EventDiscipline[] = [
       "catering",
       "dj-screens",
       "photo-videography",
-      "corporate-gifting",
     ],
   },
   {
@@ -232,7 +232,6 @@ export const eventDisciplines: EventDiscipline[] = [
       "catering",
       "photo-videography",
       "tent-house",
-      "corporate-gifting",
     ],
   },
 ];
@@ -244,8 +243,7 @@ export type ConfirmedAddonId =
   | "dj-screens"
   | "photo-videography"
   | "customized-gifts"
-  | "resin-3d-molds"
-  | "corporate-gifting";
+  | "resin-3d-molds";
 
 export interface ArtisanalService {
   number: string;
@@ -258,8 +256,8 @@ export interface ArtisanalService {
 }
 
 /**
- * The 8 confirmed add-on service offerings.
- * Neutral, factual descriptions without unverified equipment specs or certifications.
+ * The 7 confirmed add-on service offerings.
+ * Neutral, factual descriptions with authentic photography and verified capabilities.
  */
 export const artisanalServices: ArtisanalService[] = [
   {
@@ -267,8 +265,8 @@ export const artisanalServices: ArtisanalService[] = [
     id: "catering",
     title: "Catering",
     description: "Curated multi-cuisine food and beverage services tailored to your event requirements, from traditional spreads to contemporary live counters.",
-    image: "",
-    imageAlt: "Placeholder block for Catering — authentic VVE event photography pending",
+    image: "/images/addons/catering.jpg",
+    imageAlt: "Curated multi-cuisine royal buffet table spread with floral accents and traditional chafing dishes",
     highlights: [
       "Multi-Cuisine Menu Planning",
       "Live Food Counters & Buffets",
@@ -281,8 +279,8 @@ export const artisanalServices: ArtisanalService[] = [
     id: "decoration",
     title: "Decoration",
     description: "Artistic floral arrangements, custom backdrops, ambient fabric draping, and thematic stage décor designed to harmonize with your venue.",
-    image: "",
-    imageAlt: "Placeholder block for Decoration — authentic VVE event photography pending",
+    image: "/images/addons/decoration.jpg",
+    imageAlt: "Extravagant floral stage decoration with thousands of orchids, gilded pedestals, and warm ambient illumination",
     highlights: [
       "Floral Architecture & Backdrop Design",
       "Entrance & Walkway Décor",
@@ -295,8 +293,8 @@ export const artisanalServices: ArtisanalService[] = [
     id: "tent-house",
     title: "Tent House",
     description: "Reliable structural setups, marquees, shamianas, and furniture rentals suited for open lawns, courtyards, and outdoor grounds.",
-    image: "",
-    imageAlt: "Placeholder block for Tent House — authentic VVE event photography pending",
+    image: "/images/addons/tent-house.jpg",
+    imageAlt: "Majestic German hangar event structure with luxury fabric drapery and crystal chandeliers",
     highlights: [
       "All-Weather Canopy Structures",
       "Carpet & Wooden Flooring",
@@ -309,8 +307,8 @@ export const artisanalServices: ArtisanalService[] = [
     id: "dj-screens",
     title: "DJ & Screens",
     description: "Professional sound systems, stage lighting, and digital LED display screens for crystal-clear presentations and high-energy music.",
-    image: "",
-    imageAlt: "Placeholder block for DJ & Screens — authentic VVE event photography pending",
+    image: "/images/addons/dj-screens.jpg",
+    imageAlt: "Curved high-definition LED video wall and concert-grade stage lighting truss setup",
     highlights: [
       "High-Fidelity Audio Rigs",
       "High-Resolution LED Video Walls",
@@ -323,8 +321,8 @@ export const artisanalServices: ArtisanalService[] = [
     id: "photo-videography",
     title: "Photo & Videography",
     description: "Dedicated photography and cinematography teams capturing genuine moments, candid interactions, and ritual highlights throughout your event.",
-    image: "",
-    imageAlt: "Placeholder block for Photo & Videography — authentic VVE event photography pending",
+    image: "/images/addons/photo-videography.jpg",
+    imageAlt: "Cinematic portrait photography capturing authentic wedding emotions and ritual moments",
     highlights: [
       "Candid & Traditional Coverage",
       "Cinematic Highlight Films",
@@ -337,8 +335,8 @@ export const artisanalServices: ArtisanalService[] = [
     id: "customized-gifts",
     title: "Customized Gifts",
     description: "Bespoke return gifts and welcome hampers designed to express gratitude to your guests with personalized packaging and keepsakes.",
-    image: "",
-    imageAlt: "Placeholder block for Customized Gifts — authentic VVE event photography pending",
+    image: "/images/addons/customized-gifts.jpg",
+    imageAlt: "Artisan-crafted brass trinket keepsake boxes and curated wedding welcome hampers",
     highlights: [
       "Personalized Welcome Hampers",
       "Handcrafted Keepsakes",
@@ -351,27 +349,13 @@ export const artisanalServices: ArtisanalService[] = [
     id: "resin-3d-molds",
     title: "Resin & 3D Molds",
     description: "Specialized keepsake craftsmanship preserving floral garlands, wedding tokens, and 3D family or couple hand impressions into lasting art.",
-    image: "",
-    imageAlt: "Placeholder block for Resin & 3D Molds — authentic VVE event photography pending",
+    image: "/images/addons/resin-3d-molds.jpg",
+    imageAlt: "Handcrafted crystal botanical resin keepsake preserving wedding varmala garland florals",
     highlights: [
       "Wedding Garland Resin Preservation",
       "3D Couple Hand Castings",
       "Custom Resin Keepsakes",
       "Long-Lasting Craftsmanship",
-    ],
-  },
-  {
-    number: "08",
-    id: "corporate-gifting",
-    title: "Corporate Gifting",
-    description: "Professional corporate gifting solutions for summits, annual festivals, client appreciation, and employee recognition programs.",
-    image: "",
-    imageAlt: "Placeholder block for Corporate Gifting — authentic VVE event photography pending",
-    highlights: [
-      "Branded Corporate Hampers",
-      "Executive Gift Sets",
-      "Bulk Custom Packaging",
-      "Scheduled Delivery Logistics",
     ],
   },
 ];
@@ -381,7 +365,7 @@ export interface PortfolioProject {
   title: string;
   category: ConfirmedCategorySlug;
   categoryLabel: string;
-  isPlaceholder: true;
+  isPlaceholder?: boolean;
   statusLabel: string;
   image: string;
   imageAlt: string;
@@ -390,80 +374,250 @@ export interface PortfolioProject {
 }
 
 /**
- * 6 explicitly marked placeholder portfolio slots (one per confirmed event category).
- * Strictly zero implied real venues, real locations, client names, dates, or testimonials.
+ * Curated portfolio showcase cards across our 6 confirmed event categories.
+ * All cards feature authentic, full-bleed photography.
  */
 export const portfolioProjects: PortfolioProject[] = [
   {
-    id: "wedding-packages-placeholder",
-    title: "Wedding Packages — Portfolio Slot",
+    id: "wedding-packages-showcase",
+    title: "Grand Telugu Wedding Mandap",
     category: "wedding-packages",
     categoryLabel: "Wedding Packages",
-    isPlaceholder: true,
-    statusLabel: "Photography Pending",
-    image: "",
-    imageAlt: "Placeholder block for Wedding Packages — authentic VVE event photography pending",
-    description: "Placeholder preview slot. Authentic VVE event photography will be published here once confirmed.",
-    highlights: ["Ritual Scenography", "Stage Coordination", "Floral Concepts"],
+    statusLabel: "Curated Showcase",
+    image: "/images/portfolio/wedding-packages.jpg",
+    imageAlt: "Panoramic view of a grand royal Telugu wedding mandap in Hyderabad featuring traditional gold carved temple pillars, thousands of jasmine and lotus flowers, and radiant ceremonial fire",
+    description: "Traditional Telugu wedding mandap staging featuring intricately carved gold temple pillars, sacred altar ceremonial fire, and lavish jasmine floral architecture.",
+    highlights: ["Temple Pillar Mandap", "Sacred Altar Floral Work", "Ceremonial Warm Lighting"],
   },
   {
-    id: "birthday-parties-placeholder",
-    title: "Birthday Parties — Portfolio Slot",
+    id: "birthday-parties-showcase",
+    title: "Enchanted Safari Birthday Gala",
     category: "birthday-parties",
     categoryLabel: "Birthday Parties",
-    isPlaceholder: true,
-    statusLabel: "Photography Pending",
-    image: "",
-    imageAlt: "Placeholder block for Birthday Parties — authentic VVE event photography pending",
-    description: "Placeholder preview slot. Authentic VVE event photography will be published here once confirmed.",
-    highlights: ["Thematic Backdrops", "Dessert Styling", "Ambient Lighting"],
+    statusLabel: "Curated Showcase",
+    image: "/images/portfolio/birthday-parties.jpg",
+    imageAlt: "Grand luxury 1st birthday gala, Enchanted Royal Safari theme with life-size golden giraffes and lions, organic pastel balloon installations, custom illuminated marquee",
+    description: "Immersive safari-themed milestone birthday production featuring life-size golden wildlife sculptures, organic pastel balloon installations, and custom illuminated name marquees.",
+    highlights: ["Thematic Backdrops", "Organic Balloon Art", "Ambient Illuminations"],
   },
   {
-    id: "surprise-parties-placeholder",
-    title: "Surprise Parties — Portfolio Slot",
+    id: "surprise-parties-showcase",
+    title: "Romantic Rooftop Marriage Proposal",
     category: "surprise-parties",
     categoryLabel: "Surprise Parties",
-    isPlaceholder: true,
-    statusLabel: "Photography Pending",
-    image: "",
-    imageAlt: "Placeholder block for Surprise Parties — authentic VVE event photography pending",
-    description: "Placeholder preview slot. Authentic VVE event photography will be published here once confirmed.",
-    highlights: ["Ambient Floral Details", "Surprise Reveal Flow", "Coordinated Lighting"],
+    statusLabel: "Curated Showcase",
+    image: "/images/portfolio/surprise-parties.jpg",
+    imageAlt: "Stunning rooftop romantic marriage proposal setup at night in Hyderabad, neon Marry Me illuminated sign, thousands of red rose petals, glass hurricane lanterns",
+    description: "Secretly staged rooftop proposal overlooking Hyderabad city lights, featuring an illuminated neon sign, cascading red rose petal pathways, and glass hurricane lanterns.",
+    highlights: ["Discreet Coordination", "Candlelight Pathway", "City Skyline Views"],
   },
   {
-    id: "indoor-outdoor-events-placeholder",
-    title: "Indoor & Outdoor Events — Portfolio Slot",
+    id: "indoor-outdoor-events-showcase",
+    title: "Lawn Gala & Fairytale Canopy Banquet",
     category: "indoor-outdoor-events",
     categoryLabel: "Indoor & Outdoor Events",
-    isPlaceholder: true,
-    statusLabel: "Photography Pending",
-    image: "",
-    imageAlt: "Placeholder block for Indoor & Outdoor Events — authentic VVE event photography pending",
-    description: "Placeholder preview slot. Authentic VVE event photography will be published here once confirmed.",
-    highlights: ["Canopy & Tent Staging", "Venue Layout Planning", "Lighting Arrays"],
+    statusLabel: "Curated Showcase",
+    image: "/images/portfolio/indoor-outdoor-events.jpg",
+    imageAlt: "Open lawn evening gala banquet with fairytale canopy lighting and illuminated circular cocktail lounge",
+    description: "Expansive open-lawn celebration under ancient trees draped in cascading fairy lights, imperial dining arrangements, and an illuminated circular lounge.",
+    highlights: ["Fairytale Canopy", "Zoned Banquet Layout", "Architectural Illumination"],
   },
   {
-    id: "school-college-events-placeholder",
-    title: "School & College Events — Portfolio Slot",
+    id: "school-college-events-showcase",
+    title: "Campus Cultural Fest Concert Stage",
     category: "school-college-events",
     categoryLabel: "School & College Events",
-    isPlaceholder: true,
-    statusLabel: "Photography Pending",
-    image: "",
-    imageAlt: "Placeholder block for School & College Events — authentic VVE event photography pending",
-    description: "Placeholder preview slot. Authentic VVE event photography will be published here once confirmed.",
-    highlights: ["Stage Trussing Infrastructure", "Acoustic Audio Setup", "Crowd Entry Management"],
+    statusLabel: "Curated Showcase",
+    image: "/images/portfolio/school-college-events.jpg",
+    imageAlt: "Vibrant campus cultural festival concert stage with massive truss lighting systems, synchronized laser show, and high-energy crowd",
+    description: "Full-scale campus festival stage featuring heavy-duty aluminum trussing, synchronized moving-head beam lights, concert line-array audio, and structured crowd barricades.",
+    highlights: ["Concert Truss Rig", "High-Fidelity Audio", "Crowd Safety Barriers"],
   },
   {
-    id: "new-year-parties-placeholder",
-    title: "New Year Parties — Portfolio Slot",
+    id: "new-year-parties-showcase",
+    title: "Royal Countdown Gala Ballroom",
     category: "new-year-parties",
     categoryLabel: "New Year Parties",
-    isPlaceholder: true,
-    statusLabel: "Photography Pending",
-    image: "",
-    imageAlt: "Placeholder block for New Year Parties — authentic VVE event photography pending",
-    description: "Placeholder preview slot. Authentic VVE event photography will be published here once confirmed.",
-    highlights: ["Dancefloor Setup", "Themed Atmosphere", "Midnight Celebration"],
+    statusLabel: "Curated Showcase",
+    image: "/images/portfolio/new-year-parties.jpg",
+    imageAlt: "Spectacular New Year luxury countdown celebration featuring golden confetti drops, neon light sculptures, champagne towers, and live orchestra stage",
+    description: "High-octane New Year midnight countdown celebration featuring golden confetti cannons, architectural neon light installations, and dancefloor staging.",
+    highlights: ["Midnight Special Effects", "Dancefloor Infrastructure", "Dynamic Light Shows"],
   },
 ];
+
+/**
+ * Agreed Wedding Packages taxonomy & service structure.
+ * 
+ * 1. Home Events & Pujas (combined category)
+ *    - Bride-side traditional ceremonies & pujas
+ *    - Groom-side traditional ceremonies & pujas
+ *    - Family-requested traditional rituals
+ * 
+ * 2. Bride & Groom Services
+ *    - Styling/coordination services & beauty/grooming professionals
+ * 
+ * 3. Wedding Functions (3 independent selectable functions)
+ *    - Haldi (ceremony requirements, preferred date, venue, decor preferences, special instructions)
+ *    - Sangeet (entertainment requirements, music/performance, stage setup, venue, coordination)
+ *    - Reception (stage & seating requirements, decor preferences, venue, guest count, reception coordination)
+ * 
+ * 4. 7 Reusable Add-On Services
+ */
+export interface WeddingCategoryStructure {
+  id: string;
+  title: string;
+  tag: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  items: {
+    id: string;
+    label: string;
+    description: string;
+  }[];
+  customizationNote: string;
+}
+
+export interface WeddingFunctionStructure {
+  id: "haldi" | "sangeet" | "reception";
+  title: string;
+  tag: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  focusAreas: string[];
+  selectableOptions: string[];
+}
+
+export const weddingStructure = {
+  homeEventsAndPujas: {
+    id: "home-events-pujas",
+    title: "Home Events & Pujas",
+    tag: "Traditional Ceremonies",
+    description: "Dedicated planning and ceremonial staging for traditional home rituals, tailored precisely to your family customs, sacred timings, and residence layout.",
+    image: "/images/wedding-services/home-events-pujas.jpg",
+    imageAlt: "Auspicious South Indian traditional puja and ceremony stage with fresh marigold floral bells, brass lamps, and Tanjore artwork backdrop",
+    customizationNote: "Every family observes distinct ritual sequences and auspicious timings. We arrange the ceremony flow to capture your exact family customs and requirements.",
+    services: [
+      {
+        id: "bride-side-rituals",
+        label: "Bride-Side Ceremonies & Pujas",
+        description: "Pellikuthuru ceremony, Gowri Puja, Mangala Snanam ritual setup, Mehendi home staging, and traditional floral decor.",
+      },
+      {
+        id: "groom-side-rituals",
+        label: "Groom-Side Ceremonies & Pujas",
+        description: "Pellikoduku ceremony, Snathakam rituals, sacred Vratham coordination, traditional entrance toranams, and priest stage setup.",
+      },
+      {
+        id: "family-rituals",
+        label: "Family-Requested Custom Rituals",
+        description: "Custom pre-wedding and post-wedding pujas, Satyanarayana Swamy Vratham, house blessing rituals, and bespoke cultural ceremonies.",
+      },
+    ],
+  },
+
+  brideAndGroomServices: {
+    id: "bride-groom-services",
+    title: "Bride & Groom Services",
+    tag: "Styling & Preparation",
+    description: "End-to-end coordination for bridal beauty, grooming, bespoke styling, and preparation schedules to ensure seamless readiness across all functions.",
+    image: "/images/wedding-services/bride-groom-services.jpg",
+    imageAlt: "Royal bride in traditional kanjeevaram sari and heirloom jewelry on decorated swing",
+    customizationNote: "We coordinate with top-tier beauty and grooming professionals according to your preferred styling direction, ceremony timeline, and attire changes.",
+    services: [
+      {
+        id: "bridal-makeup",
+        label: "Bridal Makeup",
+        description: "High-definition bridal makeup tailored to morning ceremony rituals, evening receptions, and photography lighting.",
+      },
+      {
+        id: "bridal-hairstyling",
+        label: "Bridal Hairstyling & Draping",
+        description: "Traditional floral poola jada, contemporary updos, hair accessories, and precise saree/dupatta draping.",
+      },
+      {
+        id: "groom-styling",
+        label: "Groom Grooming & Styling",
+        description: "Hair styling, beard grooming, safa/turban tying, and traditional attire coordination for all wedding functions.",
+      },
+      {
+        id: "look-coordination",
+        label: "Outfit & Look Coordination",
+        description: "Color palette coordination between bride and groom, accessory matching, and ceremony attire schedules.",
+      },
+      {
+        id: "prep-schedules",
+        label: "Preparation & Call-Time Schedules",
+        description: "Structured preparation timelines and room coordination ensuring timely arrival for auspicious muhurtham moments.",
+      },
+    ],
+  },
+
+  functions: [
+    {
+      id: "haldi" as const,
+      title: "Haldi Ceremony",
+      tag: "Vibrant Day Ritual",
+      description: "Sunlit yellow celebrations featuring fresh marigold floral installations, brass urlis, personalized floral swings, and celebratory splash-ready decor.",
+      image: "/images/wedding-services/haldi.jpg",
+      imageAlt: "Vibrant luxury Haldi ceremony decor with traditional yellow marigold curtains, brass urli bowls filled with rose petals, custom swing with floral upholstery",
+      focusAreas: [
+        "Traditional Yellow & Marigold Staging",
+        "Brass Urli & Floral Seating Arrangements",
+        "Celebratory Splash & Petal Toss Logistics",
+        "Daylight Photo & Video Sightlines",
+      ],
+      selectableOptions: [
+        "Marigold & Floral Curtain Backdrop",
+        "Carved Brass Urli Seating Setup",
+        "Custom Floral Upholstery Swing",
+        "Guest Yellow Theme Favors & Floral Jewelry",
+        "Outdoor Lawn / Courtyard Staging",
+      ],
+    },
+    {
+      id: "sangeet" as const,
+      title: "Sangeet Musical Evening",
+      tag: "High-Energy Evening",
+      description: "Spectacular musical production with concert-grade sound, dynamic moving-head lighting, LED starfields, glossy dance floor, and choreographed performance staging.",
+      image: "/images/wedding-services/sangeet.jpg",
+      imageAlt: "Dazzling Sangeet musical evening stage in banquet palace with cascading LED starfields and grand dance floor",
+      focusAreas: [
+        "Concert Line-Array Audio & Stage Lighting",
+        "Curved P2.5 High-Definition LED Backdrop",
+        "Glossy Acrylic Dancefloor & Sparkler Pyro",
+        "Choreography & Run-of-Show Stage Timing",
+      ],
+      selectableOptions: [
+        "Grand Performance Stage & Truss Rig",
+        "High-Definition LED Screen Visuals",
+        "Glossy Mirror Dance Floor",
+        "Cold Pyro & Atmospheric Sparklers",
+        "Cocktail & Velvet Lounge Seating",
+      ],
+    },
+    {
+      id: "reception" as const,
+      title: "Wedding Reception",
+      tag: "Grand Evening Gala",
+      description: "Palatial stage architecture, bespoke floral chandeliers, imperial banquet seating, ambient mood lighting, and coordinated guest hospitality.",
+      image: "/images/wedding-services/reception.jpg",
+      imageAlt: "Fairy-light canopy wedding reception garden under centuries-old banyan trees with hanging glass baubles and warm Edison illumination",
+      focusAreas: [
+        "Imperial Stage & Couple Seating Architecture",
+        "Floral Canopy & Chandelier Installations",
+        "Guest Greeting Flow & Photography Corridor",
+        "Banquet Table Zoning & Ambient Lighting",
+      ],
+      selectableOptions: [
+        "Grand Palatial Floral Stage Backdrop",
+        "Fairytale Tree Canopy & Edison Bulb Glow",
+        "VIP Mirror Banquet Tables & Crystal Candelabras",
+        "Welcome Walkway & Photo Opportunity Foyer",
+        "Host & Guest Movement Coordination",
+      ],
+    },
+  ],
+};

@@ -312,8 +312,8 @@ test.describe('VVE Browser Smoke & Gate 3 Verification Suite', () => {
     const closeBtn = modal.locator('button[aria-label="Close modal"]');
     await expect(closeBtn).toBeVisible();
 
-    // Explicit placeholder label inside modal
-    await expect(modal).toContainText('Placeholder Slot — Authentic VVE Event Photography Pending');
+    // Verified showcase label inside modal
+    await expect(modal).toContainText('Curated Event Scenography & Production Showcase');
 
     // Pressing Escape closes the modal
     await page.keyboard.press('Escape');

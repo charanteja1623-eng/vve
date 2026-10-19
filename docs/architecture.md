@@ -268,7 +268,6 @@ Examples:
 - Tent House
 - Customized Gifts
 - Resin & 3D Moulds
-- Corporate Gifting
 
 ------------------------------------------------------------------------
 

@@ -10,6 +10,7 @@ import {
   eventDisciplines,
   artisanalServices,
 } from "@/lib/site";
+import WeddingPackageExplorer from "@/components/sections/WeddingPackageExplorer";
 
 interface PageProps {
   params: Promise<{
@@ -172,6 +173,11 @@ export default async function CategoryDetailPage({ params }: PageProps) {
 
           </div>
         </section>
+ 
+        {/* 2B. Interactive Wedding Package Architecture Explorer (Wedding Packages Only) */}
+        {category.slug === "wedding-packages" && (
+          <WeddingPackageExplorer />
+        )}
 
         {/* 3. Planning & Logistical Considerations */}
         <section className="py-20 px-6 lg:px-12 bg-burgundy-deep border-b border-gold/20">
@@ -278,7 +284,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
               Plan Your {category.title}
             </h2>
             <p className="font-sans text-base text-ivory/80 leading-relaxed mb-8">
-              Discuss dates, guest requirements, and bespoke design possibilities with our planning team across Hyderabad and Secunderabad.
+              Discuss dates, guest requirements, and bespoke design possibilities with our planning team across Hyderabad, Andhra Pradesh, and Telangana.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

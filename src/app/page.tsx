@@ -3,7 +3,6 @@ import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import LogoLoader from "@/components/loader/LogoLoader";
 import LogoMark from "@/components/brand/LogoMark";
-import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import ScrollExperienceController from "@/components/scroll/ScrollExperienceController";
 import EditorialSplitStage from "@/components/sections/EditorialSplitStage";
 import WhatsAppLink from "@/components/ui/WhatsAppLink";
@@ -201,28 +200,31 @@ export default function Home() {
               {portfolioProjects.slice(0, 4).map((project, idx) => {
                 const spanClass = idx === 0 ? "md:col-span-8 min-h-[420px]" : idx === 1 ? "md:col-span-4 min-h-[420px]" : idx === 2 ? "md:col-span-5 min-h-[360px]" : "md:col-span-7 min-h-[360px]";
                 return (
-                  <div
+                  <Link
                     key={project.id}
-                    className={`mobile-swipe-item ${spanClass} relative border border-gold/25 bg-gradient-to-br from-white/[0.06] via-burgundy-deep/40 to-[#120102]/60 backdrop-blur-xl flex flex-col justify-end p-8 group overflow-hidden rounded-xl shadow-[0_12px_36px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.16)] hover:border-gold/45 hover:shadow-[0_16px_45px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.24),_0_0_20px_rgba(201,161,90,0.16)] transition-all duration-500`}
+                    href={`/events/${project.category}`}
+                    className={`mobile-swipe-item ${spanClass} relative border border-gold/25 bg-gradient-to-br from-white/[0.06] via-burgundy-deep/40 to-[#120102]/60 backdrop-blur-xl flex flex-col justify-end p-8 group overflow-hidden rounded-xl shadow-[0_12px_36px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.16)] hover:border-gold/45 hover:shadow-[0_16px_45px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.24),_0_0_20px_rgba(201,161,90,0.16)] transition-all duration-500 block focus:outline-none focus:ring-2 focus:ring-gold`}
                   >
-                    <ImagePlaceholder
-                      title={project.title}
-                      category={project.categoryLabel}
-                      aspectRatio="16/9"
-                      className="absolute inset-0 w-full h-full"
-                      alt={`Neutral placeholder block for ${project.title}`}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/95 via-burgundy-deep/60 to-transparent z-10" />
+                    <div className="absolute inset-0 w-full h-full">
+                      <Image
+                        src={project.image}
+                        alt={project.imageAlt}
+                        fill
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 66vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/95 via-burgundy-deep/60 to-transparent z-10" />
+                    </div>
                     <div className="relative z-20 text-left transition-transform duration-500 group-hover:-translate-y-1">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold">{project.categoryLabel}</span>
                         <span className="text-gold/40 text-xs">•</span>
                         <span className="font-sans text-xs text-gold/80">{project.statusLabel}</span>
                       </div>
-                      <h3 className="font-serif text-2xl md:text-3xl text-ivory mb-2">{project.title}</h3>
-                      <p className="font-sans text-xs text-ivory/75 max-w-lg line-clamp-2">{project.description}</p>
+                      <h3 className="font-serif text-2xl md:text-3xl text-ivory mb-2 group-hover:text-gold transition-colors">{project.title}</h3>
+                      <p className="font-sans text-xs text-ivory/80 max-w-lg line-clamp-2">{project.description}</p>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

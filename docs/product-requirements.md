@@ -107,7 +107,6 @@ The team should be able to maintain:
 - Photography & Videography
 - Customized Gifts
 - Resin & 3D Moulds
-- Corporate Gifting
 
 These should be organized clearly on the website rather than reproduced
 as a long business-card list.

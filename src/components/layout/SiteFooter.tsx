@@ -10,7 +10,7 @@ export default function SiteFooter() {
             {site.name}
           </Link>
           <p className="text-sm leading-relaxed max-w-xs">{site.tagline}</p>
-          <span className="text-xs text-ivory/60">Based in {site.serviceArea}</span>
+          <p className="text-xs text-ivory/60 leading-relaxed max-w-xs">{site.serviceArea}</p>
         </div>
         
         <div className="md:col-span-3 flex flex-col gap-4">
@@ -26,12 +26,11 @@ export default function SiteFooter() {
         <div className="md:col-span-5 flex flex-col gap-4">
           <span className="text-xs font-bold uppercase tracking-widest text-gold">Contact</span>
           <div className="flex flex-col gap-3 text-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-              <a href={`tel:${site.phones[0].replace(/\s+/g, '')}`} className="hover:text-gold transition-colors w-fit">
+            <div className="flex flex-col gap-1.5">
+              <a href={site.telLinks[0]} className="hover:text-gold transition-colors w-fit">
                 {site.phones[0]}
               </a>
-              <span className="hidden sm:inline text-gold/40">•</span>
-              <a href={`tel:+91${site.phones[1].replace(/\s+/g, '')}`} className="hover:text-gold transition-colors w-fit">
+              <a href={site.telLinks[1]} className="hover:text-gold transition-colors w-fit">
                 {site.phones[1]}
               </a>
             </div>
@@ -59,7 +58,7 @@ export default function SiteFooter() {
       
       <div className="border-t border-gold/10">
         <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-ivory/50">
-          <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
+          <span suppressHydrationWarning>{`© 2026 ${site.name}. All rights reserved.`}</span>
           <div className="flex items-center gap-4">
             <Link href="/legal/privacy" className="hover:text-ivory transition-colors">Privacy Policy</Link>
             <Link href="/legal/terms" className="hover:text-ivory transition-colors">Terms of Service</Link>

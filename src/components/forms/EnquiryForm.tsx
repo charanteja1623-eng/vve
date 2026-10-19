@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useSearchParams } from "next/navigation";
 
 const APPROVED_EVENT_TYPES: string[] = [
@@ -21,13 +21,24 @@ const APPROVED_ADDONS: string[] = [
   "photo-videography",
   "customized-gifts",
   "resin-3d-molds",
-  "corporate-gifting",
 ];
 
+const emptySubscribe = () => () => {};
+
+function useIsHydrated() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
+
 export default function EnquiryForm() {
+  const isHydrated = useIsHydrated();
   const searchParams = useSearchParams();
   const rawEventType = searchParams.get("eventType")?.toLowerCase().trim() || "";
   const rawAddon = searchParams.get("addon")?.toLowerCase().trim() || "";
+  const rawServices = searchParams.get("services")?.trim() || "";
 
   // Validate eventType against confirmed list; fail safely to empty string if invalid
   const validatedEventType = (() => {
@@ -43,9 +54,31 @@ export default function EnquiryForm() {
 
   const [userEventType, setUserEventType] = useState<string | null>(null);
   const [userAddon, setUserAddon] = useState<string | null>(null);
+  const [userMessage, setUserMessage] = useState<string | null>(null);
 
-  const eventType = userEventType !== null ? userEventType : validatedEventType;
-  const addon = userAddon !== null ? userAddon : validatedAddon;
+  // During SSR and initial hydration pass (!isHydrated), render empty strings to perfectly match server HTML.
+  // Immediately after hydration completes (isHydrated), seamlessly apply prefilled query params.
+  const eventType = !isHydrated
+    ? ""
+    : userEventType !== null
+    ? userEventType
+    : validatedEventType;
+
+  const addon = !isHydrated
+    ? ""
+    : userAddon !== null
+    ? userAddon
+    : validatedAddon;
+
+  const defaultInitialMessage = rawServices
+    ? `I am requesting planning and quotation for the following services:\n\n${rawServices}`
+    : "";
+
+  const message = !isHydrated
+    ? ""
+    : userMessage !== null
+    ? userMessage
+    : defaultInitialMessage;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<{ type: "idle" | "success" | "error"; message: string }>({
@@ -81,6 +114,7 @@ export default function EnquiryForm() {
         (e.target as HTMLFormElement).reset();
         setUserEventType("");
         setUserAddon("");
+        setUserMessage("");
       } else {
         setStatus({
           type: "error",
@@ -95,7 +129,12 @@ export default function EnquiryForm() {
   }
 
   return (
-    <form id="enquiry-form" className="md:col-span-7 flex flex-col gap-8 p-6 sm:p-10 rounded-2xl bg-burgundy-deep/[0.03] backdrop-blur-md border border-burgundy/15 shadow-[0_8px_30px_rgba(58,5,7,0.06),_inset_0_1px_0_rgba(255,255,255,0.8)]" onSubmit={handleSubmit}>
+    <form
+      id="enquiry-form"
+      suppressHydrationWarning
+      className="md:col-span-7 flex flex-col gap-8 p-6 sm:p-10 rounded-2xl bg-burgundy-deep/[0.03] backdrop-blur-md border border-burgundy/15 shadow-[0_8px_30px_rgba(58,5,7,0.06),_inset_0_1px_0_rgba(255,255,255,0.8)]"
+      onSubmit={handleSubmit}
+    >
       {status.type !== "idle" && (
         <div
           role="alert"
@@ -186,6 +225,7 @@ export default function EnquiryForm() {
             id="eventType"
             name="eventType"
             required
+            suppressHydrationWarning
             value={eventType}
             onChange={(e) => setUserEventType(e.target.value)}
             disabled={isSubmitting}
@@ -209,6 +249,7 @@ export default function EnquiryForm() {
           <select
             id="addon"
             name="addon"
+            suppressHydrationWarning
             value={addon}
             onChange={(e) => setUserAddon(e.target.value)}
             disabled={isSubmitting}
@@ -222,7 +263,6 @@ export default function EnquiryForm() {
             <option value="photo-videography">Photo & Videography</option>
             <option value="customized-gifts">Customized Gifts</option>
             <option value="resin-3d-molds">Resin & 3D Molds</option>
-            <option value="corporate-gifting">Corporate Gifting</option>
           </select>
         </div>
       </div>
@@ -268,6 +308,9 @@ export default function EnquiryForm() {
           rows={5}
           required
           maxLength={2000}
+          suppressHydrationWarning
+          value={message}
+          onChange={(e) => setUserMessage(e.target.value)}
           disabled={isSubmitting}
           className="border-b border-burgundy/30 bg-transparent py-3 focus:border-gold focus:outline-none transition-colors resize-none font-sans text-burgundy-deep disabled:opacity-50"
           placeholder="Tell us more about your event ideas, approximate guest count, and any special preferences..."

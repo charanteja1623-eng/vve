@@ -1,13 +1,13 @@
+import Image from "next/image";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { site, artisanalServices } from "@/lib/site";
-import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import WhatsAppLink from "@/components/ui/WhatsAppLink";
 import Link from "next/link";
 
 export const metadata = {
   title: `Add-On Services & Production — ${site.name}`,
-  description: "Coordinated catering, decoration, tent house, DJ, screens, and event gifting in Hyderabad.",
+  description: "Coordinated catering, decoration, tent house, DJ, screens, and event gifting across Hyderabad, Andhra Pradesh, and Telangana.",
 };
 
 export default function ServicesPage() {
@@ -32,7 +32,7 @@ export default function ServicesPage() {
             </h1>
             <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-2xl leading-relaxed mb-6">
-              Our eight confirmed add-on services provide seamless logistical and design support for weddings, birthdays, and public events across Hyderabad.
+              Our seven confirmed add-on services provide seamless logistical and design support for weddings, birthdays, and public events across Hyderabad, Andhra Pradesh, and Telangana.
             </p>
             <Link
               href="/events#addons"
@@ -43,7 +43,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* 8 Services Bento Grid */}
+        {/* 7 Services Bento Grid */}
         <section className="py-24 px-6 lg:px-12 bg-burgundy">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             {artisanalServices.map((service) => (
@@ -53,13 +53,13 @@ export default function ServicesPage() {
                 className="scroll-mt-32 border border-gold/25 bg-gradient-to-br from-white/[0.08] via-burgundy-deep/40 to-[#120102]/65 rounded-2xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.18),_inset_0_0_24px_rgba(201,161,90,0.04)] backdrop-blur-xl flex flex-col justify-between group hover:border-gold/45 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7),_inset_0_1px_0_rgba(255,255,255,0.28),_0_0_30px_rgba(201,161,90,0.18)] transition-all duration-500"
               >
                 {/* Visual Header */}
-                <div className="relative h-72 sm:h-80 overflow-hidden bg-plum border-b border-gold/20">
-                  <ImagePlaceholder
-                    title={service.title}
-                    category={service.number}
-                    aspectRatio="16/10"
-                    className="w-full h-full"
-                    alt={`Placeholder block for ${service.title} — authentic event photography pending`}
+                <div className="relative h-72 sm:h-80 overflow-hidden bg-burgundy-deep border-b border-gold/20">
+                  <Image
+                    src={service.image}
+                    alt={service.imageAlt}
+                    fill
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep via-burgundy-deep/30 to-transparent" />
                   

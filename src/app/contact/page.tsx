@@ -33,18 +33,18 @@ export default function ContactPage() {
                 <h3 className="font-serif text-3xl text-gold-light mb-4">Direct Contact</h3>
                 <p className="text-sm opacity-80 mb-10 font-sans leading-relaxed">Reach out to us directly for immediate assistance or questions regarding our services.</p>
                 <div className="space-y-8 font-sans">
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2.5">
                     <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-90">Phone</span>
-                    <a href={`tel:${site.phones[0].replace(/\s+/g, '')}`} className="text-lg hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all">{site.phones[0]}</a>
-                    <a href={`tel:+91${site.phones[1].replace(/\s+/g, '')}`} className="text-lg hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all">{site.phones[1]}</a>
+                    <a href={site.telLinks[0]} className="text-lg text-ivory hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all w-fit">{site.phones[0]}</a>
+                    <a href={site.telLinks[1]} className="text-lg text-ivory hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all w-fit">{site.phones[1]}</a>
                   </div>
                   <div className="flex flex-col gap-2">
                     <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-90">Email</span>
-                    <a href={`mailto:${site.email}`} className="text-lg hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all">{site.email}</a>
+                    <a href={`mailto:${site.email}`} className="text-lg text-ivory hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all w-fit">{site.email}</a>
                   </div>
                   <div className="flex flex-col gap-2">
                     <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-90">Location</span>
-                    <span className="text-lg">{site.serviceArea}</span>
+                    <span className="text-base sm:text-lg text-ivory/90 leading-relaxed">{site.serviceArea}</span>
                   </div>
                 </div>
               </div>

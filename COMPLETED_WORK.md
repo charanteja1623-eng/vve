@@ -104,7 +104,7 @@ Zero placeholder wireframes remain in the application. All pages are populated w
    - Direct booking links leading directly to `/contact` prefilled with event discipline.
 
 3. **Artisanal Guild (`src/app/services/page.tsx`):**
-   - Full breakdown of all 8 production capabilities:
+   - Full breakdown of all 7 production capabilities:
      1. *Live Shahi Catering* (Nizami, Awadhi, Pan-Indian royal culinary spreads)
      2. *Couture Decoration & Florals* (Exotic blooms, crystal chandeliers, brass urlis)
      3. *German Hangar & Luxury Tents* (Weatherproof structures, bespoke draping)
@@ -112,7 +112,6 @@ Zero placeholder wireframes remain in the application. All pages are populated w
      5. *Heirloom Photography & Cinematic Film* (Drone coverage, 4K color grading)
      6. *Bespoke Favors & Welcome Boxes* (Silver coins, handcrafted sweets)
      7. *Preservation Resin & 3D Memorial Moulds* (Bridal garland preservation)
-     8. *Executive Corporate Gifting* (Laser-engraved leather, artisan hampers)
 
 4. **Interactive Portfolio Archive (`src/app/work/page.tsx`):**
    - Interactive client-side category filtering without page reloads:
@@ -204,6 +203,10 @@ Zero placeholder wireframes remain in the application. All pages are populated w
   - Horizontal swipe containers with momentum scrolling for event disciplines and portfolio commissioning cards.
 - **Accessible Neutral Image Placeholders (`src/components/ui/ImagePlaceholder.tsx`):**
   - Self-contained SVG pattern placeholders replacing external prototype assets.
+- **SSR / Hydration Text & DOM Synchronization (`src/components/forms/EnquiryForm.tsx` & `src/app/work/page.tsx`):**
+  - Eliminated Next.js 16 / React 19 recoverable hydration mismatch (`server rendered text didn't match client`) caused by URL query parameters prefilling `<textarea>`, `<select>`, and portfolio category filters during initial hydration.
+  - Implemented React's canonical two-pass hydration synchronization primitive (`useSyncExternalStore`) to ensure 100% bit-for-bit text node match with server-rendered HTML before seamlessly applying prefilled URL parameters.
+  - Formatted dynamic footer copyright text into an atomic string template literal with `suppressHydrationWarning`.
 
 ---
 

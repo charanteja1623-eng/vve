@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
+import Image from "next/image";
 import styles from "@/styles/feature-sections.module.css";
 import { eventDisciplines } from "@/lib/site";
 
@@ -161,17 +161,18 @@ export default function ParallaxFeatureSections() {
 
             {/* Visual Media Card (Col 8-12) */}
             <div className="lg:col-span-5 flex flex-col items-center">
-              <div className={`w-full ${styles.imageCardWrapper}`}>
-                <ImagePlaceholder
-                  title={weddings.title}
-                  category={weddings.tag}
-                  aspectRatio="16/10"
-                  className="w-full h-full min-h-[260px] sm:min-h-[320px]"
-                  alt={`Neutral placeholder block for ${weddings.title}`}
+              <div className={`w-full relative aspect-[16/10] min-h-[260px] sm:min-h-[320px] rounded-xl overflow-hidden border border-gold/30 bg-burgundy-deep/40 backdrop-blur-md`}>
+                <Image
+                  src={weddings.image}
+                  alt={weddings.imageAlt}
+                  fill
+                  className="object-cover object-center"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-sans px-3 py-1.5 bg-burgundy-deep/90 text-gold border border-gold/25 rounded backdrop-blur-md">
-                  <span>Capacity</span>
-                  <span className="font-semibold text-ivory">{weddings.capacity}</span>
+                  <span>Planning Scope</span>
+                  <span className="font-semibold text-ivory">{weddings.tag}</span>
                 </div>
               </div>
             </div>
@@ -219,17 +220,18 @@ export default function ParallaxFeatureSections() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Visual Media Card (Col 1-5 on desktop - Mirrored Layout) */}
             <div className="lg:col-span-5 order-2 lg:order-1 flex flex-col items-center">
-              <div className={`w-full ${styles.imageCardWrapper}`}>
-                <ImagePlaceholder
-                  title={celebrations.title}
-                  category={celebrations.tag}
-                  aspectRatio="16/10"
-                  className="w-full h-full min-h-[260px] sm:min-h-[320px]"
-                  alt={`Neutral placeholder block for ${celebrations.title}`}
+              <div className={`w-full relative aspect-[16/10] min-h-[260px] sm:min-h-[320px] rounded-xl overflow-hidden border border-gold/30 bg-burgundy-deep/40 backdrop-blur-md`}>
+                <Image
+                  src={celebrations.image}
+                  alt={celebrations.imageAlt}
+                  fill
+                  className="object-cover object-center"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-sans px-3 py-1.5 bg-burgundy-deep/90 text-gold border border-gold/25 rounded backdrop-blur-md">
-                  <span>Guest Range</span>
-                  <span className="font-semibold text-ivory">{celebrations.capacity}</span>
+                  <span>Curated Scope</span>
+                  <span className="font-semibold text-ivory">{celebrations.tag}</span>
                 </div>
               </div>
             </div>
@@ -366,17 +368,18 @@ export default function ParallaxFeatureSections() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch mb-10">
             {/* Widescreen Media Visual (Col 1-7) */}
             <div className="lg:col-span-7 flex flex-col justify-center">
-              <div className={`w-full ${styles.imageCardWrapper}`}>
-                <ImagePlaceholder
-                  title={corporate.title}
-                  category={corporate.tag}
-                  aspectRatio="16/9"
-                  className="w-full h-full min-h-[260px] sm:min-h-[320px]"
-                  alt={`Neutral placeholder block for ${corporate.title}`}
+              <div className={`w-full relative aspect-[16/9] min-h-[260px] sm:min-h-[320px] rounded-xl overflow-hidden border border-gold/30 bg-burgundy-deep/40 backdrop-blur-md`}>
+                <Image
+                  src={corporate.image}
+                  alt={corporate.imageAlt}
+                  fill
+                  className="object-cover object-center"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-sans px-3 py-1.5 bg-burgundy-deep/90 text-gold border border-gold/25 rounded backdrop-blur-md">
-                  <span>Capacity Scale</span>
-                  <span className="font-semibold text-ivory">{corporate.capacity}</span>
+                  <span>Production Scope</span>
+                  <span className="font-semibold text-ivory">{corporate.tag}</span>
                 </div>
               </div>
             </div>

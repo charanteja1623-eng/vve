@@ -1,11 +1,11 @@
 "use client";
 
-import { Suspense, useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
+import { Suspense, useState, useEffect, useRef, useCallback, useSyncExternalStore } from "react";
 import { useSearchParams } from "next/navigation";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { portfolioProjects, type PortfolioProject, type ConfirmedCategorySlug } from "@/lib/site";
-import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import WhatsAppLink from "@/components/ui/WhatsAppLink";
 import Link from "next/link";
 
@@ -21,12 +21,25 @@ const CATEGORY_TABS: { id: FilterCategory; label: string }[] = [
   { id: "new-year-parties", label: "New Year Parties" },
 ];
 
+const emptySubscribe = () => () => {};
+
+function useIsHydrated() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
+
 function WorkGallery() {
+  const isHydrated = useIsHydrated();
   const searchParams = useSearchParams();
   const queryCategory = searchParams.get("category");
 
+  // Keep fallbackCategory as 'all' during SSR and initial hydration to match server HTML.
+  // Seamlessly transition to the requested category once hydrated.
   const fallbackCategory: FilterCategory =
-    queryCategory && CATEGORY_TABS.some((tab) => tab.id === queryCategory)
+    isHydrated && queryCategory && CATEGORY_TABS.some((tab) => tab.id === queryCategory)
       ? (queryCategory as FilterCategory)
       : "all";
 
@@ -142,14 +155,16 @@ function WorkGallery() {
                 }}
                 className="group relative h-[440px] rounded-2xl overflow-hidden border border-gold/25 bg-gradient-to-br from-white/[0.06] via-burgundy-deep/40 to-[#120102]/60 backdrop-blur-xl flex flex-col justify-end p-8 shadow-[0_12px_36px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.16)] cursor-pointer hover:border-gold/45 hover:shadow-[0_16px_45px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.24),_0_0_20px_rgba(201,161,90,0.16)] focus:outline-none focus:ring-2 focus:ring-gold transition-all duration-500"
               >
-                <ImagePlaceholder
-                  title={project.title}
-                  category={project.categoryLabel}
-                  aspectRatio="16/10"
-                  className="absolute inset-0 w-full h-full"
-                  alt={`Placeholder block for ${project.title} — authentic event photography pending`}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep via-burgundy-deep/50 to-transparent z-10" />
+                <div className="absolute inset-0 w-full h-full">
+                  <Image
+                    src={project.image}
+                    alt={project.imageAlt}
+                    fill
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep via-burgundy-deep/60 to-transparent z-10" />
+                </div>
 
                 {/* Category Pill */}
                 <div className="absolute top-5 left-5 z-20">
@@ -160,17 +175,17 @@ function WorkGallery() {
 
                 {/* Card Info */}
                 <div className="relative z-20 transition-transform duration-500 group-hover:-translate-y-2">
-                  <span className="font-sans text-xs text-gold/80 mb-1.5 block">
+                  <span className="font-sans text-xs text-gold/90 mb-1.5 block">
                     {project.statusLabel}
                   </span>
                   <h2 className="font-serif text-2xl md:text-3xl text-ivory mb-2 group-hover:text-gold transition-colors">
                     {project.title}
                   </h2>
-                  <p className="font-sans text-xs text-ivory/80 line-clamp-2 mb-4 leading-relaxed">
+                  <p className="font-sans text-xs text-ivory/85 line-clamp-2 mb-4 leading-relaxed">
                     {project.description}
                   </p>
                   <div className="flex items-center gap-2 text-gold font-sans text-xs font-bold uppercase tracking-wider group-hover:text-gold-light">
-                    <span>View Slot Details</span>
+                    <span>View Project Details</span>
                     <span className="transition-transform group-hover:translate-x-1">→</span>
                   </div>
                 </div>
@@ -207,13 +222,13 @@ function WorkGallery() {
               ✕
             </button>
 
-            <div className="relative h-72 sm:h-96 w-full flex-shrink-0">
-              <ImagePlaceholder
-                title={selectedProject.title}
-                category={selectedProject.categoryLabel}
-                aspectRatio="16/9"
-                className="w-full h-full"
-                alt={`Placeholder block for ${selectedProject.title}`}
+            <div className="relative h-72 sm:h-96 w-full flex-shrink-0 overflow-hidden">
+              <Image
+                src={selectedProject.image}
+                alt={selectedProject.imageAlt}
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 800px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-burgundy via-transparent to-transparent pointer-events-none" />
             </div>
@@ -223,8 +238,8 @@ function WorkGallery() {
                 <span className="text-gold font-sans text-xs font-bold uppercase tracking-widest block mb-1">
                   {selectedProject.categoryLabel} — {selectedProject.statusLabel}
                 </span>
-                <span className="text-ivory/60 font-sans text-xs italic block">
-                  Placeholder Slot — Authentic VVE Event Photography Pending
+                <span className="text-ivory/70 font-sans text-xs italic block">
+                  Curated Event Scenography & Production Showcase
                 </span>
                 <h3 id="modal-project-title" className="font-serif text-3xl md:text-4xl text-ivory mt-2">
                   {selectedProject.title}
@@ -295,8 +310,8 @@ export default function WorkPage() {
               Curated Portfolio
             </h1>
             <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
-            <p className="font-sans text-base md:text-lg text-ivory/80 max-w-2xl leading-relaxed">
-              Explore portfolio preview slots across our confirmed event categories. Authentic VVE event photography will be published here upon verification.
+            <p className="font-sans text-base md:text-lg text-ivory/85 max-w-2xl leading-relaxed">
+              Explore curated commissions across our confirmed event categories. Each production showcases our dedicated staging, floral architecture, and turnkey coordination across Hyderabad, Andhra Pradesh, and Telangana.
             </p>
           </div>
         </section>

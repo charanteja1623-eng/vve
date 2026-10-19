@@ -2,14 +2,13 @@ import Image from "next/image";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { site, eventDisciplines, artisanalServices } from "@/lib/site";
-import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import WhatsAppLink from "@/components/ui/WhatsAppLink";
 import Link from "next/link";
 
 export const metadata = {
   title: `Event Categories & Add-On Services — ${site.name}`,
   description:
-    "Comprehensive wedding packages, birthday celebrations, surprise parties, indoor & outdoor events, campus functions, and event add-on services across Hyderabad & Secunderabad.",
+    "Comprehensive wedding packages, birthday celebrations, surprise parties, indoor & outdoor events, campus functions, and event add-on services across Hyderabad, Andhra Pradesh, and Telangana.",
 };
 
 export default function EventsPage() {
@@ -34,7 +33,7 @@ export default function EventsPage() {
             </h1>
             <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-2xl leading-relaxed mb-8">
-              Explore our six confirmed event categories and eight coordinated add-on services. Every event is planned with dedicated staging, décor, and vendor coordination across Hyderabad and Secunderabad.
+              Explore our six confirmed event categories and seven coordinated add-on services. Every event is planned with dedicated staging, décor, and vendor coordination across Hyderabad, Andhra Pradesh, and Telangana.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
@@ -152,7 +151,7 @@ export default function EventsPage() {
           </div>
         </section>
 
-        {/* Group 2: 8 Confirmed Add-On Services (Option 2A Unified Showcase) */}
+        {/* Group 2: 7 Confirmed Add-On Services (Option 2A Unified Showcase) */}
         <section id="addons" className="py-24 px-6 lg:px-12 bg-burgundy-deep border-b border-gold/20 scroll-mt-28">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
@@ -180,14 +179,15 @@ export default function EventsPage() {
                       <span className="w-2 h-2 rounded-full bg-gold/40" />
                     </div>
 
-                    <div className="relative h-40 w-full mb-4 rounded-lg overflow-hidden border border-gold/15">
-                      <ImagePlaceholder
-                        title={addon.title}
-                        category="Add-On Service"
-                        aspectRatio="16/9"
-                        className="w-full h-full"
-                        alt={`Placeholder block for ${addon.title} — authentic event photography pending`}
+                    <div className="relative h-44 w-full mb-4 rounded-lg overflow-hidden border border-gold/20 shadow-inner">
+                      <Image
+                        src={addon.image}
+                        alt={addon.imageAlt}
+                        fill
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/75 via-transparent to-transparent pointer-events-none" />
                     </div>
 
                     <h3 className="font-serif text-xl text-ivory mb-2">

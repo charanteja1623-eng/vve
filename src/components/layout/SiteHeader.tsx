@@ -106,10 +106,10 @@ export default function SiteHeader() {
           
           <div className="mt-14 text-center space-y-3 font-sans">
             <div className="flex flex-col items-center gap-2">
-              <a href={`tel:${site.phones[0].replace(/\s+/g, '')}`} className="text-gold-light hover:text-gold transition-colors text-base">
+              <a href={site.telLinks[0]} className="text-gold-light hover:text-gold transition-colors text-base">
                 {site.phones[0]}
               </a>
-              <a href={`tel:+91${site.phones[1].replace(/\s+/g, '')}`} className="text-gold-light hover:text-gold transition-colors text-base">
+              <a href={site.telLinks[1]} className="text-gold-light hover:text-gold transition-colors text-base">
                 {site.phones[1]}
               </a>
             </div>
