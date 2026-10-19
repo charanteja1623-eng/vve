@@ -38,7 +38,7 @@ export default function MobileActionBar() {
   return (
     <nav
       aria-label="Mobile quick actions"
-      className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-burgundy-deep/95 backdrop-blur-md border-t border-gold/30 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]"
+      className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-burgundy-deep/85 backdrop-blur-xl border-t border-gold/30 shadow-[0_-4px_25px_rgba(15,1,2,0.8),_inset_0_1px_0_rgba(227,201,133,0.18)]"
       style={{
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
       }}
@@ -48,7 +48,7 @@ export default function MobileActionBar() {
         <a
           href={`tel:${cleanPhone}`}
           aria-label={`Call Vintage Vibe Events at ${primaryPhone}`}
-          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded bg-burgundy/80 border border-gold/40 text-gold-light font-sans text-xs font-bold uppercase tracking-widest hover:border-gold hover:bg-burgundy active:scale-[0.98] transition-all min-h-[48px]"
+          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded bg-burgundy-deep/60 backdrop-blur-md border border-gold/35 text-gold-light font-sans text-xs font-bold uppercase tracking-widest hover:border-gold hover:bg-burgundy/80 hover:shadow-[0_0_16px_rgba(201,161,90,0.25)] active:scale-[0.98] transition-all min-h-[48px]"
         >
           <svg
             width="16"
@@ -71,7 +71,7 @@ export default function MobileActionBar() {
           href="/contact#enquiry-form"
           onClick={handleEnquireClick}
           aria-label="Enquire about event planning"
-          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded bg-gold text-burgundy-deep font-sans text-xs font-bold uppercase tracking-widest hover:bg-gold-light active:scale-[0.98] transition-all shadow-[0_2px_15px_rgba(201,161,90,0.3)] min-h-[48px]"
+          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded bg-gold text-burgundy-deep font-sans text-xs font-bold uppercase tracking-widest hover:bg-gold-light active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(201,161,90,0.35)] hover:shadow-[0_0_28px_rgba(201,161,90,0.55)] border border-gold-light/40 min-h-[48px]"
         >
           <svg
             width="16"

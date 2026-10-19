@@ -95,7 +95,7 @@ export default function EnquiryForm() {
   }
 
   return (
-    <form id="enquiry-form" className="md:col-span-7 flex flex-col gap-8 pt-4" onSubmit={handleSubmit}>
+    <form id="enquiry-form" className="md:col-span-7 flex flex-col gap-8 p-6 sm:p-10 rounded-2xl bg-burgundy-deep/[0.03] backdrop-blur-md border border-burgundy/15 shadow-[0_8px_30px_rgba(58,5,7,0.06),_inset_0_1px_0_rgba(255,255,255,0.8)]" onSubmit={handleSubmit}>
       {status.type !== "idle" && (
         <div
           role="alert"
@@ -287,7 +287,7 @@ export default function EnquiryForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-4 bg-burgundy text-gold hover:text-gold-light hover:bg-burgundy-deep transition-all py-5 px-10 uppercase tracking-widest font-bold text-sm w-full sm:w-auto self-start shadow-[0_4px_15px_rgba(58,5,7,0.2)] disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gold"
+        className="mt-4 bg-burgundy hover:bg-burgundy-deep text-gold hover:text-gold-light border border-gold/40 hover:border-gold hover:shadow-[0_0_20px_rgba(201,161,90,0.3)] transition-all py-5 px-10 uppercase tracking-widest font-bold text-sm w-full sm:w-auto self-start rounded shadow-[0_4px_15px_rgba(58,5,7,0.2)] disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gold"
       >
         {isSubmitting ? "Sending..." : "Submit Enquiry"}
       </button>

@@ -63,23 +63,23 @@ export default function SiteHeader() {
   }, [isOpen]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 ${isOpen ? "z-[60] h-screen bg-burgundy-deep" : "z-50 bg-burgundy-deep/90 backdrop-blur-md"} w-full border-b border-gold/20 text-ivory`}>
+    <header className={`fixed top-0 left-0 right-0 ${isOpen ? "z-[60] h-screen bg-burgundy-deep/95 backdrop-blur-xl" : "z-50 bg-burgundy-deep/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(15,1,2,0.7)]"} w-full border-b border-gold/25 text-ivory transition-colors duration-300`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-serif text-xl tracking-wide text-gold-light hover:text-gold transition-colors z-[70]" onClick={() => setIsOpen(false)}>
+        <Link href="/" className="font-serif text-xl tracking-wide text-gold-light hover:text-gold hover:drop-shadow-[0_0_12px_rgba(201,161,90,0.4)] transition-all z-[70]" onClick={() => setIsOpen(false)}>
           {site.name}
         </Link>
         <nav aria-label="Primary" className="hidden md:flex items-center gap-8 text-sm font-semibold tracking-widest uppercase font-sans">
-          <Link href="/" className="hover:text-gold transition-colors">Home</Link>
-          <Link href="/events" className="hover:text-gold transition-colors">Events</Link>
-          <Link href="/work" className="hover:text-gold transition-colors">Portfolio</Link>
-          <Link href="/contact" className="hover:text-gold transition-colors text-gold">Contact</Link>
+          <Link href="/" className="hover:text-gold hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.3)] transition-all">Home</Link>
+          <Link href="/events" className="hover:text-gold hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.3)] transition-all">Events</Link>
+          <Link href="/work" className="hover:text-gold hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.3)] transition-all">Portfolio</Link>
+          <Link href="/contact" className="hover:text-gold hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.3)] transition-all text-gold">Contact</Link>
         </nav>
         
         {/* Mobile menu button */}
         <div className="md:hidden z-[70]">
-          <button 
+          <button
             ref={buttonRef}
-            className="text-gold p-2 -mr-2 focus:outline-none focus:ring-2 focus:ring-gold rounded" 
+            className="text-gold p-2 -mr-2 focus:outline-none focus:ring-2 focus:ring-gold rounded hover:bg-gold/10 transition-colors"
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
@@ -96,17 +96,26 @@ export default function SiteHeader() {
 
       {/* Mobile menu overlay — overlays entire screen including MobileActionBar */}
       {isOpen && (
-        <div id="mobile-menu" ref={menuRef} className="fixed inset-0 z-[60] bg-burgundy-deep pt-24 px-6 md:hidden overflow-y-auto" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <div id="mobile-menu" ref={menuRef} className="fixed inset-0 z-[60] bg-burgundy-deep/95 backdrop-blur-2xl pt-24 px-6 md:hidden overflow-y-auto border-b border-gold/25 shadow-[inset_0_1px_0_rgba(227,201,133,0.15)]" role="dialog" aria-modal="true" aria-label="Mobile navigation">
           <nav className="flex flex-col gap-8 text-center text-lg font-semibold tracking-widest uppercase font-sans">
-            <Link href="/" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Home</Link>
-            <Link href="/events" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Events</Link>
-            <Link href="/work" className="hover:text-gold transition-colors" onClick={() => setIsOpen(false)}>Portfolio</Link>
-            <Link href="/contact" className="text-gold hover:text-gold-light transition-colors" onClick={() => setIsOpen(false)}>Contact</Link>
+            <Link href="/" className="hover:text-gold hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.3)] transition-all" onClick={() => setIsOpen(false)}>Home</Link>
+            <Link href="/events" className="hover:text-gold hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.3)] transition-all" onClick={() => setIsOpen(false)}>Events</Link>
+            <Link href="/work" className="hover:text-gold hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.3)] transition-all" onClick={() => setIsOpen(false)}>Portfolio</Link>
+            <Link href="/contact" className="text-gold hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.3)] transition-all" onClick={() => setIsOpen(false)}>Contact</Link>
           </nav>
           
-          <div className="mt-16 text-center">
-            <a href={`tel:${site.phones[0].replace(/\s+/g, '')}`} className="block text-gold-light hover:text-gold transition-colors font-sans mb-4">{site.phones[0]}</a>
-            <a href={`mailto:${site.email}`} className="block text-gold-light hover:text-gold transition-colors font-sans">{site.email}</a>
+          <div className="mt-14 text-center space-y-3 font-sans">
+            <div className="flex flex-col items-center gap-2">
+              <a href={`tel:${site.phones[0].replace(/\s+/g, '')}`} className="text-gold-light hover:text-gold transition-colors text-base">
+                {site.phones[0]}
+              </a>
+              <a href={`tel:+91${site.phones[1].replace(/\s+/g, '')}`} className="text-gold-light hover:text-gold transition-colors text-base">
+                {site.phones[1]}
+              </a>
+            </div>
+            <a href={`mailto:${site.email}`} className="block text-gold-light/80 hover:text-gold transition-colors text-sm pt-2">
+              {site.email}
+            </a>
           </div>
         </div>
       )}

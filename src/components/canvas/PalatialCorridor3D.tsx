@@ -353,7 +353,7 @@ export default function PalatialCorridor3D({
         >
           {/* Palatial Floor: Marble Reflection Grid */}
           <div
-            className="absolute bottom-0 w-[2400px] h-[3600px] [transform:rotateX(90deg)_translateZ(-480px)_translateY(-1200px)] [transform-origin:50%_100%] opacity-40 bg-[radial-gradient(#c9a15a_1.5px,transparent_1.5px)] [background-size:48px_48px] border-t border-gold/30"
+            className="absolute bottom-0 w-[2400px] h-[3600px] [transform:rotateX(90deg)_translateZ(-480px)_translateY(-1200px)] [transform-origin:50%_100%] opacity-40 border-t border-gold/30"
             style={{
               backgroundImage: "linear-gradient(to top, rgba(201,161,90,0.15) 1px, transparent 1px), linear-gradient(to right, rgba(201,161,90,0.15) 1px, transparent 1px)",
               backgroundSize: "80px 80px",
@@ -362,7 +362,7 @@ export default function PalatialCorridor3D({
 
           {/* Palatial Ceiling: Ribbed Vaulting */}
           <div
-            className="absolute top-0 w-[2400px] h-[3600px] [transform:rotateX(-90deg)_translateZ(-480px)_translateY(-1200px)] [transform-origin:50%_0%] opacity-25 bg-[radial-gradient(#dfc28c_1.5px,transparent_1.5px)] [background-size:60px_60px] border-b border-gold/30"
+            className="absolute top-0 w-[2400px] h-[3600px] [transform:rotateX(-90deg)_translateZ(-480px)_translateY(-1200px)] [transform-origin:50%_0%] opacity-25 border-b border-gold/30"
           />
 
           {/* Sequential 3D Portals & Colonnades along the Z-axis */}

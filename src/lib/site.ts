@@ -12,7 +12,7 @@ export const site = {
   serviceArea: "Hyderabad & Secunderabad, Telangana",
 
   // Confirmed contact details
-  phones: ["8886882608", "9032880528"],
+  phones: ["8886882608", "96529 61775"],
   email: "vintagevibeevents12@gmail.com",
   instagram: {
     handle: "@vintage_vibe_events",

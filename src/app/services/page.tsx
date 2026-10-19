@@ -20,7 +20,6 @@ export default function ServicesPage() {
         <section className="relative py-24 px-6 text-center border-b border-gold/20 overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#3a0507_0%,_#210304_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(#c9a15a_1px,transparent_1px)] [background-size:24px_24px]" />
             <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep via-burgundy-deep/90 to-burgundy-deep" />
           </div>
 
@@ -51,7 +50,7 @@ export default function ServicesPage() {
               <article
                 key={service.id}
                 id={service.id}
-                className="scroll-mt-32 border border-gold/25 bg-burgundy-deep/85 rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-between group hover:border-gold/60 transition-all duration-500"
+                className="scroll-mt-32 border border-gold/25 bg-gradient-to-br from-white/[0.08] via-burgundy-deep/40 to-[#120102]/65 rounded-2xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.18),_inset_0_0_24px_rgba(201,161,90,0.04)] backdrop-blur-xl flex flex-col justify-between group hover:border-gold/45 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7),_inset_0_1px_0_rgba(255,255,255,0.28),_0_0_30px_rgba(201,161,90,0.18)] transition-all duration-500"
               >
                 {/* Visual Header */}
                 <div className="relative h-72 sm:h-80 overflow-hidden bg-plum border-b border-gold/20">
@@ -66,7 +65,7 @@ export default function ServicesPage() {
                   
                   {/* Badge */}
                   <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="font-serif text-xl font-bold px-3 py-1 bg-burgundy-deep/90 text-gold border border-gold/30 rounded backdrop-blur-md">
+                    <span className="font-serif text-xl font-bold px-3 py-1 bg-burgundy-deep/90 text-gold border border-gold/30 rounded backdrop-blur-md shadow-sm">
                       {service.number}
                     </span>
                   </div>
@@ -122,7 +121,7 @@ export default function ServicesPage() {
 
         {/* Global CTA */}
         <section className="py-24 px-6 bg-burgundy-deep text-center border-t border-gold/20">
-          <div className="max-w-3xl mx-auto flex flex-col items-center gap-8">
+          <div className="max-w-3xl mx-auto rounded-2xl border border-gold/30 bg-burgundy-deep/80 p-8 sm:p-14 shadow-[0_15px_50px_rgba(15,1,2,0.9),_inset_0_1px_0_rgba(227,201,133,0.18)] backdrop-blur-xl relative overflow-hidden flex flex-col items-center gap-8">
             <h2 className="font-serif text-4xl md:text-5xl text-ivory">
               Commission Your Event Coordination
             </h2>
@@ -131,7 +130,7 @@ export default function ServicesPage() {
             </p>
             <Link
               href="/contact"
-              className="px-12 py-5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold-light transition-all rounded shadow-xl"
+              className="px-12 py-5 bg-gradient-to-r from-gold via-gold-light to-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_25px_rgba(201,161,90,0.45)] transition-all rounded shadow-xl"
             >
               Consult with Our Team
             </Link>

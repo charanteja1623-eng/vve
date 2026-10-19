@@ -196,8 +196,6 @@ export default function ParallaxFeatureSections() {
           {/* Deep plum-burgundy base with warm ambient center */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_45%_at_45%_55%,_#42080c_0%,_#240406_65%,_#180103_100%)]" />
 
-          {/* Textured antique gold diamond matrix */}
-          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#c9a15a_1.2px,transparent_1.2px)] [background-size:24px_24px]" />
 
           {/* Concentric diamond geometry */}
           <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none">

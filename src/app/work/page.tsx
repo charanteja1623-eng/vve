@@ -104,7 +104,7 @@ function WorkGallery() {
   return (
     <>
       {/* Interactive Filter Bar */}
-      <section className="sticky top-20 z-30 py-4 px-6 bg-burgundy/95 backdrop-blur-md border-b border-gold/20">
+      <section className="sticky top-20 z-30 py-4 px-6 bg-burgundy-deep/80 backdrop-blur-xl border-b border-gold/25 shadow-[0_4px_20px_rgba(15,1,2,0.6)]">
         <div className="max-w-7xl mx-auto flex items-center justify-start sm:justify-center gap-2 sm:gap-4 overflow-x-auto py-2 no-scrollbar font-sans text-xs font-bold uppercase tracking-wider">
           {CATEGORY_TABS.map((cat) => (
             <button
@@ -112,8 +112,8 @@ function WorkGallery() {
               onClick={() => setUserCategory(cat.id)}
               className={`px-4 py-2 rounded-full transition-all duration-300 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gold ${
                 activeCategory === cat.id
-                  ? "bg-gold text-burgundy-deep shadow-md font-extrabold"
-                  : "text-ivory/70 hover:text-gold hover:bg-burgundy-deep/60"
+                  ? "bg-gold text-burgundy-deep shadow-[0_0_16px_rgba(201,161,90,0.35)] font-extrabold border border-gold-light/40"
+                  : "text-ivory/70 hover:text-gold hover:bg-burgundy-deep/60 border border-transparent hover:border-gold/30 hover:shadow-[0_0_12px_rgba(201,161,90,0.15)]"
               }`}
             >
               {cat.label}
@@ -140,7 +140,7 @@ function WorkGallery() {
                     handleOpenProject(project);
                   }
                 }}
-                className="group relative h-[440px] rounded-2xl overflow-hidden border border-gold/25 bg-plum flex flex-col justify-end p-8 shadow-xl cursor-pointer hover:border-gold/60 focus:outline-none focus:ring-2 focus:ring-gold transition-all duration-500"
+                className="group relative h-[440px] rounded-2xl overflow-hidden border border-gold/25 bg-gradient-to-br from-white/[0.06] via-burgundy-deep/40 to-[#120102]/60 backdrop-blur-xl flex flex-col justify-end p-8 shadow-[0_12px_36px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.16)] cursor-pointer hover:border-gold/45 hover:shadow-[0_16px_45px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.24),_0_0_20px_rgba(201,161,90,0.16)] focus:outline-none focus:ring-2 focus:ring-gold transition-all duration-500"
               >
                 <ImagePlaceholder
                   title={project.title}
@@ -189,20 +189,20 @@ function WorkGallery() {
       {/* Modal Lightbox for Project Details */}
       {selectedProject && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-burgundy-deep/90 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-burgundy-deep/85 backdrop-blur-xl"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-project-title"
         >
           <div
             ref={modalRef}
-            className="relative w-full max-w-3xl bg-burgundy border border-gold/40 rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
+            className="relative w-full max-w-3xl bg-gradient-to-br from-white/[0.08] via-burgundy-deep/80 to-[#120102]/95 border border-gold/35 rounded-2xl overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.9),_0_0_35px_rgba(201,161,90,0.2),_inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl max-h-[90vh] flex flex-col"
           >
             <button
               ref={closeButtonRef}
               onClick={handleCloseProject}
               aria-label="Close modal"
-              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-burgundy-deep/90 text-gold hover:text-white flex items-center justify-center border border-gold/30 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-gold"
+              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-burgundy-deep/90 text-gold hover:text-white hover:bg-gold/20 flex items-center justify-center border border-gold/40 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-gold transition-colors"
             >
               ✕
             </button>
@@ -284,7 +284,6 @@ export default function WorkPage() {
         <section className="relative py-24 px-6 text-center border-b border-gold/20 overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#3a0507_0%,_#210304_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(#c9a15a_1px,transparent_1px)] [background-size:24px_24px]" />
             <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep via-burgundy-deep/90 to-burgundy-deep" />
           </div>
 

@@ -28,18 +28,19 @@ export default function ContactPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-20">
             {/* Contact Info */}
-            <div className="md:col-span-5 flex flex-col gap-8 bg-burgundy text-ivory p-8 md:p-12 rounded shadow-2xl border border-gold/30">
+            <div className="md:col-span-5 flex flex-col gap-8 bg-burgundy-deep/85 backdrop-blur-xl text-ivory p-8 md:p-12 rounded-2xl shadow-[0_12px_45px_rgba(15,1,2,0.8),_inset_0_1px_0_rgba(227,201,133,0.15)] border border-gold/30 hover:border-gold/50 transition-all duration-500">
               <div>
                 <h3 className="font-serif text-3xl text-gold-light mb-4">Direct Contact</h3>
                 <p className="text-sm opacity-80 mb-10 font-sans leading-relaxed">Reach out to us directly for immediate assistance or questions regarding our services.</p>
                 <div className="space-y-8 font-sans">
                   <div className="flex flex-col gap-2">
                     <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-90">Phone</span>
-                    <a href={`tel:${site.phones[0].replace(/\s+/g, '')}`} className="text-lg hover:text-gold-light transition-colors">{site.phones[0]}</a>
+                    <a href={`tel:${site.phones[0].replace(/\s+/g, '')}`} className="text-lg hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all">{site.phones[0]}</a>
+                    <a href={`tel:+91${site.phones[1].replace(/\s+/g, '')}`} className="text-lg hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all">{site.phones[1]}</a>
                   </div>
                   <div className="flex flex-col gap-2">
                     <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-90">Email</span>
-                    <a href={`mailto:${site.email}`} className="text-lg hover:text-gold-light transition-colors">{site.email}</a>
+                    <a href={`mailto:${site.email}`} className="text-lg hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all">{site.email}</a>
                   </div>
                   <div className="flex flex-col gap-2">
                     <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-90">Location</span>

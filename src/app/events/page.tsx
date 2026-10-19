@@ -22,7 +22,6 @@ export default function EventsPage() {
         <section className="relative py-24 px-6 text-center border-b border-gold/20 overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#3a0507_0%,_#210304_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(#c9a15a_1px,transparent_1px)] [background-size:24px_24px]" />
             <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep via-burgundy-deep/90 to-burgundy-deep" />
           </div>
 
@@ -40,13 +39,13 @@ export default function EventsPage() {
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
                 href="#categories"
-                className="px-6 py-3 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-wider text-xs hover:bg-gold-light transition-all rounded shadow-md"
+                className="px-6 py-3 bg-gradient-to-r from-gold via-gold-light to-gold text-burgundy-deep font-sans font-bold uppercase tracking-wider text-xs hover:shadow-[0_0_20px_rgba(201,161,90,0.4)] transition-all rounded shadow-md"
               >
                 View Event Categories ↓
               </a>
               <a
                 href="#addons"
-                className="px-6 py-3 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-wider text-xs hover:border-gold hover:bg-burgundy/60 transition-all rounded"
+                className="px-6 py-3 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-wider text-xs hover:border-gold hover:bg-burgundy/60 hover:shadow-[0_0_16px_rgba(201,161,90,0.2)] transition-all bg-burgundy-deep/40 backdrop-blur-sm rounded"
               >
                 View Add-On Services ↓
               </a>
@@ -71,11 +70,11 @@ export default function EventsPage() {
                 <article
                   key={category.slug}
                   id={category.slug}
-                  className="scroll-mt-28 flex flex-col lg:flex-row gap-10 lg:gap-14 items-center p-8 md:p-12 rounded-2xl bg-burgundy-deep/85 border border-gold/25 shadow-2xl backdrop-blur-sm group"
+                  className="scroll-mt-28 flex flex-col lg:flex-row gap-10 lg:gap-14 items-center p-8 md:p-12 rounded-2xl bg-gradient-to-br from-white/[0.08] via-burgundy-deep/40 to-[#120102]/65 border border-gold/25 shadow-[0_16px_40px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.18),_inset_0_0_24px_rgba(201,161,90,0.04)] backdrop-blur-xl group hover:border-gold/45 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7),_inset_0_1px_0_rgba(255,255,255,0.28),_0_0_30px_rgba(201,161,90,0.18)] transition-all duration-500"
                 >
                   {/* Category Imagery */}
                   <div
-                    className={`w-full lg:w-1/2 relative h-72 sm:h-88 rounded-xl overflow-hidden shadow-lg border border-gold/30 bg-burgundy ${
+                    className={`w-full lg:w-1/2 relative h-72 sm:h-88 rounded-xl overflow-hidden border border-gold/30 bg-burgundy-deep/40 backdrop-blur-md shadow-[0_12px_36px_rgba(0,0,0,0.6),_inset_0_1px_0_rgba(255,255,255,0.15)] group-hover:border-gold/50 group-hover:shadow-[0_16px_45px_rgba(0,0,0,0.7),_0_0_24px_rgba(201,161,90,0.2)] transition-all duration-500 ${
                       idx % 2 !== 0 ? "lg:order-last" : ""
                     }`}
                   >
@@ -87,7 +86,7 @@ export default function EventsPage() {
                       sizes="(min-width: 1024px) 50vw, 100vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 via-transparent to-transparent pointer-events-none" />
-                    <span className="absolute bottom-4 left-4 font-sans text-xs font-semibold px-3 py-1.5 bg-burgundy-deep/90 text-gold border border-gold/30 rounded backdrop-blur-md">
+                    <span className="absolute bottom-4 left-4 font-sans text-xs font-semibold px-3 py-1.5 bg-burgundy-deep/60 text-gold border border-gold/30 rounded backdrop-blur-md shadow-sm">
                       {category.tag}
                     </span>
                   </div>
@@ -116,7 +115,7 @@ export default function EventsPage() {
                         {category.features.map((feat, fIdx) => (
                           <div
                             key={fIdx}
-                            className="flex items-center gap-2 text-xs font-sans text-ivory/90 bg-burgundy/60 px-3 py-2 rounded border border-gold/15"
+                            className="flex items-center gap-2 text-xs font-sans text-ivory/90 bg-burgundy-deep/60 px-3 py-2 rounded-lg border border-gold/15 backdrop-blur-sm shadow-sm"
                           >
                             <span className="text-gold">✦</span>
                             <span>{feat}</span>
@@ -129,19 +128,19 @@ export default function EventsPage() {
                     <div className="pt-4 flex flex-wrap items-center gap-3">
                       <Link
                         href={`/events/${category.slug}`}
-                        className="px-6 py-3 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-xs hover:bg-gold-light transition-all rounded shadow-md text-center"
+                        className="px-6 py-3 bg-gradient-to-r from-gold via-gold-light to-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-xs hover:shadow-[0_0_20px_rgba(201,161,90,0.4)] transition-all rounded shadow-md text-center"
                       >
                         Explore Package Details →
                       </Link>
                       <Link
                         href={`/contact?eventType=${category.slug}`}
-                        className="px-5 py-3 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-xs hover:border-gold hover:bg-burgundy/60 transition-all rounded text-center"
+                        className="px-5 py-3 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-xs hover:border-gold hover:bg-burgundy/60 hover:shadow-[0_0_16px_rgba(201,161,90,0.2)] transition-all bg-burgundy-deep/40 backdrop-blur-sm rounded text-center"
                       >
                         Enquire for this Event
                       </Link>
                       <WhatsAppLink
                         message={`Hello Vintage Vibe Events, I would like to enquire about ${category.title}.`}
-                        className="px-5 py-3 border border-gold/30 text-gold font-sans font-semibold text-xs hover:bg-gold/15 transition-colors rounded text-center"
+                        className="px-5 py-3 border border-gold/30 text-gold font-sans font-semibold text-xs hover:bg-gold/15 hover:border-gold hover:shadow-[0_0_14px_rgba(201,161,90,0.2)] transition-all bg-burgundy-deep/40 backdrop-blur-sm rounded text-center"
                       >
                         WhatsApp Atelier →
                       </WhatsAppLink>
@@ -173,7 +172,7 @@ export default function EventsPage() {
                 <article
                   key={addon.id}
                   id={addon.id}
-                  className="scroll-mt-28 p-6 border border-gold/20 bg-burgundy/60 hover:border-gold/60 hover:bg-burgundy/80 transition-all duration-300 flex flex-col justify-between rounded-xl shadow-lg relative overflow-hidden"
+                  className="scroll-mt-28 p-6 border border-gold/22 bg-gradient-to-br from-white/[0.06] via-burgundy-deep/40 to-[#150102]/60 backdrop-blur-xl hover:border-gold/45 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.22),_0_0_20px_rgba(201,161,90,0.16)] shadow-[0_10px_30px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.14)] transition-all duration-300 flex flex-col justify-between rounded-xl relative overflow-hidden group"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
@@ -211,13 +210,13 @@ export default function EventsPage() {
                   <div className="flex flex-col gap-2 pt-4 border-t border-gold/15">
                     <Link
                       href={`/contact?addon=${addon.id}`}
-                      className="px-4 py-2.5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-wider text-[11px] hover:bg-gold-light transition-all rounded text-center shadow"
+                      className="px-4 py-2.5 bg-gradient-to-r from-gold via-gold-light to-gold text-burgundy-deep font-sans font-bold uppercase tracking-wider text-[11px] hover:shadow-[0_0_16px_rgba(201,161,90,0.35)] transition-all rounded text-center shadow"
                     >
                       Enquire for Add-On
                     </Link>
                     <WhatsAppLink
                       message={`Hello Vintage Vibe Events, I would like to enquire about ${addon.title} add-on service.`}
-                      className="px-3 py-2 border border-gold/30 text-gold font-sans font-semibold text-[10px] uppercase tracking-wider hover:bg-gold/10 transition-colors rounded text-center"
+                      className="px-3 py-2 border border-gold/30 text-gold font-sans font-semibold text-[10px] uppercase tracking-wider hover:bg-gold/15 hover:border-gold transition-colors rounded text-center bg-burgundy-deep/40 backdrop-blur-sm"
                     >
                       WhatsApp →
                     </WhatsAppLink>
@@ -230,7 +229,7 @@ export default function EventsPage() {
 
         {/* Global Consultation CTA */}
         <section className="py-24 px-6 bg-burgundy text-center border-t border-gold/20">
-          <div className="max-w-3xl mx-auto flex flex-col items-center gap-8">
+          <div className="max-w-3xl mx-auto rounded-2xl border border-gold/30 bg-gradient-to-br from-white/[0.08] via-burgundy-deep/45 to-[#120102]/65 p-8 sm:p-14 shadow-[0_16px_45px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-xl relative overflow-hidden flex flex-col items-center gap-8">
             <h2 className="font-serif text-4xl md:text-5xl text-ivory leading-tight">
               Begin Event Coordination
             </h2>
@@ -240,13 +239,13 @@ export default function EventsPage() {
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link
                 href="/contact"
-                className="px-12 py-5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold-light transition-all rounded shadow-xl"
+                className="px-12 py-5 bg-gradient-to-r from-gold via-gold-light to-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_25px_rgba(201,161,90,0.45)] transition-all rounded shadow-xl"
               >
                 Schedule Consultation
               </Link>
               <WhatsAppLink
                 message="Hello Vintage Vibe Events, I would like to plan an event."
-                className="px-8 py-5 border border-gold/50 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold/15 transition-all rounded"
+                className="px-8 py-5 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold/15 hover:border-gold hover:shadow-[0_0_20px_rgba(201,161,90,0.25)] transition-all bg-burgundy-deep/40 backdrop-blur-sm rounded"
               >
                 WhatsApp Direct →
               </WhatsAppLink>
