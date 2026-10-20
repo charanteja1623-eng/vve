@@ -31,13 +31,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `${category.title} — ${site.name}`,
-    description: `${category.description} Bespoke planning, staging, and vendor coordination across ${site.serviceArea}.`,
+    description: `${category.description} Complete planning, decoration, and vendor coordination across ${site.serviceArea}.`,
     alternates: {
       canonical: `https://vintagevibeevents.in/events/${category.slug}`,
     },
     openGraph: {
       title: `${category.title} — ${site.name}`,
-      description: `${category.description} Bespoke planning, staging, and vendor coordination across ${site.serviceArea}.`,
+      description: `${category.description} Complete planning, decoration, and vendor coordination across ${site.serviceArea}.`,
       url: `https://vintagevibeevents.in/events/${category.slug}`,
       images: [
         {
@@ -123,13 +123,13 @@ export default async function CategoryDetailPage({ params }: PageProps) {
                 href="/events"
                 className="px-6 py-3.5 border border-gold/40 text-ivory font-sans text-xs font-bold uppercase tracking-wider rounded hover:border-gold hover:bg-burgundy/60 hover:shadow-[0_0_16px_rgba(201,161,90,0.2)] transition-all bg-burgundy-deep/40 backdrop-blur-sm"
               >
-                ← Back to Unified Catalogue
+                ← Back to All Events
               </Link>
             </div>
           </div>
         </section>
 
-        {/* 2. Visual Scenography & Overview Section */}
+        {/* 2. Visual Overview Section */}
         <section className="py-20 px-6 lg:px-12 bg-burgundy border-b border-gold/20">
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
@@ -146,7 +146,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 right-4">
                 <span className="font-sans text-[11px] text-ivory/90 bg-burgundy-deep/85 px-3 py-1.5 rounded backdrop-blur-md border border-gold/25 block text-center shadow-md">
-                  Representative Scenography for {category.title}
+                  Event Setup for {category.title}
                 </span>
               </div>
             </div>
@@ -155,10 +155,10 @@ export default async function CategoryDetailPage({ params }: PageProps) {
             <div className="lg:col-span-6 flex flex-col gap-6 text-left">
               <div>
                 <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-2">
-                  Atelier Planning Approach
+                  Our Planning Process
                 </span>
                 <h2 className="font-serif text-3xl sm:text-4xl text-ivory leading-snug">
-                  Curated Scenography & Coordination
+                  Decoration & Event Coordination
                 </h2>
               </div>
 
@@ -169,7 +169,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
               {/* Inclusions / Highlights */}
               <div className="pt-4 border-t border-gold/20">
                 <span className="font-sans text-xs font-bold uppercase tracking-wider text-gold block mb-3">
-                  Verified Planning Inclusions:
+                  What We Provide:
                 </span>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {category.features.map((feature, fIdx) => (
@@ -198,7 +198,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
           <div className="max-w-5xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-2">
-                Execution Discipline
+                Important Details
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl text-ivory">
                 Planning & Logistical Protocols
@@ -236,13 +236,13 @@ export default async function CategoryDetailPage({ params }: PageProps) {
             <div className="max-w-6xl mx-auto">
               <div className="text-center max-w-3xl mx-auto mb-14">
                 <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-2">
-                  Tailored Add-On Integrations
+                  Recommended Add-Ons
                 </span>
                 <h2 className="font-serif text-3xl sm:text-4xl text-ivory">
                   Recommended Services for this Package
                 </h2>
                 <p className="font-sans text-sm text-ivory/75 mt-3">
-                  Complement your event with our verified add-on capabilities.
+                  Complete your event with our extra services.
                 </p>
               </div>
 
@@ -272,13 +272,13 @@ export default async function CategoryDetailPage({ params }: PageProps) {
                         href={`/events#${addon.id}`}
                         className="font-sans text-xs text-gold hover:text-gold-light transition-colors"
                       >
-                        Service Details →
+                        View Details →
                       </Link>
                       <Link
                         href={`/contact?eventType=${category.slug}&addon=${addon.id}`}
                         className="px-3.5 py-1.5 bg-gold/15 hover:bg-gold text-gold hover:text-burgundy-deep border border-gold/30 rounded font-sans text-[11px] font-bold uppercase tracking-wider transition-all hover:shadow-[0_0_12px_rgba(201,161,90,0.3)]"
                       >
-                        Enquire Both
+                        Enquire for Both
                       </Link>
                     </div>
                   </div>
@@ -292,13 +292,13 @@ export default async function CategoryDetailPage({ params }: PageProps) {
         <section className="py-20 px-6 text-center bg-burgundy-deep">
           <div className="max-w-3xl mx-auto rounded-2xl border border-gold/30 bg-burgundy-deep/80 p-8 sm:p-14 shadow-[0_15px_50px_rgba(15,1,2,0.9),_inset_0_1px_0_rgba(227,201,133,0.18)] backdrop-blur-xl relative overflow-hidden">
             <span className="font-sans text-xs font-bold uppercase tracking-[0.25em] text-gold block mb-3">
-              Begin Your Journey
+              Get Started
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl text-ivory mb-4">
               Plan Your {category.title}
             </h2>
             <p className="font-sans text-base text-ivory/80 leading-relaxed mb-8">
-              Discuss dates, guest requirements, and bespoke design possibilities with our planning team across Hyderabad, Andhra Pradesh, and Telangana.
+              Talk with our team about your dates, guest count, and ideas. We help plan events across Hyderabad, Andhra Pradesh, and Telangana.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -306,19 +306,19 @@ export default async function CategoryDetailPage({ params }: PageProps) {
                 href={`/contact?eventType=${category.slug}`}
                 className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-gold via-gold-light to-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-xs rounded hover:shadow-[0_0_20px_rgba(201,161,90,0.4)] transition-all shadow-lg text-center"
               >
-                Schedule Consultation →
+                Plan Your Event →
               </Link>
               <WhatsAppLink
                 message={`Hello Vintage Vibe Events, I would like to plan a ${category.title}.`}
                 className="w-full sm:w-auto px-6 py-3.5 border border-gold/40 text-gold font-sans font-semibold text-xs rounded hover:bg-gold/15 hover:border-gold hover:shadow-[0_0_16px_rgba(201,161,90,0.2)] transition-all bg-burgundy-deep/40 backdrop-blur-sm text-center"
               >
-                WhatsApp Atelier
+                Chat on WhatsApp
               </WhatsAppLink>
               <Link
                 href="/events"
                 className="w-full sm:w-auto px-6 py-3.5 border border-gold/25 text-ivory/80 font-sans text-xs uppercase tracking-wider rounded hover:border-gold/50 hover:bg-burgundy/40 transition-colors text-center"
               >
-                All Event Packages
+                All Event Categories
               </Link>
             </div>
           </div>

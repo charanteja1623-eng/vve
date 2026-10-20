@@ -8,12 +8,12 @@ import ScrollExperienceController from "@/components/scroll/ScrollExperienceCont
 import EditorialSplitStage from "@/components/sections/EditorialSplitStage";
 import WhatsAppLink from "@/components/ui/WhatsAppLink";
 import Link from "next/link";
-import { artisanalServices, portfolioProjects, site } from "@/lib/site";
+import { artisanalServices, portfolioProjects } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Vintage Vibe Events | Wedding & Event Planners",
   description:
-    "Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in luxury weddings, milestone birthdays, surprise parties, and bespoke celebrations across Telangana and Andhra Pradesh.",
+    "Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in weddings, milestone birthdays, surprise parties, and special celebrations across Telangana and Andhra Pradesh.",
   alternates: {
     canonical: "https://vintagevibeevents.in/",
   },
@@ -34,7 +34,7 @@ export default function Home() {
             {/* Architectural Palace Courtyard Background Image */}
             <Image
               src="/images/hero/palace-courtyard.jpg"
-              alt="Palatial architectural courtyard with warm celebratory illumination"
+              alt="Architectural courtyard with warm evening illumination"
               fill
               priority
               className="object-cover object-center"
@@ -58,7 +58,7 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 opacity-90">
               <span className="w-6 sm:w-8 h-px bg-gradient-to-r from-transparent to-gold/60" />
               <p className="font-sans text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-gold-light">
-                Bespoke Event Management · Hyderabad
+                Wedding & Event Planning · Hyderabad
               </p>
               <span className="w-6 sm:w-8 h-px bg-gradient-to-l from-transparent to-gold/60" />
             </div>
@@ -86,7 +86,7 @@ export default function Home() {
 
             {/* Value Proposition */}
             <p className="font-serif text-sm sm:text-base md:text-lg text-ivory/90 italic max-w-lg leading-relaxed px-2">
-              Palatial event scenography, royal culinary spreads, and turnkey celebration productions.
+              Stage decoration, catering, sound, lighting, and complete event planning for weddings and celebrations across Hyderabad.
             </p>
 
             {/* Call to Actions with Safe Mobile Clearance */}
@@ -95,19 +95,19 @@ export default function Home() {
                 href="/contact"
                 className="w-full sm:w-auto px-8 py-3.5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-[0.18em] text-xs hover:bg-gold-light transition-all shadow-[0_0_20px_rgba(201,161,90,0.35)] hover:shadow-[0_0_35px_rgba(201,161,90,0.6)] hover:-translate-y-0.5 transform rounded text-center border border-gold-light/40"
               >
-                Book a Consultation
+                Plan Your Event
               </Link>
               <Link
                 href="#events"
                 className="w-full sm:w-auto px-8 py-3.5 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-[0.18em] text-xs hover:border-gold hover:bg-burgundy/60 hover:shadow-[0_0_20px_rgba(201,161,90,0.25)] transition-all bg-burgundy-deep/60 backdrop-blur-md rounded text-center"
               >
-                Explore Disciplines
+                Explore Events
               </Link>
             </div>
           </div>
         </section>
 
-        {/* 2. Brand Story / The Atelier Creed */}
+        {/* 2. Brand Story / Our Story */}
         <section id="about" className="section-entry-reveal scroll-mt-24 py-24 px-6 lg:px-12 bg-burgundy border-t border-gold/15">
           <div className="max-w-6xl mx-auto border border-gold/25 bg-gradient-to-br from-white/[0.07] via-burgundy-deep/40 to-[#120102]/65 backdrop-blur-xl p-8 md:p-16 lg:p-24 relative rounded-2xl shadow-[0_16px_45px_rgba(0,0,0,0.6),_inset_0_1px_0_rgba(255,255,255,0.18)] hover:border-gold/40 transition-all duration-500">
             <div className="flex justify-center mb-12">
@@ -117,50 +117,56 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               <div className="lg:col-span-5 text-center lg:text-left">
-                <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-4">The Atelier Creed</span>
+                <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-4">OUR STORY</span>
                 <h2 className="font-serif text-4xl md:text-5xl text-ivory leading-tight">
-                  The Architecture<br className="hidden lg:block"/>of Royal Emotion
+                  Every Celebration Has a Story
                 </h2>
               </div>
-              <div className="lg:col-span-7 font-sans text-base md:text-lg text-ivory/80 leading-relaxed space-y-6 lg:border-l border-gold/20 lg:pl-16 text-center lg:text-left">
+              <div className="lg:col-span-7 font-sans text-base md:text-lg text-ivory/85 leading-relaxed space-y-5 lg:border-l border-gold/20 lg:pl-16 text-center lg:text-left">
                 <p>
-                  Born in Hyderabad, the city of Nizami splendor and timeless architectural majesty, <strong className="text-ivory font-semibold">{site.name}</strong> was founded with a singular conviction: luxury is not simply excess—it is the harmony of heritage proportions, evocative floral choreography, and unblemished execution.
+                  Every beautiful journey starts with a small idea and a big dream. Vintage Vibe Events began with one simple goal: to turn ordinary moments into special memories.
                 </p>
                 <p>
-                  From sacred Vedic mandaps to high-concept contemporary celebrations, our artisanal scenographers and production maestros sculpt environments where each moment unfolds naturally into an heirloom memory.
+                  With creativity, love, and care, we bring people together through beautiful celebrations. From small family gatherings to grand weddings and special events, we work hard to make every occasion memorable.
+                </p>
+                <p>
+                  For us, it&apos;s not just about decorations or planning an event. It&apos;s about the smiles, the happiness, and the moments families remember for years to come.
+                </p>
+                <p className="font-serif text-lg sm:text-xl text-gold italic pt-2">
+                  We don&apos;t just plan events. We create memories that last a lifetime.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 3. Editorial Split-Stage: 6 Curated Disciplines */}
+        {/* 3. Editorial Split-Stage: 6 Event Categories */}
         <EditorialSplitStage />
 
-        {/* Curated Disciplines Exploration Bridge */}
+        {/* Event Categories Exploration Bridge */}
         <div className="py-10 px-6 bg-burgundy-deep/90 border-t border-b border-gold/15 text-center">
           <p className="font-serif text-base sm:text-lg text-ivory/85 mb-3">
-            Seeking intimate proposals, campus concerts, or palatial lawn banquets?
+            Planning a family gathering, college festival, or grand wedding?
           </p>
           <Link
             href="/events"
             className="inline-flex items-center gap-2 text-gold font-sans text-xs font-bold uppercase tracking-widest hover:text-gold-light transition-colors border-b border-gold/30 hover:border-gold pb-1"
           >
-            <span>Explore All 6 Curated Disciplines</span>
+            <span>Explore All 6 Event Categories</span>
             <span>→</span>
           </Link>
         </div>
 
-        {/* 5. Artisanal Services Showcase */}
+        {/* 5. Event Services Showcase */}
         <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy border-y border-gold/20" id="services">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
               <div>
-                <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-4">Artisanal Guild</span>
-                <h2 className="font-serif text-3xl md:text-5xl text-ivory">Comprehensive Event Services</h2>
+                <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-4">Our Services</span>
+                <h2 className="font-serif text-3xl md:text-5xl text-ivory">Everything You Need for Your Event</h2>
               </div>
               <p className="font-sans text-sm md:text-base text-ivory/75 max-w-md md:text-right leading-relaxed">
-                Seamlessly integrated artisanal services executed under one unified master production team.
+                From delicious food to beautiful decorations, we take care of every detail so you can enjoy your special day.
               </p>
             </div>
             
@@ -182,7 +188,7 @@ export default function Home() {
                     href="/events#addons"
                     className="font-sans text-[11px] font-bold uppercase tracking-wider text-gold/80 group-hover:text-gold-light flex items-center gap-1.5 pt-4 border-t border-gold/15"
                   >
-                    <span>View Add-On Details</span>
+                    <span>View Service Details</span>
                     <span>→</span>
                   </Link>
                 </div>
@@ -191,19 +197,19 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6. Portfolio Preview (Neutral Placeholders & Responsive Flow) */}
+        {/* 6. Portfolio Preview */}
         <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy-deep" id="work">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
               <div>
-                <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-4">Curated Archive</span>
-                <h2 className="font-serif text-4xl md:text-5xl text-ivory">Recent Palatial Work</h2>
+                <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-4">Featured Work</span>
+                <h2 className="font-serif text-4xl md:text-5xl text-ivory">Our Recent Events</h2>
               </div>
               <Link
                 href="/work"
                 className="text-gold font-sans text-xs font-bold uppercase tracking-widest hover:text-gold-light transition-colors border-b border-gold/30 hover:border-gold pb-1 w-fit"
               >
-                Browse Full Portfolio Archive →
+                Browse Full Portfolio →
               </Link>
             </div>
             
@@ -248,22 +254,22 @@ export default function Home() {
           <div className="absolute -top-40 left-1/4 w-96 h-96 rounded-full bg-gold/5 blur-3xl pointer-events-none" />
           
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-8">
-            <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold">Begin The Journey</span>
+            <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold">Get in Touch</span>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ivory leading-tight">
-              Plan Your Extraordinary Event
+              Ready to Plan Your Next Celebration?
             </h2>
             <p className="font-sans text-base md:text-lg text-ivory/80 leading-relaxed max-w-2xl">
-              Whether curating a royal wedding or an exclusive private soirée in Hyderabad, our atelier directors are at your service.
+              Whether you are planning a grand wedding or a birthday party in Hyderabad, our team is here to help you every step of the way.
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-5 mt-4 w-full sm:w-auto">
               <Link
                 href="/contact"
                 className="px-12 py-5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold-light transition-all shadow-[0_0_25px_rgba(201,161,90,0.35)] hover:shadow-[0_0_35px_rgba(201,161,90,0.6)] hover:-translate-y-0.5 rounded w-full sm:w-auto text-center border border-gold-light/40"
               >
-                Schedule Consultation
+                Plan Your Event
               </Link>
               <WhatsAppLink
-                message="Hello Vintage Vibe Events, I would like to schedule an event consultation."
+                message="Hello Vintage Vibe Events, I would like to plan an event."
                 className="px-10 py-5 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold/15 hover:border-gold hover:shadow-[0_0_20px_rgba(201,161,90,0.25)] transition-all bg-burgundy-deep/60 backdrop-blur-md rounded w-full sm:w-auto text-center"
               >
                 WhatsApp Direct →

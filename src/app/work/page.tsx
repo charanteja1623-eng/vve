@@ -12,7 +12,7 @@ import Link from "next/link";
 type FilterCategory = "all" | ConfirmedCategorySlug;
 
 const CATEGORY_TABS: { id: FilterCategory; label: string }[] = [
-  { id: "all", label: "All Commissions" },
+  { id: "all", label: "All Events" },
   { id: "wedding-packages", label: "Wedding Packages" },
   { id: "birthday-parties", label: "Birthday Parties" },
   { id: "surprise-parties", label: "Surprise Parties" },
@@ -195,7 +195,7 @@ function WorkGallery() {
 
           {filteredProjects.length === 0 && (
             <div className="py-24 text-center">
-              <p className="font-serif text-2xl text-ivory/70">No commissions found in this category.</p>
+              <p className="font-serif text-2xl text-ivory/70">No events found in this category.</p>
             </div>
           )}
         </div>
@@ -239,7 +239,7 @@ function WorkGallery() {
                   {selectedProject.categoryLabel} — {selectedProject.statusLabel}
                 </span>
                 <span className="text-ivory/70 font-sans text-xs italic block">
-                  Curated Event Scenography & Production Showcase
+                  Event Showcase & Production
                 </span>
                 <h3 id="modal-project-title" className="font-serif text-3xl md:text-4xl text-ivory mt-2">
                   {selectedProject.title}
@@ -252,7 +252,7 @@ function WorkGallery() {
 
               <div className="pt-4 border-t border-gold/20">
                 <span className="font-sans text-xs font-bold uppercase tracking-wider text-gold block mb-3">
-                  Category Planning Focus:
+                  Event Highlights:
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {selectedProject.highlights.map((h, i) => (
@@ -272,13 +272,13 @@ function WorkGallery() {
                   onClick={handleCloseProject}
                   className="w-full sm:w-auto px-8 py-3.5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-xs hover:bg-gold-light transition-all rounded text-center shadow-lg"
                 >
-                  Enquire for This Event Type
+                  Enquire About This Event
                 </Link>
                 <WhatsAppLink
                   message={`Hello Vintage Vibe Events, I am interested in planning an event in the ${selectedProject.categoryLabel} category.`}
                   className="w-full sm:w-auto px-6 py-3.5 border border-gold/40 text-ivory font-sans text-xs hover:bg-gold/15 transition-colors rounded text-center"
                 >
-                  Inquire on WhatsApp →
+                  Chat on WhatsApp →
                 </WhatsAppLink>
               </div>
             </div>
@@ -304,14 +304,14 @@ export default function WorkPage() {
 
           <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
             <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">
-              The Palatial Archive
+              Our Work
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-ivory mb-6 leading-tight">
-              Curated Portfolio
+              Our Portfolio
             </h1>
             <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
             <p className="font-sans text-base md:text-lg text-ivory/85 max-w-2xl leading-relaxed">
-              Explore curated commissions across our confirmed event categories. Each production showcases our dedicated staging, floral architecture, and turnkey coordination across Hyderabad, Andhra Pradesh, and Telangana.
+              Explore our work across different event categories. Each event showcases our stage setup, flower decorations, lighting, and complete coordination across Hyderabad and nearby areas.
             </p>
           </div>
         </section>
@@ -325,16 +325,16 @@ export default function WorkPage() {
         <section className="py-24 px-6 bg-burgundy text-center border-t border-gold/20">
           <div className="max-w-3xl mx-auto flex flex-col items-center gap-8">
             <h2 className="font-serif text-4xl md:text-5xl text-ivory">
-              Commission Your Celebration
+              Plan Your Celebration With Us
             </h2>
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-xl leading-relaxed">
-              Every production is created anew. Let us craft an original heirloom concept for your special date.
+              Every celebration is unique. Tell us about your plans and let us help you create a memorable event.
             </p>
             <Link
               href="/contact"
               className="px-12 py-5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold-light transition-all rounded shadow-xl"
             >
-              Book a Consultation
+              Plan Your Event
             </Link>
           </div>
         </section>

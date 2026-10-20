@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Brand Visibility & Technical SEO Verification', () => {
-  const CANONICAL_BASE = 'https://vintagevibeevents.in';
-
   test('Homepage title, description, and canonical link match specifications', async ({ page }) => {
     await page.goto('/');
 
@@ -13,7 +11,7 @@ test.describe('Brand Visibility & Technical SEO Verification', () => {
     const metaDesc = page.locator('meta[name="description"]');
     await expect(metaDesc).toHaveAttribute(
       'content',
-      'Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in luxury weddings, milestone birthdays, surprise parties, and bespoke celebrations across Telangana and Andhra Pradesh.'
+      'Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in weddings, milestone birthdays, surprise parties, and special celebrations across Telangana and Andhra Pradesh.'
     );
 
     // C. Canonical link check

@@ -8,7 +8,7 @@ import Link from "next/link";
 export const metadata = {
   title: `Event Categories & Add-On Services — ${site.name}`,
   description:
-    "Comprehensive wedding packages, birthday celebrations, surprise parties, indoor & outdoor events, campus functions, and event add-on services across Hyderabad, Andhra Pradesh, and Telangana.",
+    "Complete wedding packages, birthday celebrations, surprise parties, indoor & outdoor events, college functions, and add-on services across Hyderabad, Andhra Pradesh, and Telangana.",
   alternates: {
     canonical: "https://vintagevibeevents.in/events",
   },
@@ -29,14 +29,14 @@ export default function EventsPage() {
 
           <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
             <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">
-              Event Planning & Production Catalogue
+              Our Services & Packages
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-ivory mb-6 leading-tight">
               Event Categories & Services
             </h1>
             <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-2xl leading-relaxed mb-8">
-              Explore our six confirmed event categories and seven coordinated add-on services. Every event is planned with dedicated staging, décor, and vendor coordination across Hyderabad, Andhra Pradesh, and Telangana.
+              Explore our event categories and add-on services. From weddings and birthdays to private parties and college events, we handle stage setup, decoration, and complete coordination across Hyderabad and nearby areas.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
@@ -60,7 +60,7 @@ export default function EventsPage() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-2">
-                Confirmed Disciplines
+                Our Services
               </span>
               <h2 className="font-serif text-3xl md:text-5xl text-ivory">
                 Event Categories
@@ -111,7 +111,7 @@ export default function EventsPage() {
                     {/* Features list */}
                     <div className="space-y-2.5 pt-2">
                       <span className="font-sans text-xs font-bold uppercase tracking-wider text-ivory/60 block">
-                        Planning & Staging Focus:
+                        What We Provide:
                       </span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {category.features.map((feat, fIdx) => (
@@ -144,7 +144,7 @@ export default function EventsPage() {
                         message={`Hello Vintage Vibe Events, I would like to enquire about ${category.title}.`}
                         className="px-5 py-3 border border-gold/30 text-gold font-sans font-semibold text-xs hover:bg-gold/15 hover:border-gold hover:shadow-[0_0_14px_rgba(201,161,90,0.2)] transition-all bg-burgundy-deep/40 backdrop-blur-sm rounded text-center"
                       >
-                        WhatsApp Atelier →
+                        WhatsApp Us →
                       </WhatsAppLink>
                     </div>
                   </div>
@@ -159,13 +159,13 @@ export default function EventsPage() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-2">
-                Coordinated Add-Ons
+                Extra Services
               </span>
               <h2 className="font-serif text-3xl md:text-5xl text-ivory mb-4">
                 Event Add-On Services
               </h2>
               <p className="font-sans text-sm md:text-base text-ivory/75 max-w-2xl mx-auto leading-relaxed">
-                Add-on services tailored to complement your primary event package under single-team coordination.
+                Add-on services to complete your event, all managed by our team.
               </p>
             </div>
 
@@ -234,23 +234,23 @@ export default function EventsPage() {
         <section className="py-24 px-6 bg-burgundy text-center border-t border-gold/20">
           <div className="max-w-3xl mx-auto rounded-2xl border border-gold/30 bg-gradient-to-br from-white/[0.08] via-burgundy-deep/45 to-[#120102]/65 p-8 sm:p-14 shadow-[0_16px_45px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-xl relative overflow-hidden flex flex-col items-center gap-8">
             <h2 className="font-serif text-4xl md:text-5xl text-ivory leading-tight">
-              Begin Event Coordination
+              Plan Your Event With Us
             </h2>
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-xl leading-relaxed">
-              Connect with our team to discuss your dates, selected categories, and required add-on services.
+              Contact our team to discuss your dates, ideas, and required services.
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link
                 href="/contact"
                 className="px-12 py-5 bg-gradient-to-r from-gold via-gold-light to-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_25px_rgba(201,161,90,0.45)] transition-all rounded shadow-xl"
               >
-                Schedule Consultation
+                Plan Your Event
               </Link>
               <WhatsAppLink
                 message="Hello Vintage Vibe Events, I would like to plan an event."
                 className="px-8 py-5 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold/15 hover:border-gold hover:shadow-[0_0_20px_rgba(201,161,90,0.25)] transition-all bg-burgundy-deep/40 backdrop-blur-sm rounded"
               >
-                WhatsApp Direct →
+                Chat on WhatsApp →
               </WhatsAppLink>
             </div>
           </div>

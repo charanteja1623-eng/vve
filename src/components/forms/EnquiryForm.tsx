@@ -71,7 +71,7 @@ export default function EnquiryForm() {
     : validatedAddon;
 
   const defaultInitialMessage = rawServices
-    ? `I am requesting planning and quotation for the following services:\n\n${rawServices}`
+    ? `I would like to enquire about the following services:\n\n${rawServices}`
     : "";
 
   const message = !isHydrated

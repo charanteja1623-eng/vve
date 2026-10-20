@@ -38,14 +38,14 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description:
-    "Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in luxury weddings, milestone birthdays, surprise parties, and bespoke celebrations across Telangana and Andhra Pradesh.",
+    "Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in weddings, milestone birthdays, surprise parties, and special celebrations across Telangana and Andhra Pradesh.",
   alternates: {
     canonical: "https://vintagevibeevents.in/",
   },
   openGraph: {
     title: "Vintage Vibe Events | Wedding & Event Planners",
     description:
-      "Premier wedding and event planners in Hyderabad. Turnkey decor, royal mandaps, milestone birthdays, and bespoke celebrations across Telangana and Andhra Pradesh.",
+      "Premier wedding and event planners in Hyderabad. Complete decor, mandap setups, birthdays, and celebrations across Telangana and Andhra Pradesh.",
     url: "https://vintagevibeevents.in/",
     siteName: site.name,
     locale: "en_IN",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vintage Vibe Events | Wedding & Event Planners",
     description:
-      "Premier wedding and event planners in Hyderabad. Turnkey decor, royal mandaps, milestone birthdays, and bespoke celebrations across Telangana and Andhra Pradesh.",
+      "Premier wedding and event planners in Hyderabad. Complete decor, mandap setups, birthdays, and celebrations across Telangana and Andhra Pradesh.",
     images: ["/images/hero/palace-courtyard.jpg"],
   },
   robots: {

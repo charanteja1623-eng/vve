@@ -32,13 +32,13 @@ export default function ServicesPage() {
             </h1>
             <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-2xl leading-relaxed mb-6">
-              Our seven confirmed add-on services provide seamless logistical and design support for weddings, birthdays, and public events across Hyderabad, Andhra Pradesh, and Telangana.
+              Our seven add-on services support your weddings, birthdays, and celebrations across Hyderabad and nearby areas.
             </p>
             <Link
               href="/events#addons"
               className="text-gold font-sans text-xs font-bold uppercase tracking-widest hover:text-gold-light border-b border-gold/30 hover:border-gold pb-1"
             >
-              View in Unified Events Catalogue →
+              View All Events & Packages →
             </Link>
           </div>
         </section>
@@ -84,7 +84,7 @@ export default function ServicesPage() {
                     {/* Highlights */}
                     <div className="space-y-2 pt-2 border-t border-gold/15">
                       <span className="font-sans text-xs font-bold uppercase tracking-wider text-gold block mb-3">
-                        Key Deliverables:
+                        What Is Included:
                       </span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-sans text-ivory/80">
                         {service.highlights.map((item, hIdx) => (
@@ -103,14 +103,14 @@ export default function ServicesPage() {
                       href={`/contact?addon=${service.id}`}
                       className="text-gold font-sans text-xs font-bold uppercase tracking-widest hover:text-gold-light transition-colors flex items-center gap-1.5"
                     >
-                      <span>Incorporate in Package</span>
+                      <span>Add to Your Event</span>
                       <span>→</span>
                     </Link>
                     <WhatsAppLink
                       message={`Hello Vintage Vibe Events, I would like to enquire about ${service.title} add-on service.`}
                       className="text-xs font-sans text-ivory/70 hover:text-gold transition-colors"
                     >
-                      Ask on WhatsApp →
+                      Chat on WhatsApp →
                     </WhatsAppLink>
                   </div>
                 </div>
@@ -123,16 +123,16 @@ export default function ServicesPage() {
         <section className="py-24 px-6 bg-burgundy-deep text-center border-t border-gold/20">
           <div className="max-w-3xl mx-auto rounded-2xl border border-gold/30 bg-burgundy-deep/80 p-8 sm:p-14 shadow-[0_15px_50px_rgba(15,1,2,0.9),_inset_0_1px_0_rgba(227,201,133,0.18)] backdrop-blur-xl relative overflow-hidden flex flex-col items-center gap-8">
             <h2 className="font-serif text-4xl md:text-5xl text-ivory">
-              Commission Your Event Coordination
+              Plan Your Event With Us
             </h2>
             <p className="font-sans text-base md:text-lg text-ivory/80 max-w-xl leading-relaxed">
-              Combine catering, decor, and technical production into one seamless agreement.
+              Combine catering, decoration, sound, and gifts into one simple plan with our team.
             </p>
             <Link
               href="/contact"
               className="px-12 py-5 bg-gradient-to-r from-gold via-gold-light to-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_25px_rgba(201,161,90,0.45)] transition-all rounded shadow-xl"
             >
-              Consult with Our Team
+              Contact Us
             </Link>
           </div>
         </section>

@@ -14,7 +14,7 @@ interface ImagePlaceholderProps {
  * Zero external network requests, zero stock photos.
  */
 export default function ImagePlaceholder({
-  title = "Curated Event Scenography",
+  title = "Event Showcase & Photography",
   category,
   aspectRatio = "16/10",
   className = "",

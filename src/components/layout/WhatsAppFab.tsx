@@ -30,7 +30,7 @@ export default function WhatsAppFab() {
         }`}
       >
         <span className="w-2 h-2 rounded-full bg-[#25D366] mr-2 animate-pulse" />
-        Chat with Atelier
+        Chat on WhatsApp
       </div>
 
       {/* Floating Action Button */}

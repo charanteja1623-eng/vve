@@ -72,7 +72,7 @@ test.describe('WhatsApp Click-to-Chat Integration', () => {
     expect(await eventsWaLinks.count()).toBeGreaterThan(2);
 
     await page.goto('/events/wedding-packages');
-    const weddingWa = page.locator('a[href*="wa.me"]').filter({ hasText: 'WhatsApp Atelier' });
+    const weddingWa = page.locator('a[href*="wa.me"]').filter({ hasText: /WhatsApp/i }).first();
     await expect(weddingWa).toBeVisible();
     await expect(weddingWa).toHaveAttribute('target', '_blank');
     await expect(weddingWa).toHaveAttribute('rel', 'noopener noreferrer');

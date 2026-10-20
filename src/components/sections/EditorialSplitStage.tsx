@@ -103,14 +103,14 @@ export default function EditorialSplitStage() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
           <span className="font-sans text-xs font-bold uppercase tracking-[0.25em] text-gold block mb-4">
-            Curated Atelier Disciplines
+            Event Categories
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-ivory leading-tight mb-6">
             Event Categories & Architecture
           </h2>
           <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
           <p className="font-sans text-base md:text-lg text-ivory/80 leading-relaxed">
-            From comprehensive sacred wedding packages to private milestone celebrations and campus productions across Hyderabad, Andhra Pradesh, and Telangana.
+            From complete wedding packages to birthday parties and college events across Hyderabad, Andhra Pradesh, and Telangana.
           </p>
         </div>
 
@@ -169,7 +169,7 @@ export default function EditorialSplitStage() {
                       {/* Verified Planning Highlights */}
                       <div className="mb-8 pt-4 border-t border-gold/20">
                         <span className="font-sans text-xs font-bold uppercase tracking-wider text-gold block mb-3">
-                          Planning & Coordination Scope:
+                          What We Provide:
                         </span>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                           {cat.features.map((feature, fIdx) => (

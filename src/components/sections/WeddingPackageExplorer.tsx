@@ -165,14 +165,14 @@ export default function WeddingPackageExplorer() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="font-sans text-xs font-bold uppercase tracking-[0.25em] text-gold block mb-3 px-3.5 py-1 rounded-full bg-burgundy-deep/80 backdrop-blur-md border border-gold/30 w-fit mx-auto shadow-sm">
-            Interactive Wedding Architecture
+            Wedding Packages & Services
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-ivory mb-5 leading-tight">
-            Curate Your Wedding Experience
+            Build Your Wedding Package
           </h2>
           <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-5" />
           <p className="font-sans text-base text-ivory/80 leading-relaxed">
-            Select the specific traditional home rituals, bride & groom services, independent wedding functions, and artisanal add-ons you wish to incorporate. We craft a unified quotation tailored to your requirements.
+            Choose the home rituals, bride & groom services, wedding functions, and add-ons you need. We will prepare a clear quotation based on your choices.
           </p>
         </div>
 
@@ -620,7 +620,7 @@ export default function WeddingPackageExplorer() {
               </span>
             </div>
             <p className="font-sans text-xs text-ivory/75 max-w-xl">
-              Proceed to our enquiry form with your custom selections prefilled. Our atelier team will prepare a structured quotation.
+              Proceed to our enquiry form with your selections prefilled. Our team will prepare a clear quotation for you.
             </p>
           </div>
 
@@ -636,7 +636,7 @@ export default function WeddingPackageExplorer() {
               href="#explore-wedding-packages"
               className="w-full sm:w-auto px-5 py-4 border border-gold/30 text-ivory font-sans text-xs font-semibold uppercase tracking-wider rounded hover:border-gold hover:bg-gold/10 transition-colors text-center"
             >
-              Review Architecture ↑
+              Review Selections ↑
             </a>
           </div>
         </div>

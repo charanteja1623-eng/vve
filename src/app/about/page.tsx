@@ -17,25 +17,28 @@ export default function AboutPage() {
         <section className="py-20 px-6 text-center border-b border-gold/20 relative">
           <div className="absolute inset-0 bg-plum opacity-50 z-0"></div>
           <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-            <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">Our Story</span>
-            <h1 className="font-serif text-4xl md:text-6xl text-ivory mb-6">About the Atelier</h1>
+            <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold mb-4 block">OUR STORY</span>
+            <h1 className="font-serif text-4xl md:text-6xl text-ivory mb-6">Every Celebration Has a Story</h1>
             <p className="font-sans text-lg text-ivory/80 max-w-2xl leading-relaxed">
-              Dedicated event planning, decor design, and production coordination for celebrations across Hyderabad, Andhra Pradesh, and Telangana.
+              Event planning, decoration, and coordination for celebrations across Hyderabad, Andhra Pradesh, and Telangana.
             </p>
           </div>
         </section>
 
         {/* Content */}
         <section className="py-24 px-6 lg:px-12 bg-burgundy">
-          <div className="max-w-4xl mx-auto space-y-8 font-sans text-lg text-ivory/80 leading-relaxed">
+          <div className="max-w-4xl mx-auto space-y-6 font-sans text-lg text-ivory/85 leading-relaxed">
             <p>
-              Based in Hyderabad, <strong className="text-ivory font-semibold">{site.name}</strong> was founded with a singular conviction: thoughtful events arise from the harmony of balanced design, attentive coordination, and dependable execution.
+              Every beautiful journey starts with a small idea and a big dream. Vintage Vibe Events began with one simple goal: to turn ordinary moments into special memories.
             </p>
             <p>
-              From traditional ceremonies to contemporary social gatherings, our event planning team coordinates environments where each moment unfolds naturally into an heirloom memory.
+              With creativity, love, and care, we bring people together through beautiful celebrations. From small family gatherings to grand weddings and special events, we work hard to make every occasion memorable.
             </p>
             <p>
-              Our team works closely with each client to understand their unique requirements, coordinating decoration, catering, sound, lighting, and vendor logistics under a single unified point of contact.
+              For us, it&apos;s not just about decorations or planning an event. It&apos;s about the smiles, the happiness, and the moments families remember for years to come.
+            </p>
+            <p className="font-serif text-xl sm:text-2xl text-gold italic pt-4">
+              We don&apos;t just plan events. We create memories that last a lifetime.
             </p>
           </div>
         </section>
@@ -43,7 +46,7 @@ export default function AboutPage() {
         {/* CTA */}
         <section className="py-24 px-6 bg-burgundy-deep text-center border-t border-gold/20">
           <div className="max-w-3xl mx-auto flex flex-col items-center gap-8">
-            <h2 className="font-serif text-4xl text-ivory">Begin the Journey</h2>
+            <h2 className="font-serif text-4xl text-ivory">Ready to Plan Your Event?</h2>
             <Link href="/contact" className="px-10 py-4 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold-light transition-all rounded shadow-lg">
               Contact Us
             </Link>

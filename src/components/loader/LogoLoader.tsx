@@ -158,7 +158,7 @@ export default function LogoLoader({ onDone }: { onDone?: () => void }) {
     <div
       role="status"
       aria-live="polite"
-      aria-label="Vintage Vibe Events — Atelier Brand Seal"
+      aria-label="Vintage Vibe Events Logo"
       data-exiting={exiting ? "true" : "false"}
       className="vve-loader fixed inset-0 z-[9999] flex flex-col items-center justify-center select-none overflow-hidden"
     >

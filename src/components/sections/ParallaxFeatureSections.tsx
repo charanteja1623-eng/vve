@@ -103,14 +103,14 @@ export default function ParallaxFeatureSections() {
               <div className="flex items-center gap-3">
                 <span className="w-8 h-px bg-gold/60" />
                 <span className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-gold">
-                  Signature Discipline · 01
+                  Weddings · 01
                 </span>
               </div>
 
               {/* Heading */}
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-ivory leading-tight">
-                Royal Weddings &<br />
-                <span className="text-gold italic font-serif">Mandap Scenography</span>
+                Weddings &<br />
+                <span className="text-gold italic font-serif">Mandap Decoration</span>
               </h2>
 
               {/* Subtitle */}
@@ -123,10 +123,10 @@ export default function ParallaxFeatureSections() {
                 {weddings.description}
               </p>
 
-              {/* Curated Inclusions */}
+              {/* Service Inclusions */}
               <div className="pt-2">
                 <span className="font-sans text-[11px] font-bold uppercase tracking-wider text-ivory/60 block mb-3">
-                  Signature Architectural Inclusions:
+                  What We Provide:
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {weddings.features.map((feature, idx) => (
@@ -147,13 +147,13 @@ export default function ParallaxFeatureSections() {
                   href="/contact?eventType=wedding"
                   className="px-7 py-3.5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-xs hover:bg-gold-light transition-all rounded shadow-md text-center"
                 >
-                  Enquire for Royal Weddings
+                  Enquire for Weddings
                 </Link>
                 <Link
                   href="/events#weddings"
                   className="px-6 py-3.5 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-xs hover:border-gold hover:bg-burgundy/60 transition-all rounded text-center flex items-center justify-center gap-2 group"
                 >
-                  <span>Explore Discipline</span>
+                  <span>Explore Weddings</span>
                   <span className="transition-transform group-hover:translate-x-1">→</span>
                 </Link>
               </div>
@@ -230,7 +230,7 @@ export default function ParallaxFeatureSections() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-sans px-3 py-1.5 bg-burgundy-deep/90 text-gold border border-gold/25 rounded backdrop-blur-md">
-                  <span>Curated Scope</span>
+                  <span>Event Scope</span>
                   <span className="font-semibold text-ivory">{celebrations.tag}</span>
                 </div>
               </div>
@@ -242,14 +242,14 @@ export default function ParallaxFeatureSections() {
               <div className="flex items-center gap-3">
                 <span className="w-8 h-px bg-gold/60" />
                 <span className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-gold">
-                  Bespoke Soirées · 02
+                  Birthdays & Parties · 02
                 </span>
               </div>
 
               {/* Heading */}
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-ivory leading-tight">
                 Celebrations &<br />
-                <span className="text-gold italic font-serif">Milestone Evenings</span>
+                <span className="text-gold italic font-serif">Special Occasions</span>
               </h2>
 
               {/* Subtitle */}
@@ -262,10 +262,10 @@ export default function ParallaxFeatureSections() {
                 {celebrations.description}
               </p>
 
-              {/* Curated Inclusions */}
+              {/* Service Inclusions */}
               <div className="pt-2">
                 <span className="font-sans text-[11px] font-bold uppercase tracking-wider text-ivory/60 block mb-3">
-                  Signature Soirée Inclusions:
+                  What We Provide:
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {celebrations.features.map((feature, idx) => (
@@ -345,14 +345,14 @@ export default function ParallaxFeatureSections() {
             <div className="flex items-center justify-center gap-3 mb-3">
               <span className="w-8 h-px bg-gold/60" />
               <span className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-gold">
-                Enterprise Production · 03
+                Venue Events · 03
               </span>
               <span className="w-8 h-px bg-gold/60" />
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-ivory leading-tight mb-4">
-              Executive Corporate Galas &<br />
-              <span className="text-gold italic font-serif">Leadership Summits</span>
+              Indoor & Outdoor Events &<br />
+              <span className="text-gold italic font-serif">Venue Celebrations</span>
             </h2>
 
             <p className="font-serif text-base sm:text-lg text-gold-light/90 italic mb-4">
@@ -378,7 +378,7 @@ export default function ParallaxFeatureSections() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-sans px-3 py-1.5 bg-burgundy-deep/90 text-gold border border-gold/25 rounded backdrop-blur-md">
-                  <span>Production Scope</span>
+                  <span>Event Scope</span>
                   <span className="font-semibold text-ivory">{corporate.tag}</span>
                 </div>
               </div>
@@ -388,7 +388,7 @@ export default function ParallaxFeatureSections() {
             <div className="lg:col-span-5 flex flex-col justify-between p-6 sm:p-8 bg-burgundy-deep/80 border border-gold/25 rounded-xl shadow-xl backdrop-blur-sm">
               <div>
                 <span className="font-sans text-xs font-bold uppercase tracking-wider text-gold block mb-4">
-                  Enterprise Production Standards:
+                  What We Provide:
                 </span>
                 <div className="space-y-3">
                   {corporate.features.map((feature, idx) => (
@@ -406,16 +406,16 @@ export default function ParallaxFeatureSections() {
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row items-stretch gap-3 mt-6 pt-4 border-t border-gold/20">
                 <Link
-                  href="/contact?eventType=corporate"
+                  href="/contact?eventType=indoor-outdoor-events"
                   className="px-6 py-3.5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-xs hover:bg-gold-light transition-all rounded shadow-md text-center flex-1"
                 >
-                  Enquire for Corporate Galas
+                  Enquire for Venue Events
                 </Link>
                 <Link
-                  href="/events#corporate"
+                  href="/events#indoor-outdoor-events"
                   className="px-5 py-3.5 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-xs hover:border-gold hover:bg-burgundy/60 transition-all rounded text-center flex items-center justify-center gap-1.5 group"
                 >
-                  <span>Explore</span>
+                  <span>Explore Events</span>
                   <span className="transition-transform group-hover:translate-x-1">→</span>
                 </Link>
               </div>

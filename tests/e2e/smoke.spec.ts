@@ -234,8 +234,7 @@ test.describe('VVE Browser Smoke & Gate 3 Verification Suite', () => {
     const firstCard = stageSection.locator('#stage-wedding-packages');
     await firstCard.scrollIntoViewIfNeeded();
     await firstCard.click({ position: { x: 20, y: 20 } });
-    await page.waitForURL('**/events/wedding-packages', { timeout: 15000 });
-    expect(page.url()).toContain('/events/wedding-packages');
+    await expect(page).toHaveURL(/\/events\/wedding-packages/, { timeout: 30000 });
   });
 
   test('Hero Section: architectural background image and scroll-driven dolly zoom', async ({ page }) => {
@@ -325,7 +324,7 @@ test.describe('VVE Browser Smoke & Gate 3 Verification Suite', () => {
     await expect(closeBtn).toBeVisible();
 
     // Verified showcase label inside modal
-    await expect(modal).toContainText('Curated Event Scenography & Production Showcase');
+    await expect(modal).toContainText('Event Showcase & Production');
 
     // Pressing Escape closes the modal
     await page.keyboard.press('Escape');

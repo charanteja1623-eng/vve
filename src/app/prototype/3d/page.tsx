@@ -78,10 +78,10 @@ export default function PalatialCorridorPage() {
                 Return to Production Home
               </Link>
               <Link
-                href="/contact?eventType=wedding"
+                href="/contact?eventType=wedding-packages"
                 className="px-8 py-3.5 border border-gold/40 text-gold font-sans font-bold uppercase tracking-widest text-xs hover:border-gold hover:bg-burgundy/60 transition-all rounded text-center w-full sm:w-auto"
               >
-                Enquire for Palatial Mandaps
+                Enquire for Wedding Mandaps
               </Link>
             </div>
           </div>

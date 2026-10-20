@@ -25,7 +25,7 @@ export default function JsonLd() {
     logo: "https://vintagevibeevents.in/vve-frame.png",
     image: "https://vintagevibeevents.in/images/hero/palace-courtyard.jpg",
     description:
-      "Vintage Vibe Events is a premier wedding and event planning atelier in Hyderabad, specializing in luxury weddings, milestone birthdays, surprise celebrations, and turnkey event design across Telangana and Andhra Pradesh.",
+      "Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in weddings, milestone birthdays, surprise celebrations, and complete event design across Telangana and Andhra Pradesh.",
     telephone: `+91${site.phones[0]}`,
     email: site.email,
     address: {
