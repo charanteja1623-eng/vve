@@ -9,6 +9,9 @@ export const metadata = {
   title: `Event Categories & Add-On Services — ${site.name}`,
   description:
     "Comprehensive wedding packages, birthday celebrations, surprise parties, indoor & outdoor events, campus functions, and event add-on services across Hyderabad, Andhra Pradesh, and Telangana.",
+  alternates: {
+    canonical: "https://vintagevibeevents.in/events",
+  },
 };
 
 export default function EventsPage() {

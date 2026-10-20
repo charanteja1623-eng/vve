@@ -8,7 +8,9 @@
 
 export const site = {
   name: "Vintage Vibe Events",
+  alternateName: "Vintage Vibe",
   tagline: "Creating moments. Designing memories.",
+  url: "https://vintagevibeevents.in",
   serviceArea: "Hyderabad, Andhra Pradesh, and Telangana.",
 
   // Confirmed contact details — displayed separately with proper spacing

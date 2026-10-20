@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
@@ -8,6 +9,15 @@ import EditorialSplitStage from "@/components/sections/EditorialSplitStage";
 import WhatsAppLink from "@/components/ui/WhatsAppLink";
 import Link from "next/link";
 import { artisanalServices, portfolioProjects, site } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Vintage Vibe Events | Wedding & Event Planners",
+  description:
+    "Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in luxury weddings, milestone birthdays, surprise parties, and bespoke celebrations across Telangana and Andhra Pradesh.",
+  alternates: {
+    canonical: "https://vintagevibeevents.in/",
+  },
+};
 
 export default function Home() {
   return (
@@ -56,6 +66,7 @@ export default function Home() {
             {/* Canonical LogoMark */}
             <div className="hero-brand-lockup flex flex-col items-center text-center w-full">
               <h1 className="m-0">
+                <span className="sr-only">Vintage Vibe Events — Wedding & Event Planners</span>
                 <LogoMark className="w-[min(80vw,460px)]" priority />
               </h1>
             </div>

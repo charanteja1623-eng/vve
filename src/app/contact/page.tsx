@@ -7,6 +7,9 @@ import EnquiryForm from "@/components/forms/EnquiryForm";
 export const metadata = {
   title: `Contact Us — ${site.name}`,
   description: "Enquire about your upcoming event with Vintage Vibe Events in Hyderabad.",
+  alternates: {
+    canonical: "https://vintagevibeevents.in/contact",
+  },
 };
 
 export default function ContactPage() {

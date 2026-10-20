@@ -6,6 +6,10 @@ import Link from "next/link";
 export const metadata = {
   title: "Real-Time 3D Perspective Palatial Corridor — Vintage Vibe Events",
   description: "Option B 3D scroll animation engine simulating an imperial Nizami palatial corridor leading into the sacred mandap sanctum.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function PalatialCorridorPage() {

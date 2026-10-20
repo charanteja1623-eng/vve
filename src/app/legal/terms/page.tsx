@@ -4,6 +4,9 @@ import { site } from "@/lib/site";
 
 export const metadata = {
   title: `Terms of Service — ${site.name}`,
+  alternates: {
+    canonical: "https://vintagevibeevents.in/legal/terms",
+  },
 };
 
 export default function TermsOfServicePage() {

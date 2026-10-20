@@ -4,6 +4,8 @@ import "./globals.css";
 import "@/styles/scroll-experience.css";
 import WhatsAppFab from "@/components/layout/WhatsAppFab";
 import MobileActionBar from "@/components/layout/MobileActionBar";
+import JsonLd from "@/components/seo/JsonLd";
+import { site } from "@/lib/site";
 
 // next/font self-hosts these at build time — no runtime Google Fonts request.
 const cormorant = Cormorant_Garamond({
@@ -30,9 +32,51 @@ const cinzelDecorative = Cinzel_Decorative({
 });
 
 export const metadata: Metadata = {
-  title: "Vintage Vibe Events — Creating moments. Designing memories.",
+  metadataBase: new URL(site.url),
+  title: {
+    default: "Vintage Vibe Events | Wedding & Event Planners",
+    template: `%s | ${site.name}`,
+  },
   description:
-    "Vintage Vibe Events is a premium event organizer in Hyderabad — weddings, celebrations and corporate events, with coordinated design, decoration and services under one team.",
+    "Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in luxury weddings, milestone birthdays, surprise parties, and bespoke celebrations across Telangana and Andhra Pradesh.",
+  alternates: {
+    canonical: "https://vintagevibeevents.in/",
+  },
+  openGraph: {
+    title: "Vintage Vibe Events | Wedding & Event Planners",
+    description:
+      "Premier wedding and event planners in Hyderabad. Turnkey decor, royal mandaps, milestone birthdays, and bespoke celebrations across Telangana and Andhra Pradesh.",
+    url: "https://vintagevibeevents.in/",
+    siteName: site.name,
+    locale: "en_IN",
+    type: "website",
+    images: [
+      {
+        url: "/images/hero/palace-courtyard.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Vintage Vibe Events | Wedding & Event Planners",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vintage Vibe Events | Wedding & Event Planners",
+    description:
+      "Premier wedding and event planners in Hyderabad. Turnkey decor, royal mandaps, milestone birthdays, and bespoke celebrations across Telangana and Andhra Pradesh.",
+    images: ["/images/hero/palace-courtyard.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -43,6 +87,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-ivory text-burgundy-deep" suppressHydrationWarning>
+        <JsonLd />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-gold focus:text-burgundy-deep focus:font-bold focus:rounded focus:outline-none focus:ring-2 focus:ring-burgundy-deep shadow-lg"

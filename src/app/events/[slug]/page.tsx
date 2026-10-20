@@ -32,6 +32,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${category.title} — ${site.name}`,
     description: `${category.description} Bespoke planning, staging, and vendor coordination across ${site.serviceArea}.`,
+    alternates: {
+      canonical: `https://vintagevibeevents.in/events/${category.slug}`,
+    },
+    openGraph: {
+      title: `${category.title} — ${site.name}`,
+      description: `${category.description} Bespoke planning, staging, and vendor coordination across ${site.serviceArea}.`,
+      url: `https://vintagevibeevents.in/events/${category.slug}`,
+      images: [
+        {
+          url: category.image,
+          alt: category.imageAlt,
+        },
+      ],
+    },
   };
 }
 

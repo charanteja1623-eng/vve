@@ -4,6 +4,9 @@ import { site } from "@/lib/site";
 
 export const metadata = {
   title: `Privacy Policy — ${site.name}`,
+  alternates: {
+    canonical: "https://vintagevibeevents.in/legal/privacy",
+  },
 };
 
 export default function PrivacyPolicyPage() {
