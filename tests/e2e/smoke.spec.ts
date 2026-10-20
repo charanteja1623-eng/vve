@@ -146,25 +146,12 @@ test.describe('VVE Browser Smoke & Gate 3 Verification Suite', () => {
     }
   });
 
-  test('Mobile action bar visibility, Call action, and Enquire routing', async ({ page }) => {
+  test('Bottom mobile contact bar is completely removed across all viewports', async ({ page }) => {
     await page.goto('/');
     await waitForPageReady(page);
 
-    const viewport = page.viewportSize();
-    const isSmallScreen = (viewport?.width ?? 1440) < 768;
     const actionBar = page.locator('nav[aria-label="Mobile quick actions"]');
-
-    if (isSmallScreen) {
-      await expect(actionBar).toBeVisible();
-
-      const callAction = actionBar.locator('a[href^="tel:8886882608"]');
-      await expect(callAction).toBeVisible();
-
-      const enquireAction = actionBar.locator('a[href*="/contact"]');
-      await expect(enquireAction).toBeVisible();
-    } else {
-      await expect(actionBar).toBeHidden();
-    }
+    await expect(actionBar).toHaveCount(0);
   });
 
   test('WhatsApp click-to-chat: FAB, CTA buttons, and links point to canonical wa.me URL with proper attributes', async ({ page }) => {

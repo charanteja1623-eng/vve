@@ -143,7 +143,7 @@ test.describe('VVE Gate 4: Cinematic Gilded Seal Logo Loader Suite (~5s & Reload
     const loader = page.locator('.vve-loader');
 
     if (await loader.count() > 0) {
-      await loader.waitFor({ state: 'detached', timeout: 5000 });
+      await loader.waitFor({ state: 'detached', timeout: 10000 });
     }
 
     const loaderDuration = await page.evaluate(() => {

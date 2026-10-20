@@ -79,21 +79,19 @@ test.describe('WhatsApp Click-to-Chat Integration', () => {
     await expect(weddingWa).toHaveAttribute('href', new RegExp(`^${CANONICAL_WA_PREFIX.replace(/\+/g, '\\+')}`));
   });
 
-  test('Mobile action bar includes WhatsApp button on mobile viewport', async ({ page }) => {
+  test('Mobile viewport: duplicate action bar is removed and floating WhatsApp FAB remains interactive', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
 
+    // Bottom action bar must not exist
     const actionBar = page.locator('nav[aria-label="Mobile quick actions"]');
-    await expect(actionBar).toBeVisible();
+    await expect(actionBar).toHaveCount(0);
 
-    const waAction = actionBar.locator('a[aria-label*="WhatsApp"]');
-    await expect(waAction).toBeVisible();
-    await expect(waAction).toHaveAttribute('target', '_blank');
-    await expect(waAction).toHaveAttribute('rel', 'noopener noreferrer');
-    await expect(waAction).toHaveAttribute('href', new RegExp(`^${CANONICAL_WA_PREFIX.replace(/\+/g, '\\+')}`));
-
-    // Phone call action is also present and separate
-    const callAction = actionBar.locator('a[href^="tel:"]');
-    await expect(callAction).toBeVisible();
+    // Floating WhatsApp FAB remains visible, clickable, and correctly configured
+    const waFab = page.locator('aside[aria-label="Quick contact"] a[aria-label*="WhatsApp"]');
+    await expect(waFab).toBeVisible();
+    await expect(waFab).toHaveAttribute('target', '_blank');
+    await expect(waFab).toHaveAttribute('rel', 'noopener noreferrer');
+    await expect(waFab).toHaveAttribute('href', new RegExp(`^${CANONICAL_WA_PREFIX.replace(/\+/g, '\\+')}`));
   });
 });

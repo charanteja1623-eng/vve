@@ -94,7 +94,7 @@ export default function SiteHeader() {
         </div>
       </div>
 
-      {/* Mobile menu overlay — overlays entire screen including MobileActionBar */}
+      {/* Mobile menu overlay — overlays entire screen */}
       {isOpen && (
         <div id="mobile-menu" ref={menuRef} className="fixed inset-0 z-[60] bg-burgundy-deep/95 backdrop-blur-2xl pt-24 px-6 md:hidden overflow-y-auto border-b border-gold/25 shadow-[inset_0_1px_0_rgba(227,201,133,0.15)]" role="dialog" aria-modal="true" aria-label="Mobile navigation">
           <nav className="flex flex-col gap-8 text-center text-lg font-semibold tracking-widest uppercase font-sans">

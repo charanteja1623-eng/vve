@@ -3,7 +3,6 @@ import { Cormorant_Garamond, Manrope, Cinzel_Decorative } from "next/font/google
 import "./globals.css";
 import "@/styles/scroll-experience.css";
 import WhatsAppFab from "@/components/layout/WhatsAppFab";
-import MobileActionBar from "@/components/layout/MobileActionBar";
 import JsonLd from "@/components/seo/JsonLd";
 import { site } from "@/lib/site";
 
@@ -96,7 +95,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         {children}
         <WhatsAppFab />
-        <MobileActionBar />
       </body>
     </html>
   );

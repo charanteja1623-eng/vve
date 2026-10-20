@@ -5,14 +5,6 @@
  * src/app/globals.css is intentionally kept untouched.
  */
 
-/* ============================================================
-   1. Mobile Viewport Spacing & Safe-Area Insets
-   ============================================================ */
-@media (max-width: 768px) {
-  body {
-    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
-  }
-}
 
 /* ============================================================
    2. Hero Background Scaling & Section Cross-Fade

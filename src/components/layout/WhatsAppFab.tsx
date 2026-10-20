@@ -22,7 +22,13 @@ export default function WhatsAppFab() {
   const waUrl = `https://wa.me/${cleanPhone}?text=${defaultMessage}`;
 
   return (
-    <aside aria-label="Quick contact" className="fixed bottom-20 sm:bottom-6 right-6 z-40 flex items-center gap-3">
+    <aside
+      aria-label="Quick contact"
+      className="fixed right-6 z-40 flex items-center gap-3"
+      style={{
+        bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
+      }}
+    >
       {/* Tooltip Pill */}
       <div
         className={`hidden sm:flex items-center px-4 py-2 rounded-full bg-burgundy-deep/95 border border-gold/40 text-ivory text-xs font-sans font-semibold tracking-wider shadow-xl transition-all duration-300 pointer-events-none ${
