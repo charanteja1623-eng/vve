@@ -34,6 +34,18 @@ export default function SiteFooter() {
                 {site.phones[1]}
               </a>
             </div>
+            {Boolean(site.whatsappNumber && site.whatsappNumber.replace(/\D/g, "")) && (
+              <a
+                href={`https://wa.me/${site.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent("Hello, I'd like to enquire about your event services.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#25D366] transition-colors w-fit flex items-center gap-1.5"
+                aria-label="Chat with Vintage Vibe Events on WhatsApp"
+              >
+                <span>WhatsApp:</span>
+                <span className="text-gold hover:text-gold-light">+91 9652961775</span>
+              </a>
+            )}
             <a href={`mailto:${site.email}`} className="hover:text-gold transition-colors w-fit">
               {site.email}
             </a>

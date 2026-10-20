@@ -12,13 +12,17 @@ export default function WhatsAppFab() {
   }
 
   const cleanPhone = site.whatsappNumber.replace(/\D/g, "");
+  if (!cleanPhone) {
+    return null;
+  }
+
   const defaultMessage = encodeURIComponent(
-    `Hello ${site.name}, I would like to enquire about your luxury event planning services in Hyderabad.`
+    "Hello, I'd like to enquire about your event services."
   );
   const waUrl = `https://wa.me/${cleanPhone}?text=${defaultMessage}`;
 
   return (
-    <aside aria-label="Quick contact" className="fixed bottom-6 right-6 z-40 flex items-center gap-3">
+    <aside aria-label="Quick contact" className="fixed bottom-20 sm:bottom-6 right-6 z-40 flex items-center gap-3">
       {/* Tooltip Pill */}
       <div
         className={`hidden sm:flex items-center px-4 py-2 rounded-full bg-burgundy-deep/95 border border-gold/40 text-ivory text-xs font-sans font-semibold tracking-wider shadow-xl transition-all duration-300 pointer-events-none ${

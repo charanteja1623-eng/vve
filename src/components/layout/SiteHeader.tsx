@@ -63,7 +63,7 @@ export default function SiteHeader() {
   }, [isOpen]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 ${isOpen ? "z-[60] h-screen bg-burgundy-deep/95 backdrop-blur-xl" : "z-50 bg-burgundy-deep/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(15,1,2,0.7)]"} w-full border-b border-gold/25 text-ivory transition-colors duration-300`}>
+    <header className={`fixed top-0 left-0 right-0 ${isOpen ? "z-[60] h-screen bg-burgundy-deep/95 backdrop-blur-xl" : "z-50 bg-burgundy-deep shadow-[0_4px_30px_rgba(15,1,2,0.85)]"} w-full border-b border-gold/25 text-ivory transition-colors duration-300`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="font-serif text-xl tracking-wide text-gold-light hover:text-gold hover:drop-shadow-[0_0_12px_rgba(201,161,90,0.4)] transition-all z-[70]" onClick={() => setIsOpen(false)}>
           {site.name}

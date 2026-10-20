@@ -21,8 +21,11 @@ export default function WhatsAppLink({
   const cleanPhone = site.whatsappNumber.replace(/\D/g, "");
   if (!cleanPhone) return null;
 
-  const url = message
-    ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`
+  const defaultMessage = "Hello, I'd like to enquire about your event services.";
+  const finalMessage = message !== undefined ? message : defaultMessage;
+
+  const url = finalMessage
+    ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(finalMessage)}`
     : `https://wa.me/${cleanPhone}`;
 
   return (

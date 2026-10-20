@@ -35,9 +35,27 @@ export default function ContactPage() {
                 <div className="space-y-8 font-sans">
                   <div className="flex flex-col gap-2.5">
                     <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-90">Phone</span>
-                    <a href={site.telLinks[0]} className="text-lg text-ivory hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all w-fit">{site.phones[0]}</a>
-                    <a href={site.telLinks[1]} className="text-lg text-ivory hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all w-fit">{site.phones[1]}</a>
+                    <div className="flex flex-col gap-2">
+                      <a href={site.telLinks[0]} className="text-lg leading-snug text-ivory hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all w-fit">{site.phones[0]}</a>
+                      <a href={site.telLinks[1]} className="text-lg leading-snug text-ivory hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all w-fit">{site.phones[1]}</a>
+                    </div>
                   </div>
+                  {Boolean(site.whatsappNumber && site.whatsappNumber.replace(/\D/g, "")) && (
+                    <div className="flex flex-col gap-2">
+                      <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-90">WhatsApp</span>
+                      <a
+                        href={`https://wa.me/${site.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent("Hello, I'd like to enquire about your event services.")}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-lg bg-[#25D366]/20 border border-[#25D366]/40 text-ivory hover:bg-[#25D366]/30 hover:border-[#25D366] transition-all text-sm font-semibold w-fit group shadow-[0_0_15px_rgba(37,211,102,0.2)]"
+                        aria-label="Chat with Vintage Vibe Events on WhatsApp"
+                      >
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse shadow-[0_0_8px_#25D366]" />
+                        <span>Chat on WhatsApp (+91 9652961775)</span>
+                        <span className="text-[#25D366] group-hover:translate-x-1 transition-transform">→</span>
+                      </a>
+                    </div>
+                  )}
                   <div className="flex flex-col gap-2">
                     <span className="text-xs font-bold uppercase tracking-widest text-gold opacity-90">Email</span>
                     <a href={`mailto:${site.email}`} className="text-lg text-ivory hover:text-gold-light hover:drop-shadow-[0_0_8px_rgba(201,161,90,0.4)] transition-all w-fit">{site.email}</a>

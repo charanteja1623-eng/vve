@@ -167,16 +167,28 @@ test.describe('VVE Browser Smoke & Gate 3 Verification Suite', () => {
     }
   });
 
-  test('Strict single-switch: WhatsApp controls and links are absent while unconfirmed', async ({ page }) => {
+  test('WhatsApp click-to-chat: FAB, CTA buttons, and links point to canonical wa.me URL with proper attributes', async ({ page }) => {
     for (const path of ['/', '/events', '/work', '/contact']) {
       await page.goto(path);
       await waitForPageReady(page);
 
-      const waFab = page.locator('a[aria-label*="WhatsApp"]');
-      await expect(waFab).toHaveCount(0);
+      // Verify WhatsApp FAB is present and configured with canonical wa.me link
+      const waFab = page.locator('aside[aria-label="Quick contact"] a[aria-label*="WhatsApp"]');
+      await expect(waFab).toBeAttached();
+      await expect(waFab).toHaveAttribute('href', /https:\/\/wa\.me\/919652961775/);
+      await expect(waFab).toHaveAttribute('target', '_blank');
+      await expect(waFab).toHaveAttribute('rel', 'noopener noreferrer');
 
+      // Verify all wa.me links on the page point to canonical number with external security attributes
       const waLinks = page.locator('a[href*="wa.me"]');
-      await expect(waLinks).toHaveCount(0);
+      const count = await waLinks.count();
+      expect(count).toBeGreaterThan(0);
+      for (let i = 0; i < count; i++) {
+        const link = waLinks.nth(i);
+        await expect(link).toHaveAttribute('href', /https:\/\/wa\.me\/919652961775/);
+        await expect(link).toHaveAttribute('target', '_blank');
+        await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+      }
     }
   });
 

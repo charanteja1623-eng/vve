@@ -12,7 +12,7 @@ export const site = {
   serviceArea: "Hyderabad, Andhra Pradesh, and Telangana.",
 
   // Confirmed contact details — displayed separately with proper spacing
-  phones: ["8886882608", "96529 61775"],
+  phones: ["8886882608", "9652961775"],
   telLinks: ["tel:8886882608", "tel:+919652961775"],
   email: "vintagevibeevents12@gmail.com",
   instagram: {
@@ -21,9 +21,12 @@ export const site = {
   },
 
   // Canonical WhatsApp business number configuration.
-  // UNCONFIRMED: Kept empty by default until officially confirmed by the client.
-  // Single source of truth: when empty/unconfirmed, all WhatsApp actions are hidden globally.
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.trim() || "",
+  // Single source of truth: when empty/unconfigured, all WhatsApp actions are hidden globally.
+  // Overridable via NEXT_PUBLIC_WHATSAPP_NUMBER environment variable.
+  whatsappNumber:
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER !== undefined
+      ? process.env.NEXT_PUBLIC_WHATSAPP_NUMBER.trim()
+      : "919652961775",
 
   // Confirmed operating hours
   businessHours: "Mon – Sat: 10:00 AM – 8:00 PM IST",

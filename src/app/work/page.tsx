@@ -117,7 +117,7 @@ function WorkGallery() {
   return (
     <>
       {/* Interactive Filter Bar */}
-      <section className="sticky top-20 z-30 py-4 px-6 bg-burgundy-deep/80 backdrop-blur-xl border-b border-gold/25 shadow-[0_4px_20px_rgba(15,1,2,0.6)]">
+      <section className="sticky top-[73px] md:top-[61px] z-40 py-3.5 sm:py-4 px-6 bg-burgundy-deep border-b border-gold/25 shadow-[0_4px_25px_rgba(15,1,2,0.85)]">
         <div className="max-w-7xl mx-auto flex items-center justify-start sm:justify-center gap-2 sm:gap-4 overflow-x-auto py-2 no-scrollbar font-sans text-xs font-bold uppercase tracking-wider">
           {CATEGORY_TABS.map((cat) => (
             <button
@@ -136,7 +136,7 @@ function WorkGallery() {
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-20 px-6 lg:px-12 bg-burgundy-deep">
+      <section className="py-12 sm:py-16 md:py-20 px-6 lg:px-12 bg-burgundy-deep scroll-mt-36">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project) => (
@@ -204,7 +204,7 @@ function WorkGallery() {
       {/* Modal Lightbox for Project Details */}
       {selectedProject && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-burgundy-deep/85 backdrop-blur-xl"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-burgundy-deep/85 backdrop-blur-xl"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-project-title"
@@ -293,10 +293,10 @@ export default function WorkPage() {
   return (
     <>
       <SiteHeader />
-      <main id="main-content" className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory pt-24">
+      <main id="main-content" className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory pt-[73px] md:pt-[61px]">
         
         {/* Hero */}
-        <section className="relative py-24 px-6 text-center border-b border-gold/20 overflow-hidden">
+        <section className="relative py-14 sm:py-16 md:py-20 px-6 text-center border-b border-gold/20 overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#3a0507_0%,_#210304_100%)]" />
             <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep via-burgundy-deep/90 to-burgundy-deep" />

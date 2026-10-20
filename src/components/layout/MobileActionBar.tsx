@@ -89,10 +89,10 @@ export default function MobileActionBar() {
           <span>Enquire</span>
         </Link>
 
-        {/* WhatsApp Action: strictly conditionally rendered ONLY if confirmed */}
-        {Boolean(site.whatsappNumber) && (
+        {/* WhatsApp Action: strictly conditionally rendered ONLY if configured */}
+        {Boolean(site.whatsappNumber && site.whatsappNumber.replace(/\D/g, "")) && (
           <a
-            href={`https://wa.me/${site.whatsappNumber.replace(/\D/g, "")}`}
+            href={`https://wa.me/${site.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent("Hello, I'd like to enquire about your event services.")}`}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat with Vintage Vibe Events on WhatsApp"
