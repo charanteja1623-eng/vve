@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect, useSyncExternalStore } from "react";
 import { useSearchParams } from "next/navigation";
-import { getTomorrowDateString, isValidFutureEventDate } from "@/lib/dates";
+import { isValidFutureEventDate } from "@/lib/dates";
+import DatePicker from "@/components/ui/DatePicker";
 
 const APPROVED_EVENT_TYPES: string[] = [
   "wedding-packages",
@@ -60,16 +61,28 @@ export default function EnquiryForm() {
     return Array.from(new Set(combined));
   })();
 
+  // Extract initial date from URL query parameters (if supplied) and validate strictly
+  const rawDate = searchParams.get("date")?.trim() || "";
+  const validatedInitialDate = (() => {
+    if (!rawDate) return "";
+    const check = isValidFutureEventDate(rawDate);
+    return check.valid && check.normalizedDate ? check.normalizedDate : "";
+  })();
+
   const [userEventType, setUserEventType] = useState<string | null>(null);
   const [userAddons, setUserAddons] = useState<string[] | null>(null);
   const [userMessage, setUserMessage] = useState<string | null>(null);
+  const [dateValue, setDateValue] = useState(validatedInitialDate);
+  const [prevInitialDate, setPrevInitialDate] = useState(validatedInitialDate);
+
+  if (validatedInitialDate !== prevInitialDate) {
+    setPrevInitialDate(validatedInitialDate);
+    setDateValue(validatedInitialDate);
+  }
+
   const [isAddonOpen, setIsAddonOpen] = useState(false);
   const addonRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-
-  // Dynamic minimum date strictly starting tomorrow in Asia/Kolkata
-  const minDate = getTomorrowDateString();
-  const [dateValue, setDateValue] = useState("");
 
   // During SSR and initial hydration pass (!isHydrated), render empty values to match server HTML.
   // Immediately after hydration completes (isHydrated), seamlessly apply prefilled query params.
@@ -224,6 +237,7 @@ export default function EnquiryForm() {
   return (
     <form
       id="enquiry-form"
+      data-hydrated={isHydrated}
       suppressHydrationWarning
       className="md:col-span-7 flex flex-col gap-8 p-6 sm:p-10 rounded-2xl bg-burgundy-deep/[0.03] backdrop-blur-md border border-burgundy/15 shadow-[0_8px_30px_rgba(58,5,7,0.06),_inset_0_1px_0_rgba(255,255,255,0.8)]"
       onSubmit={handleSubmit}
@@ -488,21 +502,16 @@ export default function EnquiryForm() {
 
       {/* Row 4: Event Date & Budget */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="date" className="text-xs font-bold uppercase tracking-widest text-burgundy-deep">
-            Event Date <span className="text-burgundy/40 text-[10px] font-normal lowercase">(future dates only)</span>
-          </label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            min={minDate}
-            value={dateValue}
-            onChange={(e) => setDateValue(e.target.value)}
-            disabled={isSubmitting}
-            className="border-b border-burgundy/30 bg-transparent py-3 focus:border-gold focus:outline-none transition-colors font-sans text-burgundy-deep disabled:opacity-50"
-          />
-        </div>
+        <DatePicker
+          id="date"
+          name="date"
+          value={dateValue}
+          onChange={(val) => setDateValue(val)}
+          disabled={isSubmitting}
+          variant="light"
+          label="Event Date"
+          sublabel="(future dates only)"
+        />
         <div className="flex flex-col gap-2">
           <label htmlFor="budget" className="text-xs font-bold uppercase tracking-widest text-burgundy-deep">
             Estimated Budget

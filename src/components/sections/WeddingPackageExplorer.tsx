@@ -4,16 +4,19 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { weddingStructure, artisanalServices } from "@/lib/site";
+import DatePicker from "@/components/ui/DatePicker";
 
 export default function WeddingPackageExplorer() {
   const router = useRouter();
 
   // 1. Home Events & Pujas selections
   const [selectedHomeEvents, setSelectedHomeEvents] = useState<string[]>([]);
+  const [homeEventsDate, setHomeEventsDate] = useState("");
   const [homeCustomsNote, setHomeCustomsNote] = useState("");
 
   // 2. Bride & Groom services selections
   const [selectedBrideGroom, setSelectedBrideGroom] = useState<string[]>([]);
+  const [brideGroomDate, setBrideGroomDate] = useState("");
 
   // 3. Wedding Functions (Independent selections: Haldi, Sangeet, Reception)
   const [selectedFunctions, setSelectedFunctions] = useState<Record<string, boolean>>({
@@ -123,6 +126,9 @@ export default function WeddingPackageExplorer() {
         .filter((s) => selectedHomeEvents.includes(s.id))
         .map((s) => s.label);
       parts.push(`Home Events & Pujas: ${labels.join(", ")}`);
+      if (homeEventsDate) {
+        parts.push(`  Preferred Date: ${homeEventsDate}`);
+      }
       if (homeCustomsNote) {
         parts.push(`  Family Customs & Traditions: ${homeCustomsNote}`);
       }
@@ -134,6 +140,9 @@ export default function WeddingPackageExplorer() {
         .filter((s) => selectedBrideGroom.includes(s.id))
         .map((s) => s.label);
       parts.push(`Bride & Groom Services: ${labels.join(", ")}`);
+      if (brideGroomDate) {
+        parts.push(`  Preferred Date: ${brideGroomDate}`);
+      }
     }
 
     // Addons
@@ -148,7 +157,16 @@ export default function WeddingPackageExplorer() {
     const primaryAddon = selectedAddons[0] || "";
     const addonParam = primaryAddon ? `&addon=${primaryAddon}` : "";
 
-    router.push(`/contact?eventType=wedding-packages&services=${compiledServices}${addonParam}#enquiry-form`);
+    // Extract earliest or primary selected date across functions and services
+    const activeDates = [
+      ...activeFns.map((fn) => functionDetails[fn]?.date),
+      homeEventsDate,
+      brideGroomDate,
+    ].filter(Boolean) as string[];
+    const primaryDate = activeDates[0] || "";
+    const dateParam = primaryDate ? `&date=${encodeURIComponent(primaryDate)}` : "";
+
+    router.push(`/contact?eventType=wedding-packages&services=${compiledServices}${addonParam}${dateParam}#enquiry-form`);
   };
 
   const totalSelectionsCount =
@@ -260,19 +278,31 @@ export default function WeddingPackageExplorer() {
                   })}
                 </div>
 
-                {/* Family Customs Details */}
-                <div className="pt-4 border-t border-gold/20">
-                  <label htmlFor="home-customs-note" className="font-sans text-xs font-bold uppercase tracking-wider text-gold block mb-2">
-                    Family Customs & Special Ceremony Instructions:
-                  </label>
-                  <textarea
-                    id="home-customs-note"
-                    rows={2}
-                    value={homeCustomsNote}
-                    onChange={(e) => setHomeCustomsNote(e.target.value)}
-                    placeholder="Specify particular traditions (Telugu, Tamil, Marwari, etc.), preferred muhurtham dates, or specific puja items needed..."
-                    className="w-full bg-burgundy-deep/70 border border-gold/30 rounded-lg p-3 text-xs font-sans text-ivory focus:border-gold focus:outline-none placeholder:text-ivory/40"
-                  />
+                {/* Family Customs & Preferred Date Details */}
+                <div className="pt-4 border-t border-gold/20 flex flex-col gap-4">
+                  <div className="max-w-xs">
+                    <DatePicker
+                      id="date-home-events"
+                      value={homeEventsDate}
+                      onChange={setHomeEventsDate}
+                      variant="dark"
+                      label="Preferred Date for Pujas & Ceremonies:"
+                      aria-label="Preferred date for Home Events & Pujas"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="home-customs-note" className="font-sans text-xs font-bold uppercase tracking-wider text-gold block mb-2">
+                      Family Customs & Special Ceremony Instructions:
+                    </label>
+                    <textarea
+                      id="home-customs-note"
+                      rows={2}
+                      value={homeCustomsNote}
+                      onChange={(e) => setHomeCustomsNote(e.target.value)}
+                      placeholder="Specify particular traditions (Telugu, Tamil, Marwari, etc.), preferred muhurtham dates, or specific puja items needed..."
+                      className="w-full bg-burgundy-deep/70 border border-gold/30 rounded-lg p-3 text-xs font-sans text-ivory focus:border-gold focus:outline-none placeholder:text-ivory/40"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -359,6 +389,18 @@ export default function WeddingPackageExplorer() {
                       </div>
                     );
                   })}
+                </div>
+
+                {/* Preferred Date for Bride & Groom Services */}
+                <div className="pt-4 border-t border-gold/20 max-w-xs">
+                  <DatePicker
+                    id="date-bride-groom"
+                    value={brideGroomDate}
+                    onChange={setBrideGroomDate}
+                    variant="dark"
+                    label="Preferred Date for Styling & Trials:"
+                    aria-label="Preferred date for Bride and Groom Services"
+                  />
                 </div>
               </div>
             </div>
@@ -458,14 +500,13 @@ export default function WeddingPackageExplorer() {
                             {/* Preferred Date & Guest Count / Venue */}
                             <div className="grid grid-cols-2 gap-2">
                               <div>
-                                <label className="text-[10px] font-sans text-ivory/70 block mb-1">
-                                  Preferred Date:
-                                </label>
-                                <input
-                                  type="date"
+                                <DatePicker
+                                  id={`date-${fn.id}`}
                                   value={details.date || ""}
-                                  onChange={(e) => updateFunctionField(fn.id, "date", e.target.value)}
-                                  className="w-full bg-burgundy-deep/90 border border-gold/30 rounded p-1.5 text-xs font-sans text-ivory focus:border-gold focus:outline-none"
+                                  onChange={(val) => updateFunctionField(fn.id, "date", val)}
+                                  variant="dark"
+                                  label="Preferred Date:"
+                                  aria-label={`Preferred date for ${fn.title}`}
                                 />
                               </div>
                               <div>
