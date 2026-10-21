@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useSyncExternalStore } from "react";
 import { useSearchParams } from "next/navigation";
-import { getTomorrowDateString } from "@/lib/dates";
+import { getTomorrowDateString, isValidFutureEventDate } from "@/lib/dates";
 
 const APPROVED_EVENT_TYPES: string[] = [
   "wedding-packages",
@@ -159,17 +159,24 @@ export default function EnquiryForm() {
 
     // Explicit client-side date boundary check: must be strictly tomorrow or later
     const dateInput = (data.date as string)?.trim() || "";
-    if (dateInput && dateInput < minDate) {
-      setStatus({
-        type: "error",
-        message: "Event date must be in the future (tomorrow or later).",
-      });
-      setIsSubmitting(false);
-      return;
+    if (dateInput) {
+      const dateCheck = isValidFutureEventDate(dateInput);
+      if (!dateCheck.valid) {
+        setStatus({
+          type: "error",
+          message: dateCheck.error || "Event date must be in the future (tomorrow or later).",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+      if (dateCheck.normalizedDate) {
+        data.date = dateCheck.normalizedDate;
+      }
     }
 
     // Attach selected add-ons array and primary single value for backward compatibility
     data.addons = selectedAddons;
+    data.addOnServices = selectedAddons;
     data.addon = selectedAddons.length > 0 ? selectedAddons[0] : "";
 
     try {
@@ -193,9 +200,18 @@ export default function EnquiryForm() {
         setDateValue("");
         setIsAddonOpen(false);
       } else {
+        let displayMessage = result.message || result.error || "Something went wrong.";
+        if (result.details && Array.isArray(result.details) && result.details.length > 0) {
+          const detailMsgs = result.details
+            .map((d: { message?: string }) => d.message)
+            .filter(Boolean);
+          if (detailMsgs.length > 0) {
+            displayMessage = detailMsgs.join(" ");
+          }
+        }
         setStatus({
           type: "error",
-          message: result.message || result.error || "Something went wrong.",
+          message: displayMessage,
         });
       }
     } catch {

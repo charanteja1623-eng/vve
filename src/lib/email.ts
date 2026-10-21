@@ -62,6 +62,7 @@ export function getCategoryTitle(eventType: string): string {
 export function extractAddonList(data: {
   addon?: string | null;
   addons?: string[] | string | null;
+  addOnServices?: string[] | string | null;
 }): string[] {
   const set = new Set<string>();
   if (data.addon && typeof data.addon === "string" && data.addon.trim()) {
@@ -70,18 +71,21 @@ export function extractAddonList(data: {
       if (trimmed) set.add(trimmed);
     });
   }
-  if (data.addons) {
-    if (Array.isArray(data.addons)) {
-      data.addons.forEach((item) => {
+  const processList = (raw: string[] | string | null | undefined) => {
+    if (!raw) return;
+    if (Array.isArray(raw)) {
+      raw.forEach((item) => {
         if (typeof item === "string" && item.trim()) set.add(item.trim());
       });
-    } else if (typeof data.addons === "string" && data.addons.trim()) {
-      data.addons.split(",").forEach((item) => {
+    } else if (typeof raw === "string" && raw.trim()) {
+      raw.split(",").forEach((item) => {
         const trimmed = item.trim();
         if (trimmed) set.add(trimmed);
       });
     }
-  }
+  };
+  processList(data.addons);
+  processList(data.addOnServices);
   return Array.from(set);
 }
 
@@ -120,7 +124,8 @@ export function buildEnquiryEmailText(data: EnquiryData, submittedAt: Date = new
   const addonsFormatted = formatAddons(addons);
   const emailDisplay = data.email && data.email.trim() ? data.email.trim() : "Not provided";
   const dateDisplay = data.date && data.date.trim() ? data.date.trim() : "Not specified";
-  const budgetDisplay = data.budget && data.budget.trim() ? data.budget.trim() : "Not specified";
+  const budgetStr = data.budget !== null && data.budget !== undefined ? String(data.budget).trim() : "";
+  const budgetDisplay = budgetStr || "Not specified";
 
   return `=======================================================
 NEW ENQUIRY - VINTAGE VIBE EVENTS
@@ -163,7 +168,8 @@ export function buildEnquiryEmailHtml(data: EnquiryData, submittedAt: Date = new
   const safeEmail = data.email && data.email.trim() ? escapeHtml(data.email.trim()) : "<em>Not provided</em>";
   const safeLocation = escapeHtml(data.location);
   const safeDate = data.date && data.date.trim() ? escapeHtml(data.date.trim()) : "<em>Not specified</em>";
-  const safeBudget = data.budget && data.budget.trim() ? escapeHtml(data.budget.trim()) : "<em>Not specified</em>";
+  const budgetStr = data.budget !== null && data.budget !== undefined ? String(data.budget).trim() : "";
+  const safeBudget = budgetStr ? escapeHtml(budgetStr) : "<em>Not specified</em>";
   const safeMessage = formatMultilineHtml(data.message);
   const formattedTimestamp = escapeHtml(submittedAt.toUTCString());
 

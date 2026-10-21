@@ -165,6 +165,13 @@ test.describe('Timezone & Future Date Validation Logic', () => {
     // Malformed / impossible dates must be rejected
     expect(isValidFutureEventDate('invalid-date').valid).toBe(false);
     expect(isValidFutureEventDate('2026-02-31').valid).toBe(false);
+    expect(isValidFutureEventDate('31-02-2026').valid).toBe(false);
+    expect(isValidFutureEventDate('31-02-2026').error).toContain('does not exist on the calendar');
+
+    // Localized DD-MM-YYYY future dates must be accepted and normalized
+    const dmyRes = isValidFutureEventDate('31-10-2026');
+    expect(dmyRes.valid).toBe(true);
+    expect(dmyRes.normalizedDate).toBe('2026-10-31');
   });
 });
 
@@ -359,6 +366,163 @@ test.describe('Enquiry API Route Endpoint Verification', () => {
     expect(res.status()).toBe(200);
     const body = await res.json();
     expect(body.success).toBe(true);
+  });
+
+  test('Submits enquiry with localized DD-MM-YYYY future event date and normal budget', async ({ request }) => {
+    const uniqueRunId = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const payload = {
+      name: `Future Date DMY QA ${uniqueRunId}`,
+      phone: '+91 96529 61775',
+      location: 'Hyderabad Atelier',
+      eventType: 'wedding-packages',
+      date: '31-10-2026',
+      budget: '₹8,50,000',
+      addons: ['catering', 'decoration'],
+      message: `Enquiry with DD-MM-YYYY date format. Run: ${uniqueRunId}`,
+    };
+
+    const res = await request.post('/api/enquiry', {
+      headers: { 'x-forwarded-for': `198.51.100.${Math.floor(Math.random() * 50) + 150}` },
+      data: payload,
+    });
+
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    expect(body.success).toBe(true);
+  });
+
+  test('Submits enquiry with null and empty optional fields successfully', async ({ request }) => {
+    const uniqueRunId = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const payload = {
+      name: `Null Fields QA ${uniqueRunId}`,
+      phone: '8125151685',
+      email: null,
+      location: 'Hyderabad Atelier',
+      eventType: 'birthday-parties',
+      addon: null,
+      addons: null,
+      addOnServices: null,
+      date: null,
+      budget: null,
+      message: `Enquiry with null optional fields. Run: ${uniqueRunId}`,
+    };
+
+    const res = await request.post('/api/enquiry', {
+      headers: { 'x-forwarded-for': `198.51.100.${Math.floor(Math.random() * 50) + 180}` },
+      data: payload,
+    });
+
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    expect(body.success).toBe(true);
+  });
+
+  test('Accepts addOnServices property name in submission payload', async ({ request }) => {
+    const uniqueRunId = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const payload = {
+      name: `AddOnServices QA ${uniqueRunId}`,
+      phone: '8125151685',
+      location: 'Hyderabad Atelier',
+      eventType: 'wedding-packages',
+      addOnServices: ['catering', 'dj-screens'],
+      message: `Enquiry with addOnServices payload property. Run: ${uniqueRunId}`,
+    };
+
+    const res = await request.post('/api/enquiry', {
+      headers: { 'x-forwarded-for': `198.51.100.${Math.floor(Math.random() * 50) + 200}` },
+      data: payload,
+    });
+
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    expect(body.success).toBe(true);
+  });
+
+  test('Rejects invalid budget values with field-specific validation error', async ({ request }) => {
+    // 1. Negative budget
+    const resNegative = await request.post('/api/enquiry', {
+      headers: { 'x-forwarded-for': '198.51.100.220' },
+      data: {
+        name: 'Negative Budget QA',
+        phone: '8125151685',
+        location: 'Hyderabad',
+        eventType: 'birthday-parties',
+        budget: '-50000',
+        message: 'Testing negative budget rejection.',
+      },
+    });
+    expect(resNegative.status()).toBe(400);
+    const bodyNeg = await resNegative.json();
+    expect(bodyNeg.error).toBe('Validation failed');
+    expect(bodyNeg.message).toContain('Budget cannot be negative.');
+
+    // 2. Exorbitant budget (100000000000)
+    const resExorbitant = await request.post('/api/enquiry', {
+      headers: { 'x-forwarded-for': '198.51.100.221' },
+      data: {
+        name: 'Exorbitant Budget QA',
+        phone: '8125151685',
+        location: 'Hyderabad',
+        eventType: 'birthday-parties',
+        budget: '100000000000',
+        message: 'Testing exorbitant budget rejection.',
+      },
+    });
+    expect(resExorbitant.status()).toBe(400);
+    const bodyEx = await resExorbitant.json();
+    expect(bodyEx.error).toBe('Validation failed');
+    expect(bodyEx.message).toContain('Please enter a realistic estimated budget (up to ₹100 Crore).');
+  });
+
+  test('Rejects invalid phone numbers with field-specific validation error', async ({ request }) => {
+    // Phone with letters
+    const resLetters = await request.post('/api/enquiry', {
+      headers: { 'x-forwarded-for': '198.51.100.222' },
+      data: {
+        name: 'Invalid Phone QA',
+        phone: 'abcdefghij',
+        location: 'Hyderabad',
+        eventType: 'birthday-parties',
+        message: 'Testing letter phone number rejection.',
+      },
+    });
+    expect(resLetters.status()).toBe(400);
+    const bodyLetters = await resLetters.json();
+    expect(bodyLetters.error).toBe('Validation failed');
+    expect(bodyLetters.message).toContain('phone number');
+
+    // Phone too short
+    const resShort = await request.post('/api/enquiry', {
+      headers: { 'x-forwarded-for': '198.51.100.223' },
+      data: {
+        name: 'Short Phone QA',
+        phone: '12345',
+        location: 'Hyderabad',
+        eventType: 'birthday-parties',
+        message: 'Testing short phone number rejection.',
+      },
+    });
+    expect(resShort.status()).toBe(400);
+    const bodyShort = await resShort.json();
+    expect(bodyShort.error).toBe('Validation failed');
+    expect(bodyShort.message).toContain('at least 10 digits');
+  });
+
+  test('Rejects malformed add-on data with field-specific validation error', async ({ request }) => {
+    const res = await request.post('/api/enquiry', {
+      headers: { 'x-forwarded-for': '198.51.100.224' },
+      data: {
+        name: 'Malformed Addons QA',
+        phone: '8125151685',
+        location: 'Hyderabad',
+        eventType: 'birthday-parties',
+        addons: [123, 456],
+        message: 'Testing malformed add-on data rejection.',
+      },
+    });
+    expect(res.status()).toBe(400);
+    const body = await res.json();
+    expect(body.error).toBe('Validation failed');
   });
 });
 

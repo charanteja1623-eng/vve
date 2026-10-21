@@ -44,12 +44,14 @@ export function getTomorrowDateString(
 
 export interface DateValidationResult {
   valid: boolean;
+  normalizedDate?: string;
   error?: string;
 }
 
 /**
  * Validates whether an event date string is strictly in the future (tomorrow or later)
  * relative to the destination timezone.
+ * Supports standard ISO (YYYY-MM-DD) and common localized (DD-MM-YYYY) input formats.
  * Empty or unsupplied values are considered valid because event date is optional.
  */
 export function isValidFutureEventDate(
@@ -63,16 +65,27 @@ export function isValidFutureEventDate(
 
   const trimmed = dateStr.trim();
 
-  // Validate strict YYYY-MM-DD format
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-  if (!dateRegex.test(trimmed)) {
+  let year: number;
+  let month: number;
+  let day: number;
+
+  const ymdMatch = trimmed.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:T.*)?$/);
+  const dmyMatch = trimmed.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+
+  if (ymdMatch) {
+    year = parseInt(ymdMatch[1], 10);
+    month = parseInt(ymdMatch[2], 10);
+    day = parseInt(ymdMatch[3], 10);
+  } else if (dmyMatch) {
+    day = parseInt(dmyMatch[1], 10);
+    month = parseInt(dmyMatch[2], 10);
+    year = parseInt(dmyMatch[3], 10);
+  } else {
     return {
       valid: false,
-      error: "Please enter a valid date in YYYY-MM-DD format.",
+      error: "Please enter a valid date in YYYY-MM-DD or DD-MM-YYYY format.",
     };
   }
-
-  const [year, month, day] = trimmed.split("-").map((v) => parseInt(v, 10));
 
   // Calendar validity check (e.g. rejects Feb 31, month 13, etc.)
   const parsed = new Date(Date.UTC(year, month - 1, day));
@@ -87,15 +100,16 @@ export function isValidFutureEventDate(
     };
   }
 
+  const normalized = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
   const todayInKolkata = getTodayDateString(timeZone, now);
 
   // ISO date strings YYYY-MM-DD compare chronologically with lexical comparisons
-  if (trimmed <= todayInKolkata) {
+  if (normalized <= todayInKolkata) {
     return {
       valid: false,
       error: "Event date must be in the future (tomorrow or later).",
     };
   }
 
-  return { valid: true };
+  return { valid: true, normalizedDate: normalized };
 }

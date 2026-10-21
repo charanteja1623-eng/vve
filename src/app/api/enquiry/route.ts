@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { enquirySchema } from "@/lib/validations/enquiry";
+import { isValidFutureEventDate } from "@/lib/dates";
 import { createClient } from "@supabase/supabase-js";
 import {
   getEmailConfig,
@@ -105,8 +106,14 @@ export async function POST(request: Request) {
     // 3. Zod Input Schema Validation with Length Bounds
     const result = enquirySchema.safeParse(body);
     if (!result.success) {
+      const errorMessages = result.error.issues.map((i) => i.message).filter(Boolean);
+      const userMessage = errorMessages.length > 0 ? errorMessages.join(" ") : "Validation failed";
       return NextResponse.json(
-        { error: "Validation failed", details: result.error.issues },
+        {
+          error: "Validation failed",
+          message: userMessage,
+          details: result.error.issues,
+        },
         { status: 400 }
       );
     }
@@ -140,6 +147,11 @@ export async function POST(request: Request) {
     const selectedAddons = extractAddonList(data);
     const addonsLabel = formatAddons(selectedAddons);
 
+    // Normalize date to canonical YYYY-MM-DD if provided
+    const dateCheck = data.date ? isValidFutureEventDate(data.date) : null;
+    const normalizedDate = dateCheck?.normalizedDate || (data.date || "").trim();
+    const budgetStr = data.budget !== null && data.budget !== undefined ? String(data.budget).trim() : "";
+
     const submissionFingerprint = crypto
       .createHash("sha256")
       .update(
@@ -150,8 +162,8 @@ export async function POST(request: Request) {
           email: (data.email || "").trim().toLowerCase(),
           location: data.location.trim().toLowerCase(),
           eventType: data.eventType.trim().toLowerCase(),
-          date: (data.date || "").trim(),
-          budget: (data.budget || "").trim(),
+          date: normalizedDate,
+          budget: budgetStr,
           message: data.message.trim(),
           addons: [...selectedAddons].sort(),
         })
@@ -184,8 +196,8 @@ export async function POST(request: Request) {
       email: data.email || null,
       location: data.location,
       event_type: data.eventType,
-      event_date: data.date || null,
-      budget: data.budget || null,
+      event_date: normalizedDate || null,
+      budget: budgetStr || null,
       message: finalMessage,
       status: "new",
       addons: selectedAddons,
@@ -213,7 +225,12 @@ export async function POST(request: Request) {
 
     // 7. Transactional Email Notification via Resend
     // Uses deterministic payload hash as idempotency key internally to prevent duplicate provider dispatches
-    const emailResult = await sendEnquiryNotificationEmail(data);
+    const emailPayload: typeof data = {
+      ...data,
+      date: normalizedDate,
+      budget: budgetStr,
+    };
+    const emailResult = await sendEnquiryNotificationEmail(emailPayload);
 
     if (!emailResult.success) {
       // Safe error log without exposing provider credentials or PII
