@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
+import crypto from "crypto";
 import { enquirySchema } from "@/lib/validations/enquiry";
 import { createClient } from "@supabase/supabase-js";
+import {
+  getEmailConfig,
+  sendEnquiryNotificationEmail,
+  extractAddonList,
+  formatAddons,
+} from "@/lib/email";
 
 // Supabase environment variables (Server-side privileged client)
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -18,6 +25,18 @@ const supabaseSecretKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABAS
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute window
 const MAX_REQUESTS = 3; // 3 requests per minute per client IP
+
+/**
+ * In-memory deduplication state for accidental double submission / retry protection.
+ *
+ * NOTE ON DELIVERY GUARANTEES:
+ * Best-effort in-memory deduplication combined with provider-level idempotency keys
+ * mitigates rapid double clicks and network retry storms within a 60-second window.
+ * Exactly-once delivery is NOT claimed across distributed ephemeral serverless instances
+ * without an external distributed consensus store (e.g., Redis).
+ */
+const recentSubmissionsMap = new Map<string, { timestamp: number; success: boolean }>();
+const DEDUP_WINDOW = 60 * 1000; // 60 seconds
 
 export async function POST(request: Request) {
   try {
@@ -44,7 +63,7 @@ export async function POST(request: Request) {
 
     const now = Date.now();
 
-    // Memory Hygiene: Prune expired entries before evaluating to prevent unbounded memory growth
+    // Memory Hygiene: Prune expired rate-limit entries before evaluating
     for (const [key, val] of rateLimitMap.entries()) {
       if (now - val.timestamp >= RATE_LIMIT_WINDOW) {
         rateLimitMap.delete(key);
@@ -76,7 +95,7 @@ export async function POST(request: Request) {
     // 2. Honeypot Anti-Spam Check
     if (body.company_website) {
       console.warn("Honeypot triggered."); // Safe log, no PII
-      // Silently accept to mislead automated spam scrapers without persisting
+      // Silently accept to mislead automated spam scrapers without persisting or emailing
       return NextResponse.json(
         { success: true, message: "Your enquiry has been successfully submitted." },
         { status: 200 }
@@ -94,10 +113,11 @@ export async function POST(request: Request) {
 
     const data = result.data;
 
-    // 4. Configuration Check (Gated Fallback for External Integrations)
-    if (!supabaseUrl || !supabaseSecretKey) {
+    // 4. Configuration Check (Supabase Storage & Resend Email Service)
+    const emailConfig = getEmailConfig();
+    if (!supabaseUrl || !supabaseSecretKey || !emailConfig) {
       // Per architectural specification: if credentials are unavailable, document the exact
-      // integration blocker and do NOT simulate successful database persistence.
+      // integration blocker and do NOT simulate successful database persistence or notification.
       return NextResponse.json(
         {
           error: "Configuration Missing",
@@ -108,30 +128,80 @@ export async function POST(request: Request) {
       );
     }
 
-    // 5. Database Persistence via Supabase Client
+    // 5. Duplicate Submission Check (In-memory Deduplication)
+    // Prune expired entries from deduplication map
+    for (const [key, val] of recentSubmissionsMap.entries()) {
+      if (now - val.timestamp >= DEDUP_WINDOW) {
+        recentSubmissionsMap.delete(key);
+      }
+    }
+
+    // Build deterministic fingerprint of the enquiry payload
+    const selectedAddons = extractAddonList(data);
+    const addonsLabel = formatAddons(selectedAddons);
+
+    const submissionFingerprint = crypto
+      .createHash("sha256")
+      .update(
+        JSON.stringify({
+          ip,
+          name: data.name.trim().toLowerCase(),
+          phone: data.phone.trim(),
+          email: (data.email || "").trim().toLowerCase(),
+          location: data.location.trim().toLowerCase(),
+          eventType: data.eventType.trim().toLowerCase(),
+          date: (data.date || "").trim(),
+          budget: (data.budget || "").trim(),
+          message: data.message.trim(),
+          addons: [...selectedAddons].sort(),
+        })
+      )
+      .digest("hex");
+
+    const existingSubmission = recentSubmissionsMap.get(submissionFingerprint);
+    if (existingSubmission && existingSubmission.success) {
+      // Duplicate submission detected within the deduplication window.
+      // Return previous success status safely without re-inserting or re-emailing.
+      return NextResponse.json(
+        { success: true, message: "Your enquiry has been successfully submitted." },
+        { status: 200 }
+      );
+    }
+
+    // 6. Database Persistence via Supabase Client
     const supabase = createClient(supabaseUrl, supabaseSecretKey);
 
-    // Format message to include optional add-on service if specified
-    const finalMessage = data.addon
+    // Format message to include optional add-on service(s) if specified
+    const finalMessage = selectedAddons.length > 0
+      ? `${data.message}\n\n[Selected Add-On Services: ${addonsLabel}]`
+      : data.addon
       ? `${data.message}\n\n[Selected Add-On Service: ${data.addon}]`
       : data.message;
 
-    const { error } = await supabase.from("enquiries").insert([
-      {
-        name: data.name,
-        phone: data.phone,
-        email: data.email || null,
-        location: data.location,
-        event_type: data.eventType,
-        event_date: data.date || null,
-        budget: data.budget || null,
-        message: finalMessage,
-        status: "new",
-      },
-    ]);
+    const insertPayload: Record<string, unknown> = {
+      name: data.name,
+      phone: data.phone,
+      email: data.email || null,
+      location: data.location,
+      event_type: data.eventType,
+      event_date: data.date || null,
+      budget: data.budget || null,
+      message: finalMessage,
+      status: "new",
+      addons: selectedAddons,
+    };
 
-    if (error) {
-      console.error("Supabase insert error. Code:", error.code); // Do not log client data to prevent PII leaks
+    let { error: dbError } = await supabase.from("enquiries").insert([insertPayload]);
+
+    // Non-breaking fallback if 'addons' column has not yet been migrated in database schema (PGRST204)
+    if (dbError && dbError.code === "PGRST204") {
+      delete insertPayload.addons;
+      const retryResult = await supabase.from("enquiries").insert([insertPayload]);
+      dbError = retryResult.error;
+    }
+
+    if (dbError) {
+      console.error("Supabase insert error. Code:", dbError.code); // Do not log client data to prevent PII leaks
       return NextResponse.json(
         {
           error: "Failed to save enquiry",
@@ -141,12 +211,30 @@ export async function POST(request: Request) {
       );
     }
 
-    // 6. Notification Blocker Documentation:
-    // Email notifications (e.g. via Resend, SendGrid) are deliberately gated and unconfigured.
-    // They must not be claimed as operational until explicit SMTP/API provider credentials
-    // are provisioned and an end-to-end delivery test passes.
+    // 7. Transactional Email Notification via Resend
+    // Uses deterministic payload hash as idempotency key internally to prevent duplicate provider dispatches
+    const emailResult = await sendEnquiryNotificationEmail(data);
 
-    // 7. Explicit Success State
+    if (!emailResult.success) {
+      // Safe error log without exposing provider credentials or PII
+      console.error("Resend notification dispatch failed.");
+      return NextResponse.json(
+        {
+          error: "Notification Delivery Failed",
+          message:
+            "The online form is temporarily unavailable due to backend configuration. Please contact us via phone or email.",
+        },
+        { status: 500 }
+      );
+    }
+
+    // 8. Record Successful Submission in Deduplication Cache
+    recentSubmissionsMap.set(submissionFingerprint, {
+      timestamp: now,
+      success: true,
+    });
+
+    // 9. Explicit Success State
     return NextResponse.json(
       { success: true, message: "Your enquiry has been successfully submitted." },
       { status: 200 }
