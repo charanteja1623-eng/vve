@@ -1,0 +1,476 @@
+@import "tailwindcss";
+
+/*
+  Vintage Vibe Events — brand token system (Tailwind v4 @theme).
+  Palette salvaged from the original repo; see docs/essentials.md.
+  Usage: bg-burgundy, text-gold, font-serif, etc.
+*/
+
+@theme {
+  /* Brand colour tokens */
+  --color-burgundy: #3a0507; /* primary field */
+  --color-burgundy-wine: #671217; /* raised surfaces / medallion */
+  --color-burgundy-deep: #210304; /* deepest shadow */
+  --color-plum: #250305; /* dark plum / charcoal accents */
+  --color-gold: #c9a15a; /* antique gold — hairlines, small accents */
+  --color-gold-light: #e3c985; /* light gold — highlights only */
+  --color-gold-ink: #7a5210; /* high-contrast gold ink for light/ivory backgrounds (WCAG 2.2 AA) */
+  --color-ivory: #f7f1e5; /* warm ivory — primary light surface */
+
+  /* Semantic aliases */
+  --color-background: var(--color-ivory);
+  --color-foreground: var(--color-burgundy-deep);
+
+  /* Typography — self-hosted via next/font (see layout.tsx) */
+  --font-serif: var(--font-cormorant); /* display / headings */
+  --font-sans: var(--font-manrope); /* UI / body */
+  --font-logo: var(--font-cinzel-decorative); /* logo wordmark only */
+}
+
+/* Baseline */
+html {
+  color-scheme: light;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), Arial, sans-serif;
+}
+
+/* Visible gold focus ring, brand-consistent (a11y) */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Respect reduced-motion globally; feature animations opt back in deliberately */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Vintage Vibe Events — Cinematic 5-Second Logo Loader
+   Palette: deep burgundy (#210304 / #320406), antique gold (#c9a15a / #e5c483), ivory (#f7f1e5)
+   Sequence:
+     0.0–0.8s: Deep burgundy canvas & warm radial gold ambience
+     0.8–3.2s: Controlled gold shard trajectories assemble into official frame
+     2.25–3.2s: Wordmark emerges from center-out
+     2.95–3.4s: Base frame cross-fades in to seal fine filigree
+     3.25–4.3s: Restrained gold light sweep reveals completed mark
+     4.2–5.0s: Tagline fades in and composition holds calmly
+     5.0s+:    Smooth exit dissolve once page is ready
+   ============================================================ */
+
+/* ============================================================
+   Vintage Vibe Events — Precision Cinematic 5-Second Logo Loader
+   Palette: deep burgundy (#210304 / #320406), antique gold (#c9a15a / #e5c483), ivory (#f7f1e5)
+   Sequence:
+     0.0–0.8s: Deep burgundy canvas & warm radial gold ambience
+     0.8–3.2s: Coordinated anatomical fragment assembly & per-letter wordmark formation
+     2.8–3.3s: Base frame cross-fades in to seal fine filigree tips
+     3.2–4.2s: Restrained gold luster bloom washes softly across the mark and settles
+     4.2–5.0s: Tagline fades in and composition holds calmly
+     5.0s+:    Smooth exit dissolve once page is ready
+   ============================================================ */
+
+/* Document Scroll Locking & Duplicate Transition Guards */
+html[data-loader-active="true"],
+html[data-loader-active="true"] body {
+  overflow: hidden !important;
+  height: 100% !important;
+  overscroll-behavior: none;
+}
+html[data-loader-active="true"]::-webkit-scrollbar,
+html[data-loader-active="true"] body::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+html[data-loader-active="true"] .hero-brand-lockup {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  animation: none !important;
+}
+html[data-loader-done="true"]:not([data-loader-active="true"]) .hero-brand-lockup {
+  animation: vve-hero-reveal 0.8s ease-out forwards;
+}
+
+@keyframes vve-hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vve-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 48%, #320406 0%, #210304 65%, #140203 100%);
+  opacity: 1;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  user-select: none;
+  cursor: default;
+}
+.vve-loader[data-exiting="true"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Atmospheric warm gold ambient glow behind the logo */
+.vve-loader-ambient {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 680px);
+  height: min(72vw, 460px);
+  background: radial-gradient(circle, rgba(201, 161, 90, 0.12) 0%, rgba(201, 161, 90, 0.03) 50%, transparent 75%);
+  pointer-events: none;
+  opacity: 0;
+  animation: vve-ambient-in 1.4s ease-out 0.2s both;
+}
+
+@keyframes vve-ambient-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.90);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Stage keeps the exact frame aspect ratio; cqw drives wordmark size */
+.vve-stage {
+  position: relative;
+  width: min(84vw, 540px);
+  aspect-ratio: 720 / 436;
+  container-type: inline-size;
+  will-change: transform;
+}
+
+/* Golden Stipple & Particle Constellation Assembly (0.0s – 1.8s) */
+.vve-particle-constellation {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.vve-particle {
+  position: absolute;
+  width: var(--psize, 3.5px);
+  height: var(--psize, 3.5px);
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, #f7ebb8 40%, #c9a15a 100%);
+  box-shadow: 0 0 8px rgba(201, 161, 90, 0.8), 0 0 16px rgba(247, 235, 184, 0.5);
+  animation: vve-particle-converge 1.6s cubic-bezier(0.16, 1, 0.3, 1) var(--pdelay, 0s) both;
+}
+
+@keyframes vve-particle-converge {
+  0% {
+    opacity: 0;
+    transform: translate(calc(var(--px) * 2.2), calc(var(--py) * 2.2)) scale(0.3);
+  }
+  30% {
+    opacity: 0.95;
+    transform: translate(calc(var(--px) * 1.3), calc(var(--py) * 1.3)) scale(1.1);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.8);
+  }
+}
+
+/* Bilateral Feathered Reveal of Cartouche Frame (1.0s – 2.6s) */
+.vve-seal-reveal-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: vve-seal-reveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) 1.0s both;
+}
+
+@keyframes vve-seal-reveal {
+  0% {
+    clip-path: inset(0 50% 0 50%);
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0% 0 0%);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.vve-frame-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Soft Curved Specular Shimmer Sweep (2.6s – 3.8s) — No harsh rectangular streak */
+.vve-shimmer-sweep {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 50% 120% at 50% 50%,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(247, 235, 184, 0.35) 35%,
+    rgba(201, 161, 90, 0.20) 55%,
+    transparent 75%
+  );
+  opacity: 0;
+  transform: translateX(-120%);
+  animation: vve-shimmer-sweep 1.2s cubic-bezier(0.4, 0, 0.2, 1) 2.6s both;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+@keyframes vve-shimmer-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+  30% {
+    opacity: 0.95;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+}
+
+/* Wordmark — canonical typography locked to frame geometry (2.2s – 3.4s reveal) */
+.vve-wordmark {
+  position: absolute;
+  left: 50%;
+  top: 48.0%;
+  width: 62%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  white-space: nowrap;
+  font-family: var(--font-logo), serif;
+  font-weight: 400;
+  color: #d4a853;
+  background: linear-gradient(180deg, #f7ebb8 0%, #d9b15d 45%, #b88a32 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 4.8cqw;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  padding: 0 2cqw;
+  box-sizing: border-box;
+}
+
+.vve-word {
+  display: inline-flex;
+  align-items: center;
+}
+
+.vve-wordmark--loader {
+  opacity: 0;
+  animation: vve-wordmark-reveal 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.2s both;
+}
+
+@keyframes vve-wordmark-reveal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.97);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Tagline Container & Typography (3.4s – 4.4s reveal) */
+.vve-tagline-wrap {
+  margin-top: 1.75rem;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  max-width: min(90vw, 560px);
+}
+
+.vve-tagline {
+  font-family: var(--font-serif), Cormorant Garamond, Georgia, serif;
+  font-size: clamp(0.9rem, 2.2vw, 1.15rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(247, 241, 229, 0.85); /* ivory/85 */
+  opacity: 0;
+  transform: translateY(6px);
+  animation: vve-tagline-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 3.4s both;
+  line-height: 1.4;
+}
+
+.vve-tagline--static {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+.vve-tagline-accent {
+  color: var(--color-gold, #c9a15a);
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.1em;
+}
+
+@keyframes vve-tagline-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Prefers-reduced-motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  .vve-loader {
+    transition: opacity 0.1s ease !important;
+  }
+  .vve-loader-ambient {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  .vve-particle-constellation {
+    display: none !important;
+  }
+  .vve-seal-reveal-wrap {
+    animation: none !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .vve-shimmer-sweep {
+    display: none !important;
+  }
+  .vve-wordmark--loader {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+    filter: none !important;
+  }
+  .vve-tagline {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ============================================================
+   Vintage Vibe Events — Neon Glass UI Refinement
+   Deep burgundy base, antique gold accents, translucent glass surfaces,
+   controlled backdrop blur, fine low-contrast borders, subtle neon-gold glow.
+   ============================================================ */
+
+.neon-glass-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(38, 5, 8, 0.45) 28%, rgba(20, 2, 3, 0.65) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(201, 161, 90, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 24px rgba(201, 161, 90, 0.04);
+}
+
+.neon-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(42, 5, 8, 0.40) 28%, rgba(20, 2, 3, 0.60) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(201, 161, 90, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 24px rgba(201, 161, 90, 0.04);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neon-glass-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(55, 7, 10, 0.50) 28%, rgba(28, 3, 4, 0.72) 100%);
+  border-color: rgba(201, 161, 90, 0.45);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 0 30px rgba(201, 161, 90, 0.18);
+  transform: translateY(-2px);
+}
+
+.neon-gold-btn {
+  background: #c9a15a;
+  color: #210304;
+  border: 1px solid rgba(227, 201, 133, 0.5);
+  box-shadow: 0 0 18px rgba(201, 161, 90, 0.35);
+  transition: all 0.3s ease;
+}
+
+.neon-gold-btn:hover {
+  background: #e3c985;
+  box-shadow: 0 0 30px rgba(201, 161, 90, 0.6);
+  transform: translateY(-1px);
+}
+
+.neon-glass-btn {
+  background: rgba(33, 3, 4, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(201, 161, 90, 0.4);
+  color: #f7f1e5;
+  transition: all 0.3s ease;
+}
+
+.neon-glass-btn:hover {
+  border-color: #c9a15a;
+  background: rgba(58, 5, 7, 0.7);
+  box-shadow: 0 0 20px rgba(201, 161, 90, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-glass-card:hover {
+    transform: none !important;
+  }
+  .neon-gold-btn:hover {
+    transform: none !important;
+  }
+}

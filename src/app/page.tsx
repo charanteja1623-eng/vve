@@ -1,0 +1,386 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import SiteHeader from "@/components/layout/SiteHeader";
+import SiteFooter from "@/components/layout/SiteFooter";
+import LogoLoader from "@/components/loader/LogoLoader";
+import LogoMark from "@/components/brand/LogoMark";
+import EditorialSplitStage from "@/components/sections/EditorialSplitStage";
+import WhatsAppLink from "@/components/ui/WhatsAppLink";
+import Link from "next/link";
+import { artisanalServices, portfolioProjects } from "@/lib/site";
+import PixelCard from "@/components/ui/PixelCard";
+import ScrollStack, { ScrollStackItem } from "@/components/ui/ScrollStack";
+
+export const metadata: Metadata = {
+  title: "Vintage Vibe Events | Wedding & Event Planners",
+  description:
+    "Vintage Vibe Events is a premier wedding and event planning company in Hyderabad, specializing in weddings, milestone birthdays, surprise parties, and special celebrations across Telangana and Andhra Pradesh.",
+  alternates: {
+    canonical: "https://vintagevibeevents.in/",
+  },
+};
+
+export default function Home() {
+  return (
+    <>
+      <LogoLoader />
+      <SiteHeader />
+      <main id="main-content" className="flex flex-1 flex-col w-full bg-burgundy-deep text-ivory">
+        
+        {/* 1. Hero Section with Scroll-Driven Dolly Zoom */}
+        <section className="hero-viewport pt-20 pb-12 px-5 sm:px-6">
+          {/* Background Layer — scales and moves with scroll progress */}
+          <div className="hero-bg-layer" aria-hidden="true">
+            {/* Architectural Palace Courtyard Background Image */}
+            <Image
+              src="/images/hero/palace-courtyard.jpg"
+              alt="Architectural courtyard with warm evening illumination"
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+
+            {/* Deep imperial burgundy tinted overlay for contrast & brand continuity */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(55,6,9,0.72)_0%,_rgba(33,3,4,0.88)_75%,_#150102_100%)]" />
+            
+            {/* Soft antique gold ember ambient luster behind cartouche */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_45%_at_50%_40%,_rgba(201,161,90,0.22)_0%,_transparent_75%)]" />
+
+            {/* Elegant vignette preserving edge focus and smooth fade to next section */}
+            <div className="absolute inset-0 bg-gradient-to-b from-burgundy-deep/70 via-transparent to-burgundy-deep" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-burgundy-deep/30 to-burgundy-deep" />
+          </div>
+          
+          {/* Foreground Content Layer — Stays sharp, readable and never scales */}
+          <div className="hero-content-layer max-w-4xl mx-auto flex flex-col items-center text-center gap-5 sm:gap-6 mt-4 sm:mt-8">
+            {/* Editorial Eyebrow */}
+            <div className="parallax-layer-slow flex items-center justify-center gap-3 opacity-90">
+              <span className="w-6 sm:w-8 h-px bg-gradient-to-r from-transparent to-gold/60" />
+              <p className="font-sans text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-gold-light">
+                Wedding & Event Planning · Hyderabad
+              </p>
+              <span className="w-6 sm:w-8 h-px bg-gradient-to-l from-transparent to-gold/60" />
+            </div>
+
+            {/* Canonical LogoMark */}
+            <div className="hero-brand-lockup flex flex-col items-center text-center w-full">
+              <h1 className="m-0">
+                <span className="sr-only">Vintage Vibe Events — Wedding & Event Planners</span>
+                <LogoMark className="w-[min(80vw,460px)]" priority />
+              </h1>
+            </div>
+
+            {/* Tagline */}
+            <p className="parallax-layer-mid font-serif text-2xl sm:text-3xl md:text-4xl text-ivory tracking-wide max-w-2xl leading-tight font-normal">
+              <span className="inline-block">Creating moments.</span>{" "}
+              <span className="inline-block text-gold italic font-serif">Designing memories.</span>
+            </p>
+
+            {/* Subtle Royal Divider Pip */}
+            <div className="flex items-center justify-center gap-2 my-0.5 opacity-80">
+              <span className="w-5 h-px bg-gold/40" />
+              <span className="text-gold text-[9px]">♦</span>
+              <span className="w-5 h-px bg-gold/40" />
+            </div>
+
+            {/* Value Proposition */}
+            <p className="parallax-layer-fast font-serif text-sm sm:text-base md:text-lg text-ivory/90 italic max-w-lg leading-relaxed px-2">
+              Stage decoration, catering, sound, lighting, and complete event planning for weddings and celebrations across Hyderabad.
+            </p>
+
+            {/* Call to Actions with Safe Mobile Clearance */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 mt-4 sm:mt-6 w-full max-w-md px-4 sm:px-0">
+              <Link
+                href="/contact"
+                className="w-full sm:w-auto px-8 py-3.5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-[0.18em] text-xs hover:bg-gold-light transition-all shadow-[0_0_20px_rgba(201,161,90,0.35)] hover:shadow-[0_0_35px_rgba(201,161,90,0.6)] hover:-translate-y-0.5 transform rounded text-center border border-gold-light/40"
+              >
+                Plan Your Event
+              </Link>
+              <Link
+                href="#events"
+                className="w-full sm:w-auto px-8 py-3.5 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-[0.18em] text-xs hover:border-gold hover:bg-burgundy/60 hover:shadow-[0_0_20px_rgba(201,161,90,0.25)] transition-all bg-burgundy-deep/60 backdrop-blur-md rounded text-center"
+              >
+                Explore Events
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* 2. Brand Story / Our Story — Sticky Cinematic Storytelling Stage */}
+        <section id="about" className="section-entry-reveal vve-reveal scroll-mt-24 py-24 px-6 lg:px-12 bg-burgundy border-t border-gold/15 relative">
+          <div className="max-w-6xl mx-auto border border-gold/25 bg-gradient-to-br from-white/[0.07] via-burgundy-deep/40 to-[#120102]/65 backdrop-blur-xl p-8 md:p-16 lg:p-24 relative rounded-2xl shadow-[0_16px_45px_rgba(0,0,0,0.6),_inset_0_1px_0_rgba(255,255,255,0.18)] hover:border-gold/40 transition-all duration-500">
+            <div className="flex justify-center mb-12">
+               <div className="h-px w-20 bg-gradient-to-r from-transparent to-gold/50" />
+               <div className="w-2.5 h-2.5 rounded-full bg-gold mx-4" />
+               <div className="h-px w-20 bg-gradient-to-l from-transparent to-gold/50" />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+              {/* Left Column: Pinned / Sticky Storytelling Anchor */}
+              <div className="lg:col-span-5 text-center lg:text-left story-sticky-col">
+                <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-4">OUR STORY</span>
+                <h2 className="font-serif text-4xl md:text-5xl text-ivory leading-tight mb-4">
+                  Every Celebration Has a Story
+                </h2>
+                <div className="hidden lg:flex items-center gap-2 pt-2 opacity-75">
+                  <span className="w-8 h-px bg-gold/50" />
+                  <span className="text-gold text-[10px]">✦</span>
+                  <span className="font-sans text-xs text-gold/80 uppercase tracking-widest">Our Journey</span>
+                </div>
+              </div>
+              {/* Right Column: Progressive Story Narrative Stages */}
+              <div className="lg:col-span-7 font-sans text-base md:text-lg text-ivory/85 leading-relaxed space-y-8 lg:border-l border-gold/20 lg:pl-16 text-center lg:text-left">
+                <div className="story-milestone-item vve-reveal">
+                  <span className="story-milestone-marker hidden lg:block" aria-hidden="true" />
+                  <p>
+                    Every beautiful journey starts with a small idea and a big dream. Vintage Vibe Events began with one simple goal: to turn ordinary moments into special memories.
+                  </p>
+                </div>
+                <div className="story-milestone-item vve-reveal">
+                  <span className="story-milestone-marker hidden lg:block" aria-hidden="true" />
+                  <p>
+                    With creativity, love, and care, we bring people together through beautiful celebrations. From small family gatherings to grand weddings and special events, we work hard to make every occasion memorable.
+                  </p>
+                </div>
+                <div className="story-milestone-item vve-reveal">
+                  <span className="story-milestone-marker hidden lg:block" aria-hidden="true" />
+                  <p>
+                    For us, it&apos;s not just about decorations or planning an event. It&apos;s about the smiles, the happiness, and the moments families remember for years to come.
+                  </p>
+                </div>
+                <div className="story-milestone-item vve-reveal">
+                  <span className="story-milestone-marker hidden lg:block" aria-hidden="true" />
+                  <p className="font-serif text-lg sm:text-xl text-gold italic pt-2">
+                    We don&apos;t just plan events. We create memories that last a lifetime.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3. Editorial Split-Stage: 6 Event Categories */}
+        <EditorialSplitStage />
+
+        {/* Event Categories Exploration Bridge */}
+        <div className="py-10 px-6 bg-burgundy-deep/90 border-t border-b border-gold/15 text-center">
+          <p className="font-serif text-base sm:text-lg text-ivory/85 mb-3">
+            Planning a family gathering, college festival, or grand wedding?
+          </p>
+          <Link
+            href="/events"
+            className="inline-flex items-center gap-2 text-gold font-sans text-xs font-bold uppercase tracking-widest hover:text-gold-light transition-colors border-b border-gold/30 hover:border-gold pb-1"
+          >
+            <span>Explore All 6 Event Categories</span>
+            <span>→</span>
+          </Link>
+        </div>
+
+        {/* 5. Event Services Showcase */}
+        <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy border-y border-gold/20 relative" id="services">
+          <div className="max-w-7xl mx-auto">
+            <div className="vve-reveal flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+              <div>
+                <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-4">Our Services</span>
+                <h2 className="font-serif text-3xl md:text-5xl text-ivory">Everything You Need for Your Event</h2>
+              </div>
+              <p className="font-sans text-sm md:text-base text-ivory/75 max-w-md md:text-right leading-relaxed">
+                From delicious food to beautiful decorations, we take care of every detail so you can enjoy your special day.
+              </p>
+            </div>
+            
+            <div className="vve-stagger-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {artisanalServices.map((service) => (
+                <PixelCard
+                  key={service.id}
+                  colors={["#52090e", "#c9a15a", "#e5c07b", "#f7f1e5"]}
+                  glowColor="#c9a15a"
+                  shape="square"
+                  origin="center"
+                  gap={5}
+                  pixelSize={2}
+                  speed={35}
+                  revealDuration={600}
+                  spotlight={0.5}
+                  glow={0.5}
+                  opacity={0.35}
+                  fade={0.7}
+                  trigger="hover"
+                  radius={16}
+                  clickPulse
+                  intro
+                  theme="dark"
+                  className="vve-reveal-scale p-6 border border-gold/22 bg-gradient-to-br from-white/[0.06] via-burgundy-deep/40 to-[#150102]/60 backdrop-blur-xl hover:border-gold/45 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.22),_0_0_20px_rgba(201,161,90,0.16)] shadow-[0_10px_30px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.14)] transition-all duration-300 flex flex-col justify-between group rounded-xl relative overflow-hidden"
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="font-serif text-2xl text-gold/60 group-hover:text-gold transition-colors">{service.number}</span>
+                    <span className="w-2 h-2 rounded-full bg-gold/40 group-hover:bg-gold transition-colors" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-xl text-ivory group-hover:text-gold transition-colors mb-2">{service.title}</h3>
+                    <p className="font-sans text-xs text-ivory/70 line-clamp-3 leading-relaxed mb-6">{service.description}</p>
+                  </div>
+                  <Link
+                    href="/events#addons"
+                    className="font-sans text-[11px] font-bold uppercase tracking-wider text-gold/80 group-hover:text-gold-light flex items-center gap-1.5 pt-4 border-t border-gold/15"
+                  >
+                    <span>View Service Details</span>
+                    <span>→</span>
+                  </Link>
+                </PixelCard>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 6. Portfolio Preview — Dedicated ScrollStack Section */}
+        <section className="py-24 lg:py-32 px-6 lg:px-12 bg-burgundy-deep relative" id="work">
+          <div className="max-w-6xl mx-auto">
+            <div className="vve-reveal flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+              <div>
+                <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold block mb-4">Featured Work</span>
+                <h2 className="font-serif text-4xl md:text-5xl text-ivory">Our Recent Events</h2>
+              </div>
+              <Link
+                href="/work"
+                className="text-gold font-sans text-xs font-bold uppercase tracking-widest hover:text-gold-light transition-colors border-b border-gold/30 hover:border-gold pb-1 w-fit"
+              >
+                Browse Full Portfolio →
+              </Link>
+            </div>
+            
+            <ScrollStack
+              useWindowScroll={true}
+              itemDistance={380}
+              itemStackDistance={22}
+              stackPosition={85}
+              itemScale={0.04}
+              baseScale={0.90}
+              dimAmount={0.18}
+              holdDistance={260}
+              smoothScroll={false}
+              className="w-full"
+            >
+              {portfolioProjects.slice(0, 4).map((project, idx) => (
+                <ScrollStackItem key={project.id} itemClassName="p-0 border-0 bg-transparent shadow-none">
+                  <PixelCard
+                    colors={["#52090e", "#c9a15a", "#e5c07b", "#f7f1e5"]}
+                    glowColor="#c9a15a"
+                    shape="square"
+                    origin="center"
+                    gap={5}
+                    pixelSize={2}
+                    speed={35}
+                    revealDuration={600}
+                    spotlight={0.5}
+                    glow={0.5}
+                    opacity={0.35}
+                    fade={0.7}
+                    trigger="hover"
+                    radius={20}
+                    clickPulse
+                    intro
+                    theme="dark"
+                    className="w-full border border-gold/25 bg-gradient-to-br from-white/[0.08] via-burgundy-deep/60 to-[#120102]/85 shadow-[0_16px_45px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.2)] hover:border-gold/45 transition-all duration-500 rounded-2xl overflow-hidden"
+                  >
+                    <article className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] sm:min-h-[420px] w-full">
+                      {/* Project Image Frame */}
+                      <div className="lg:col-span-7 relative min-h-[260px] sm:min-h-[320px] lg:min-h-full overflow-hidden border-b lg:border-b-0 lg:border-r border-gold/20 cinematic-image-container group">
+                        <Image
+                          src={project.image}
+                          alt={project.imageAlt}
+                          fill
+                          className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out cinematic-image-zoom"
+                          sizes="(max-width: 1024px) 100vw, 60vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep via-burgundy-deep/40 to-transparent lg:hidden" />
+                        <div className="absolute top-4 left-4 z-10">
+                          <span className="font-sans text-[11px] font-bold uppercase tracking-widest px-3 py-1 bg-burgundy-deep/90 text-gold border border-gold/30 rounded-full backdrop-blur-md shadow-md">
+                            {project.categoryLabel}
+                          </span>
+                        </div>
+                        <div className="absolute bottom-4 left-4 z-10 hidden sm:block">
+                          <span className="font-sans text-xs text-ivory/85 bg-burgundy-deep/80 px-3 py-1 rounded backdrop-blur-md border border-gold/25 shadow-sm">
+                            ✦ {project.statusLabel}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Project Editorial Details */}
+                      <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between text-left">
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="font-serif text-2xl text-gold/70">
+                              {String(idx + 1).padStart(2, "0")}
+                            </span>
+                            <span className="w-8 h-px bg-gold/40" />
+                            <span className="font-sans text-[11px] uppercase tracking-wider text-gold-light sm:hidden">
+                              {project.statusLabel}
+                            </span>
+                          </div>
+                          <h3 className="font-serif text-2xl sm:text-3xl text-ivory mb-3 hover:text-gold transition-colors leading-snug">
+                            {project.title}
+                          </h3>
+                          <p className="font-sans text-xs sm:text-sm text-ivory/80 leading-relaxed mb-6">
+                            {project.description}
+                          </p>
+                        </div>
+
+                        <div className="pt-6 border-t border-gold/20 flex flex-wrap items-center gap-3">
+                          <Link
+                            href={`/events/${project.category}`}
+                            className="px-6 py-3 bg-gradient-to-r from-gold via-gold-light to-gold text-burgundy-deep font-sans font-bold uppercase tracking-wider text-xs rounded hover:shadow-[0_0_20px_rgba(201,161,90,0.4)] transition-all shadow-md text-center"
+                          >
+                            Explore Category →
+                          </Link>
+                          <Link
+                            href="/work"
+                            className="px-4 py-3 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-wider text-xs hover:border-gold hover:bg-gold/10 transition-all rounded text-center"
+                          >
+                            View in Gallery
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
+                  </PixelCard>
+                </ScrollStackItem>
+              ))}
+            </ScrollStack>
+          </div>
+        </section>
+
+        {/* 7. Consultation CTA */}
+        <section className="py-32 lg:py-40 px-6 bg-burgundy text-center relative overflow-hidden border-t border-gold/20">
+          <div className="absolute inset-0 bg-gradient-to-t from-burgundy-deep/80 to-transparent pointer-events-none" />
+          <div className="absolute -top-40 left-1/4 w-96 h-96 rounded-full bg-gold/5 blur-3xl pointer-events-none" />
+          
+          <div className="vve-reveal-scale relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-8">
+            <span className="font-sans text-xs font-bold uppercase tracking-widest text-gold">Get in Touch</span>
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ivory leading-tight">
+              Ready to Plan Your Next Celebration?
+            </h2>
+            <p className="font-sans text-base md:text-lg text-ivory/80 leading-relaxed max-w-2xl">
+              Whether you are planning a grand wedding or a birthday party in Hyderabad, our team is here to help you every step of the way.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center gap-5 mt-4 w-full sm:w-auto">
+              <Link
+                href="/contact"
+                className="px-12 py-5 bg-gold text-burgundy-deep font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold-light transition-all shadow-[0_0_25px_rgba(201,161,90,0.35)] hover:shadow-[0_0_35px_rgba(201,161,90,0.6)] hover:-translate-y-0.5 rounded w-full sm:w-auto text-center border border-gold-light/40"
+              >
+                Plan Your Event
+              </Link>
+              <WhatsAppLink
+                message="Hello Vintage Vibe Events, I would like to plan an event."
+                className="px-10 py-5 border border-gold/40 text-ivory font-sans font-bold uppercase tracking-widest text-sm hover:bg-gold/15 hover:border-gold hover:shadow-[0_0_20px_rgba(201,161,90,0.25)] transition-all bg-burgundy-deep/60 backdrop-blur-md rounded w-full sm:w-auto text-center"
+              >
+                WhatsApp Direct →
+              </WhatsAppLink>
+            </div>
+          </div>
+        </section>
+
+      </main>
+      <SiteFooter />
+    </>
+  );
+}
