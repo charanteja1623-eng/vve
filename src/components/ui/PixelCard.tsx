@@ -197,9 +197,9 @@ export default function PixelCard({
   glowColor,
   opacity = 0.35,
   fade = 0.7,
-  trigger = 'hover',
+  trigger = 'click',
   clickPulse = true,
-  intro = true,
+  intro = false,
   introDelay = 0,
   noFocus,
   theme = 'dark',
@@ -278,6 +278,7 @@ export default function PixelCard({
       maskKey: '',
       mode: '',
       active: false,
+      completed: false,
       changedAt: 0,
       originX: 0,
       originY: 0,
@@ -363,6 +364,7 @@ export default function PixelCard({
 
     const setActiveState = (value: boolean, x?: number, y?: number) => {
       if (state.active === value) return;
+      if (state.mode === 'click' && !value && state.active) return;
       const s = settingsRef.current;
       state.active = value;
       state.changedAt = state.time;
@@ -489,7 +491,7 @@ export default function PixelCard({
 
     const frame = (now: number) => {
       state.raf = 0;
-      if (!state.alive) return;
+      if (!state.alive || state.completed) return;
       const s = settingsRef.current;
       const dt = state.last ? Math.min(0.05, (now - state.last) / 1000) : 1 / 60;
       state.last = now;
@@ -501,11 +503,19 @@ export default function PixelCard({
         state.introAt = -1;
         if (!state.active) {
           setActiveState(true);
-          if (state.mode !== 'always') state.releaseAt = state.time + s.revealDuration / 1000 + 0.7;
+          if (state.mode !== 'always' && state.mode !== 'click') {
+            state.releaseAt = state.time + s.revealDuration / 1000 + 0.7;
+          }
         }
       }
 
-      if (state.releaseAt >= 0 && state.time >= state.releaseAt && !state.hovering && state.mode !== 'always') {
+      if (
+        state.releaseAt >= 0 &&
+        state.time >= state.releaseAt &&
+        !state.hovering &&
+        state.mode !== 'always' &&
+        state.mode !== 'click'
+      ) {
         state.releaseAt = -1;
         setActiveState(false);
       }
@@ -527,6 +537,20 @@ export default function PixelCard({
       });
 
       const presence = draw();
+
+      // Check if reveal animation has completed in click mode:
+      // Once reveal duration elapses and pulses finish, lock static frame and terminate rAF
+      const span = s.revealDuration / 1000;
+      const elapsed = state.time - state.changedAt;
+      if (state.mode === 'click' && state.active && elapsed >= span && state.pulses.length === 0) {
+        for (let i = 0; i < state.count; i++) state.presence[i] = 1;
+        draw();
+        state.completed = true;
+        state.raf = 0;
+        state.last = 0;
+        return;
+      }
+
       const settling =
         state.active ||
         state.introAt >= 0 ||
@@ -534,12 +558,14 @@ export default function PixelCard({
         state.pulses.length > 0 ||
         state.spotPower > 0.002 ||
         Math.abs(state.spotVX) + Math.abs(state.spotVY) > 0.5;
-      if (settling && state.visible) state.raf = requestAnimationFrame(frame);
+      if (settling && state.visible && !state.completed) state.raf = requestAnimationFrame(frame);
       else state.last = 0;
     };
 
     const wake = () => {
-      if (!state.raf && state.alive && state.visible) state.raf = requestAnimationFrame(frame);
+      if (!state.raf && state.alive && state.visible && !state.completed) {
+        state.raf = requestAnimationFrame(frame);
+      }
     };
 
     const local = (event: PointerEvent) => {
@@ -548,6 +574,7 @@ export default function PixelCard({
     };
 
     const onEnter = (event: PointerEvent) => {
+      if (state.mode === 'click' && (!state.active || state.completed)) return;
       const [x, y] = local(event);
       state.hovering = event.pointerType !== 'touch';
       state.pointerX = x;
@@ -567,6 +594,7 @@ export default function PixelCard({
     };
 
     const onMove = (event: PointerEvent) => {
+      if (state.mode === 'click' && (!state.active || state.completed)) return;
       const [x, y] = local(event);
       state.pointerX = x;
       state.pointerY = y;
@@ -578,17 +606,26 @@ export default function PixelCard({
       if (state.mode === 'hover') {
         if (event.pointerType === 'touch') state.releaseAt = state.time + 1.2;
         else setActiveState(false);
+        wake();
       }
-      wake();
     };
 
     const onDown = (event: PointerEvent) => {
-      const [x, y] = local(event);
       if (state.mode === 'click') {
+        // First click/tap activates the pixel reveal once. Subsequent clicks never restart.
+        if (state.active || state.completed) return;
+        const [x, y] = local(event);
         state.introAt = -1;
         state.releaseAt = -1;
-        setActiveState(!state.active, x, y);
-      } else if (!state.active) {
+        setActiveState(true, x, y);
+        if (settingsRef.current.clickPulse && !reduce) {
+          state.pulses.push({ x, y, radius: 0, power: 1 });
+        }
+        wake();
+        return;
+      }
+      const [x, y] = local(event);
+      if (!state.active) {
         setActiveState(true, x, y);
       }
       if (settingsRef.current.clickPulse && !reduce && state.active) {
@@ -598,14 +635,22 @@ export default function PixelCard({
     };
 
     const onOutside = (event: PointerEvent) => {
-      if (state.mode === 'click' && state.active && !container.contains(event.target as Node)) setActiveState(false);
+      if (state.mode !== 'click' && state.active && !container.contains(event.target as Node)) {
+        setActiveState(false);
+      }
     };
 
     const onKey = (event: KeyboardEvent) => {
       if (state.mode !== 'click' || event.target !== container) return;
       if (event.key !== 'Enter' && event.key !== ' ') return;
       event.preventDefault();
-      setActiveState(!state.active);
+      if (!state.active && !state.completed) {
+        setActiveState(true, state.width / 2, state.height / 2);
+        if (settingsRef.current.clickPulse && !reduce) {
+          state.pulses.push({ x: state.width / 2, y: state.height / 2, radius: 0, power: 1 });
+        }
+        wake();
+      }
     };
 
     const onFocus = (event: FocusEvent<HTMLDivElement>) => {
@@ -627,7 +672,7 @@ export default function PixelCard({
       if (mode === 'always') {
         state.releaseAt = -1;
         setActiveState(true);
-      } else if (previous === 'always' && !state.hovering) {
+      } else if (previous === 'always' && !state.hovering && mode !== 'click') {
         setActiveState(false);
       }
     };
@@ -641,7 +686,12 @@ export default function PixelCard({
 
     const resizeObserver = new ResizeObserver(() => {
       build();
-      wake();
+      if (state.completed) {
+        for (let i = 0; i < state.count; i++) state.presence[i] = 1;
+        draw();
+      } else if (state.active) {
+        wake();
+      }
     });
     resizeObserver.observe(container);
 
@@ -649,12 +699,18 @@ export default function PixelCard({
     const visibility = new IntersectionObserver(entries => {
       state.visible = entries.some(entry => entry.isIntersecting);
       const s = settingsRef.current;
-      if (state.visible && !introStarted && (s.trigger === 'always' || (s.intro && !reduce))) {
+      if (state.visible && !introStarted && s.trigger === 'always') {
         introStarted = true;
         build();
         state.introAt = state.time + s.introDelay / 1000;
+        wake();
+      } else if (state.visible && !introStarted && s.intro && !reduce && s.trigger !== 'click') {
+        introStarted = true;
+        build();
+        state.introAt = state.time + s.introDelay / 1000;
+        wake();
       }
-      if (state.visible) wake();
+      if (state.visible && state.active && !state.completed) wake();
     });
     visibility.observe(container);
 

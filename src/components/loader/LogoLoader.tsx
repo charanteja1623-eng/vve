@@ -23,7 +23,8 @@ import Image from "next/image";
  *   - Prefers-reduced-motion: Exits swiftly in <= 800ms with static composition.
  */
 
-const NORMAL_DURATION_MS = 5000;
+// Reduced by exactly one second from 5000ms per VVE Phase 2 specifications
+const NORMAL_DURATION_MS = 4000;
 const EXIT_TRANSITION_MS = 400;
 const REDUCED_MOTION_DURATION_MS = 400;
 

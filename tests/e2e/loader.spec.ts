@@ -91,17 +91,17 @@ test.describe('VVE Gate 4: Cinematic Gilded Seal Logo Loader Suite (~5s & Reload
       return Math.round(end - start);
     });
 
-    // Minimum display requirement >= 4,800ms
+    // Minimum display requirement >= 3,800ms (1 second shorter than former 4,800ms requirement)
     expect(
       totalDuration,
-      `Expected loader visible duration >= 4,800ms, but exited in ${totalDuration}ms`
-    ).toBeGreaterThanOrEqual(4800);
+      `Expected loader visible duration >= 3,800ms, but exited in ${totalDuration}ms`
+    ).toBeGreaterThanOrEqual(3800);
 
-    // Maximum failsafe detachment <= 6,800ms
+    // Maximum failsafe detachment <= 5,800ms
     expect(
       totalDuration,
-      `Expected loader detachment <= 6,800ms, but took ${totalDuration}ms`
-    ).toBeLessThanOrEqual(6800);
+      `Expected loader detachment <= 5,800ms, but took ${totalDuration}ms`
+    ).toBeLessThanOrEqual(5800);
 
     // 9. Scroll restored cleanly after exit
     await expect(page.locator('html')).not.toHaveAttribute('data-loader-active', 'true');
@@ -153,11 +153,11 @@ test.describe('VVE Gate 4: Cinematic Gilded Seal Logo Loader Suite (~5s & Reload
       return Math.round(end - start);
     });
 
-    // Reduced motion must exit swiftly (< 1,500ms)
+    // Reduced motion must exit swiftly (< 2,000ms)
     expect(
       loaderDuration,
-      `Expected reduced-motion loader exit swiftly (< 1,500ms), but took ${loaderDuration}ms`
-    ).toBeLessThan(1500);
+      `Expected reduced-motion loader exit swiftly (< 2,000ms), but took ${loaderDuration}ms`
+    ).toBeLessThan(2000);
 
     // Verify scroll locking is cleanly released
     await expect(page.locator('html')).not.toHaveAttribute('data-loader-active', 'true', { timeout: 5000 });

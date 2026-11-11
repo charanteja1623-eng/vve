@@ -96,10 +96,10 @@ export default function EventsPage() {
                     glow={0.5}
                     opacity={0.35}
                     fade={0.7}
-                    trigger="hover"
+                    trigger="click"
                     radius={24}
                     clickPulse
-                    intro
+                    intro={false}
                     theme="dark"
                     className="vve-reveal scroll-mt-28 border border-gold/25 shadow-[0_16px_40px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.18),_inset_0_0_24px_rgba(201,161,90,0.04)] hover:border-gold/45 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7),_inset_0_1px_0_rgba(255,255,255,0.28),_0_0_30px_rgba(201,161,90,0.18)] transition-all duration-500"
                   >
@@ -220,10 +220,10 @@ export default function EventsPage() {
                   glow={0.5}
                   opacity={0.35}
                   fade={0.7}
-                  trigger="hover"
+                  trigger="click"
                   radius={16}
                   clickPulse
-                  intro
+                  intro={false}
                   theme="dark"
                   className="rounded-xl border border-gold/22 bg-gradient-to-br from-white/[0.06] via-burgundy-deep/40 to-[#150102]/60 backdrop-blur-xl hover:border-gold/45 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.22),_0_0_20px_rgba(201,161,90,0.16)] shadow-[0_10px_30px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.14)] transition-all duration-300"
                 >

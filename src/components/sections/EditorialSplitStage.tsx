@@ -45,6 +45,7 @@ export default function EditorialSplitStage() {
   const reduced = usePrefersReducedMotion();
   const [visibleCards, setVisibleCards] = useState<Record<string, boolean>>({});
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
+  const activatedCards = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     if (typeof window === "undefined" || reduced) return;
@@ -88,7 +89,12 @@ export default function EditorialSplitStage() {
     if (target.closest("a") || target.closest("button")) {
       return;
     }
-    router.push(`/events/${slug}`);
+    // First click: activate pixel reveal. Second click: navigate to event detail
+    if (activatedCards.current.has(slug)) {
+      router.push(`/events/${slug}`);
+    } else {
+      activatedCards.current.add(slug);
+    }
   };
 
   return (
@@ -156,10 +162,10 @@ export default function EditorialSplitStage() {
                   glow={0.5}
                   opacity={0.35}
                   fade={0.7}
-                  trigger="hover"
+                  trigger="click"
                   radius={24}
                   clickPulse
-                  intro
+                  intro={false}
                   theme="dark"
                   className="w-full p-6 sm:p-10 lg:p-12 border border-gold/25 bg-gradient-to-br from-white/[0.08] via-burgundy-deep/40 to-[#120102]/65 hover:bg-gradient-to-br hover:from-white/[0.12] hover:via-burgundy-deep/50 hover:to-[#120102]/75 hover:border-gold/45 shadow-[0_16px_40px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.18),_inset_0_0_24px_rgba(201,161,90,0.04)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.7),_inset_0_1px_0_rgba(255,255,255,0.28),_0_0_30px_rgba(201,161,90,0.18)] backdrop-blur-xl transition-all duration-300 cursor-pointer"
                 >

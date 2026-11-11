@@ -155,10 +155,10 @@ function WorkGallery() {
                 glow={0.5}
                 opacity={0.35}
                 fade={0.7}
-                trigger="hover"
+                trigger="click"
                 radius={16}
                 clickPulse
-                intro
+                intro={false}
                 theme="dark"
                 className="vve-reveal-scale h-[440px] border border-gold/25 shadow-[0_12px_36px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.16)] hover:border-gold/45 hover:shadow-[0_16px_45px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.24),_0_0_20px_rgba(201,161,90,0.16)] transition-all duration-500 cursor-pointer"
               >

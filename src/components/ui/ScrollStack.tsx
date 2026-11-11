@@ -285,8 +285,8 @@ const ScrollStack = ({
         settleSoon();
         return;
       }
-      current += (goal - current) * (1 - Math.pow(0.9, dt * 60));
-      if (Math.abs(goal - current) < 0.5) current = goal;
+      current += (goal - current) * (1 - Math.pow(0.82, dt * 60));
+      if (Math.abs(goal - current) < 0.6) current = goal;
       writeScroll(current);
       if (current === goal) {
         gliding = false;
@@ -303,11 +303,11 @@ const ScrollStack = ({
         writeScroll(goal);
         return;
       }
-      if (gliding) return;
       gliding = true;
       current = readScroll();
       written = current;
       last = performance.now();
+      cancelAnimationFrame(glide);
       glide = requestAnimationFrame(step);
     };
 
@@ -330,18 +330,106 @@ const ScrollStack = ({
       if (!gliding) settleSoon();
     };
 
+    let gestureLockUntil = 0;
+
     const onWheel = (input: Event) => {
       const event = input as WheelEvent;
-      if (!settingsRef.current?.smoothScroll || motion.matches || event.defaultPrevented || event.ctrlKey) return;
+      if (motion.matches || event.defaultPrevented || event.ctrlKey) return;
       if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-      const page = windowed ? window.innerHeight : root.clientHeight;
-      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? page : 1);
-      if (!delta || scrollsInside(event.target as Element | null, windowed ? document.body : root, delta)) return;
-      const base = gliding ? goal : readScroll();
-      if ((delta < 0 && base <= 0) || (delta > 0 && base >= maxScroll() - 0.5)) return;
-      event.preventDefault();
-      window.clearTimeout(rest);
-      glideTo(base + delta);
+      if (scrollsInside(event.target as Element | null, windowed ? document.body : root, event.deltaY)) return;
+
+      if (!points.length) return;
+
+      const currentScroll = readScroll();
+      const firstPoint = points[0];
+      const lastPoint = points[points.length - 1];
+      const stackEntryBound = firstPoint - 25;
+      const stackExitBound = lastPoint + 25;
+
+      // If outside stack bounds, allow standard free page scrolling
+      if (currentScroll < stackEntryBound || currentScroll > stackExitBound) {
+        return;
+      }
+
+      // Inside stack: find closest active card
+      let activeIndex = 0;
+      let minDiff = Infinity;
+      for (let i = 0; i < points.length; i++) {
+        const diff = Math.abs(points[i] - currentScroll);
+        if (diff < minDiff) {
+          minDiff = diff;
+          activeIndex = i;
+        }
+      }
+
+      const now = performance.now();
+      // Trackpad momentum / rapid events guard: if within cooldown, prevent skipping
+      if (now < gestureLockUntil) {
+        event.preventDefault();
+        return;
+      }
+
+      // Check intentional vertical gesture
+      if (event.deltaY > 18) {
+        // Downward gesture -> Advance to next card
+        if (activeIndex < points.length - 1) {
+          event.preventDefault();
+          gestureLockUntil = now + 380;
+          glideTo(points[activeIndex + 1]);
+        }
+        // If activeIndex === points.length - 1: at last card, release to normal page scrolling
+      } else if (event.deltaY < -18) {
+        // Upward gesture -> Return to previous card
+        if (activeIndex > 0) {
+          event.preventDefault();
+          gestureLockUntil = now + 380;
+          glideTo(points[activeIndex - 1]);
+        }
+        // If activeIndex === 0: at first card, release to upward page scrolling
+      }
+    };
+
+    let touchStartY = 0;
+    let touchStartTime = 0;
+
+    const onTouchStart = (event: Event) => {
+      const te = event as TouchEvent;
+      if (te.touches && te.touches.length === 1) {
+        touchStartY = te.touches[0].clientY;
+        touchStartTime = performance.now();
+      }
+    };
+
+    const onTouchEnd = (event: Event) => {
+      const te = event as TouchEvent;
+      if (!te.changedTouches || te.changedTouches.length !== 1 || !points.length) return;
+      const touchEndY = te.changedTouches[0].clientY;
+      const diffY = touchEndY - touchStartY;
+      const elapsed = performance.now() - touchStartTime;
+
+      if (Math.abs(diffY) > 40 && elapsed < 550) {
+        const currentScroll = readScroll();
+        const stackEntryBound = points[0] - 30;
+        const stackExitBound = points[points.length - 1] + 30;
+
+        if (currentScroll >= stackEntryBound && currentScroll <= stackExitBound) {
+          let activeIndex = 0;
+          let minDiff = Infinity;
+          for (let i = 0; i < points.length; i++) {
+            const diff = Math.abs(points[i] - currentScroll);
+            if (diff < minDiff) {
+              minDiff = diff;
+              activeIndex = i;
+            }
+          }
+
+          if (diffY < -40 && activeIndex < points.length - 1) {
+            glideTo(points[activeIndex + 1]);
+          } else if (diffY > 40 && activeIndex > 0) {
+            glideTo(points[activeIndex - 1]);
+          }
+        }
+      }
     };
 
     const onPress = () => {
@@ -360,6 +448,8 @@ const ScrollStack = ({
     observer.observe(inner);
     target.addEventListener('scroll', onScroll, { passive: true });
     target.addEventListener('wheel', onWheel, { passive: false });
+    target.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
     target.addEventListener('pointerdown', onPress, { passive: true });
     window.addEventListener('pointerup', onRelease, { passive: true });
     window.addEventListener('pointercancel', onRelease, { passive: true });
@@ -374,6 +464,8 @@ const ScrollStack = ({
       observer.disconnect();
       target.removeEventListener('scroll', onScroll);
       target.removeEventListener('wheel', onWheel);
+      target.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend', onTouchEnd);
       target.removeEventListener('pointerdown', onPress);
       window.removeEventListener('pointerup', onRelease);
       window.removeEventListener('pointercancel', onRelease);

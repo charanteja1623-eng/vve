@@ -205,10 +205,10 @@ export default function Home() {
                   glow={0.5}
                   opacity={0.35}
                   fade={0.7}
-                  trigger="hover"
+                  trigger="click"
                   radius={16}
                   clickPulse
-                  intro
+                  intro={false}
                   theme="dark"
                   className="vve-reveal-scale p-6 border border-gold/22 bg-gradient-to-br from-white/[0.06] via-burgundy-deep/40 to-[#150102]/60 backdrop-blur-xl hover:border-gold/45 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.22),_0_0_20px_rgba(201,161,90,0.16)] shadow-[0_10px_30px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.14)] transition-all duration-300 flex flex-col justify-between group rounded-xl relative overflow-hidden"
                 >
@@ -276,10 +276,10 @@ export default function Home() {
                     glow={0.5}
                     opacity={0.35}
                     fade={0.7}
-                    trigger="hover"
+                    trigger="click"
                     radius={20}
                     clickPulse
-                    intro
+                    intro={false}
                     theme="dark"
                     className="w-full border border-gold/25 bg-gradient-to-br from-white/[0.08] via-burgundy-deep/60 to-[#120102]/85 shadow-[0_16px_45px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.2)] hover:border-gold/45 transition-all duration-500 rounded-2xl overflow-hidden"
                   >

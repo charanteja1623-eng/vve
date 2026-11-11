@@ -224,10 +224,10 @@ export default async function CategoryDetailPage({ params }: PageProps) {
                   glow={0.5}
                   opacity={0.35}
                   fade={0.7}
-                  trigger="hover"
+                  trigger="click"
                   radius={16}
                   clickPulse
-                  intro
+                  intro={false}
                   theme="dark"
                   className="vve-reveal-scale rounded-xl border border-gold/25 bg-burgundy-deep/65 p-6 backdrop-blur-md shadow-[0_6px_24px_rgba(15,1,2,0.6),_inset_0_1px_0_rgba(227,201,133,0.1)] hover:border-gold/40 hover:shadow-[0_0_20px_rgba(201,161,90,0.15)] transition-all flex items-start gap-4"
                 >
@@ -292,10 +292,10 @@ export default async function CategoryDetailPage({ params }: PageProps) {
                       glow={0.5}
                       opacity={0.35}
                       fade={0.7}
-                      trigger="hover"
+                      trigger="click"
                       radius={20}
                       clickPulse
-                      intro
+                      intro={false}
                       theme="dark"
                       className="w-full rounded-2xl border border-gold/25 bg-gradient-to-br from-white/[0.08] via-burgundy-deep/60 to-[#120102]/85 backdrop-blur-xl p-8 sm:p-10 flex flex-col justify-between shadow-[0_16px_45px_rgba(15,1,2,0.8),_inset_0_1px_0_rgba(227,201,133,0.18)] hover:border-gold/50 transition-all duration-300"
                     >

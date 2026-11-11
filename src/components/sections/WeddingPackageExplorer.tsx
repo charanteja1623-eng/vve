@@ -254,10 +254,10 @@ export default function WeddingPackageExplorer() {
                         glow={0.5}
                         opacity={0.35}
                         fade={0.7}
-                        trigger="hover"
+                        trigger="click"
                         radius={12}
                         clickPulse
-                        intro
+                        intro={false}
                         theme="dark"
                         className={`rounded-xl border transition-all duration-300 cursor-pointer ${
                           isSelected
@@ -388,10 +388,10 @@ export default function WeddingPackageExplorer() {
                         glow={0.5}
                         opacity={0.35}
                         fade={0.7}
-                        trigger="hover"
+                        trigger="click"
                         radius={12}
                         clickPulse
-                        intro
+                        intro={false}
                         theme="dark"
                         className={`rounded-xl border transition-all duration-300 cursor-pointer ${
                           isSelected
@@ -498,10 +498,10 @@ export default function WeddingPackageExplorer() {
                       glow={0.5}
                       opacity={0.35}
                       fade={0.7}
-                      trigger="hover"
+                      trigger="click"
                       radius={20}
                       clickPulse
-                      intro
+                      intro={false}
                       theme="dark"
                       className={`w-full rounded-2xl border transition-all duration-500 overflow-hidden shadow-[0_16px_50px_rgba(0,0,0,0.65)] ${
                         isSelected
@@ -703,10 +703,10 @@ export default function WeddingPackageExplorer() {
                     glow={0.5}
                     opacity={0.35}
                     fade={0.7}
-                    trigger="hover"
+                    trigger="click"
                     radius={12}
                     clickPulse
-                    intro
+                    intro={false}
                     theme="dark"
                     className={`rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer ${
                       isSelected

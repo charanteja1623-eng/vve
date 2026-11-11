@@ -46,22 +46,35 @@ test.describe('VVE Global ScrollStack & PixelCard Integration Suite', () => {
     await expect(serviceCanvases).toHaveCount(7);
   });
 
-  test('PixelCard canvas tracks pointer movement and activates spotlight', async ({ page }) => {
+  test('PixelCard activates on first click/tap, preserves state on mouse leave, and stops rAF', async ({ page }) => {
     await page.goto('/');
     await waitForPageReady(page);
 
     const firstCard = page.locator('#events article').first();
     await firstCard.scrollIntoViewIfNeeded();
 
-    // Hover over the card to trigger PixelCard spotlight/hover
-    await firstCard.hover();
-    await page.waitForTimeout(200);
-
-    // Verify parent PixelCard container has dark theme data attribute
     const pixelCardContainer = page.locator('#events [data-theme="dark"]').first();
     await expect(pixelCardContainer).toBeVisible();
 
-    // Canvas should have non-zero dimensions
+    // 1. Initially, cards appear in normal state (not activated)
+    await expect(pixelCardContainer).not.toHaveAttribute('data-active', 'true');
+
+    // 2. First click or tap activates the pixel reveal
+    await firstCard.click();
+    await page.waitForTimeout(100);
+    await expect(pixelCardContainer).toHaveAttribute('data-active', 'true');
+
+    // 3. Mouse leave must not reset the card
+    await page.mouse.move(0, 0);
+    await page.waitForTimeout(300);
+    await expect(pixelCardContainer).toHaveAttribute('data-active', 'true');
+
+    // 4. Subsequent hover or clicks must not restart or reset
+    await firstCard.hover();
+    await page.waitForTimeout(100);
+    await expect(pixelCardContainer).toHaveAttribute('data-active', 'true');
+
+    // Canvas has valid non-zero dimensions
     const canvas = pixelCardContainer.locator('canvas');
     const box = await canvas.boundingBox();
     expect(box).not.toBeNull();
